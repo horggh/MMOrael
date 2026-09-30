@@ -51,3 +51,10 @@ crashlytics-build.properties
 # OS files
 .DS_Store
 Thumbs.db
+
+# Arquivos brutos baixados (extraidos para Assets/ conforme necessario)
+Downloads/
+
+# Dumps de crash e solucao gerada pela IDE
+mono_crash.*
+*.slnx
