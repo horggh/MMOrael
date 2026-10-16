@@ -70,15 +70,37 @@ public class CharacterStats : MonoBehaviour
         Changed?.Invoke(leveled);
     }
 
-    public int MaxHp => 40 + vitality * 8 + level * 5;
-    public int MaxSp => 10 + intelligence * 4 + level * 2;
-    public int Atk => 5 + strength * 2 + dexterity / 2 + weaponAtk;
-    public int Matk => intelligence * 2 + level;
-    public int Def => vitality / 2;
-    public int Hit => level + dexterity + luck / 3;
-    public int Flee => level + agility + luck / 5;
+    // Bônus do equipamento: não são salvos, o Equipment recalcula ao mudar.
+    private readonly int[] _eqAttrs = new int[6];
+    private int _eqAtk, _eqDef, _eqHp;
+
+    public int Bonus(int i) => _eqAttrs[i];
+    /// Atributo final = base distribuída + equipamento.
+    public int Total(int i) => Get(i) + _eqAttrs[i];
+
+    private int Str => Total(0);
+    private int Agi => Total(1);
+    private int Vit => Total(2);
+    private int Int => Total(3);
+    private int Dex => Total(4);
+    private int Luk => Total(5);
+
+    public int MaxHp => 40 + Vit * 8 + level * 5 + _eqHp;
+    public int MaxSp => 10 + Int * 4 + level * 2;
+    public int Atk => 5 + Str * 2 + Dex / 2 + weaponAtk + _eqAtk;
+    public int Matk => Int * 2 + level;
+    public int Def => Vit / 2 + _eqDef;
+    public int Hit => level + Dex + Luk / 3;
+    public int Flee => level + Agi + Luk / 5;
     /// Percentual. Crítico ignora esquiva e defesa.
-    public float CritChance => luck * 0.3f;
+    public float CritChance => Luk * 0.3f;
     /// Multiplicador: 1 = normal, 1.5 = ataca 50% mais rápido.
-    public float AttackSpeed => 1f + agility * 0.02f + dexterity * 0.005f;
+    public float AttackSpeed => 1f + Agi * 0.02f + Dex * 0.005f;
+
+    public void SetEquipBonus(int[] attrs, int atk, int def, int hp)
+    {
+        for (int i = 0; i < 6; i++) _eqAttrs[i] = attrs[i];
+        _eqAtk = atk; _eqDef = def; _eqHp = hp;
+        Changed?.Invoke(false);
+    }
 }

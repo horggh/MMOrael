@@ -8,6 +8,7 @@ public class ActionBar : MonoBehaviour
 {
     public const int Size = 10;
     public string[] slots = new string[Size];
+    public const string SkillPrefix = "skill:";
 
     private Inventory _bag;
 
@@ -37,7 +38,14 @@ public class ActionBar : MonoBehaviour
     public void Trigger(int i)
     {
         string id = slots[i];
-        if (string.IsNullOrEmpty(id) || _bag == null) return;
-        _bag.Use(id);
+        if (string.IsNullOrEmpty(id)) return;
+
+        // Habilidades ficam na barra com prefixo "skill:"; o resto é item.
+        if (id.StartsWith(SkillPrefix))
+        {
+            var su = GetComponent<SkillUser>();
+            if (su != null) su.Request(id.Substring(SkillPrefix.Length));
+        }
+        else if (_bag != null) _bag.Use(id);
     }
 }

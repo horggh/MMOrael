@@ -14,5 +14,15 @@ public class PixelArtImporter : AssetPostprocessor
         im.textureCompression = TextureImporterCompression.Uncompressed;
         im.mipmapEnabled = false;
         im.alphaIsTransparency = true;
+
+        // Plantações: o canteiro molhado é gerado escurecendo os pixels em tempo de jogo.
+        if (assetPath.Contains("/Crops/")) im.isReadable = true;
+
+        // Cursor precisa ser legível pela CPU, senão o Unity recusa ao trocar o ponteiro.
+        if (assetPath.Contains("/UI/cursor"))
+        {
+            im.textureType = TextureImporterType.Cursor;
+            im.isReadable = true;
+        }
     }
 }

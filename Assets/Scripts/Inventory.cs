@@ -30,6 +30,12 @@ public class Inventory : MonoBehaviour
         _health = GetComponent<Health>();
         for (int i = 0; i < Size; i++) slots[i] ??= new ItemStack();
         if (Count("pocao_vermelha") == 0 && startingPotions > 0) Add("pocao_vermelha", startingPotions);
+        // Equipamento de teste, até existirem drops e lojas.
+        foreach (var id in new[] { "elmo_ferro", "armadura_ferro", "calca_couro", "botas_couro", "espada_ferro",
+                                   "escudo_madeira", "colar_esmeralda", "colar_safira", "anel_ouro",
+                                   "picareta", "enxada", "regador" })
+            Add(id, 1);
+        Add("semente_morango", 5);
     }
 
     public int Count(string id)
@@ -62,7 +68,7 @@ public class Inventory : MonoBehaviour
         return added;
     }
 
-    private void Remove(string id, int amount)
+    public void Remove(string id, int amount)
     {
         for (int i = Size - 1; i >= 0 && amount > 0; i--)
         {
@@ -84,7 +90,15 @@ public class Inventory : MonoBehaviour
     public bool Use(string id)
     {
         var def = ItemDB.Get(id);
-        if (def == null || Count(id) == 0 || Time.time < _readyAt) return false;
+        if (def == null || Count(id) == 0) return false;
+
+        // "Usar" um equipamento é vesti-lo.
+        if (def.kind == ItemKind.Equipment)
+        {
+            var eq = GetComponent<Equipment>();
+            return eq != null && eq.Equip(id);
+        }
+        if (Time.time < _readyAt) return false;
 
         if (def.kind == ItemKind.Consumable && def.heal > 0)
         {

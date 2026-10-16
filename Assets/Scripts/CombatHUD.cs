@@ -13,6 +13,7 @@ public class CombatHUD : MonoBehaviour
 
     private CharacterStats _stats;
     private Inventory _bag;
+    private SkillUser _su;
 
     private void AddPlayerPopup(string text, Color color) => _popups.Add(new Popup
     {
@@ -28,6 +29,9 @@ public class CombatHUD : MonoBehaviour
     private void OnDisable() => Combat.Resolved -= OnResolved;
     private void Start()
     {
+        _su = player != null ? player.GetComponent<SkillUser>() : null;
+        if (_su != null) _su.Used += d => AddPlayerPopup(d.name + "!", new Color(1f, 0.6f, 0.2f));
+
         _bag = player != null ? player.GetComponent<Inventory>() : null;
         if (_bag != null)
         {
@@ -65,6 +69,7 @@ public class CombatHUD : MonoBehaviour
             case HitKind.Critical: p.text = r.damage + "!"; p.color = new Color(1f, 0.85f, 0.2f); break;
             default: p.text = r.damage.ToString(); p.color = Color.white; break;
         }
+        if (r.skill && r.kind != HitKind.Miss) p.color = new Color(1f, 0.55f, 0.15f);
         _popups.Add(p);
     }
 
@@ -85,16 +90,16 @@ public class CombatHUD : MonoBehaviour
             GUI.color = Color.white;
             DrawFill(new Rect(16, 16, 200, 18), player.Hp, player.maxHp, new Color(0.8f, 0.15f, 0.15f));
             GUI.Label(new Rect(222, 13, 80, 24), $"{player.Hp}/{player.maxHp}", _label);
-            int sp = _stats != null ? _stats.MaxSp : 0;
-            DrawFill(new Rect(16, 40, 200, 14), sp, sp, new Color(0.2f, 0.45f, 0.9f));
-            GUI.Label(new Rect(222, 35, 80, 24), $"{sp}/{sp}", _label);
+            int sp = _su != null ? _su.Sp : 0, maxSp = _su != null ? _su.maxSp : 0;
+            DrawFill(new Rect(16, 40, 200, 14), sp, maxSp, new Color(0.2f, 0.45f, 0.9f));
+            GUI.Label(new Rect(222, 35, 80, 24), $"{sp}/{maxSp}", _label);
 
             // Barra sob os pés do personagem, como no Ragnarok: sempre à vista no meio da luta.
             Vector3 feet = Camera.main.WorldToScreenPoint(player.transform.position);
             DrawFill(new Rect(feet.x - 22, Screen.height - feet.y + 4, 44, 5), player.Hp, player.maxHp,
                      player.Hp * 3 < player.maxHp ? new Color(1f, 0.3f, 0.2f) : new Color(0.3f, 0.9f, 0.3f));
         }
-        GUI.Label(new Rect(14, 70, 400, 24), "I: inventário    C: atributos    1–0: atalhos", _label);
+        GUI.Label(new Rect(14, 70, 500, 24), "I: inventário    E: equipamento    C: atributos    K: habilidades    1–0: atalhos", _label);
 
         foreach (var wolf in FindObjectsByType<WolfAI>(FindObjectsSortMode.None))
         {
@@ -148,7 +153,7 @@ public class CombatHUD : MonoBehaviour
         for (int i = 0; i < 6; i++)
         {
             GUI.Label(new Rect(x, y, 40, 24), CharacterStats.Names[i], _label);
-            GUI.Label(new Rect(x + 40, y, 30, 24), s.Get(i).ToString(), _label);
+            GUI.Label(new Rect(x + 34, y, 40, 24), s.Bonus(i) > 0 ? $"{s.Get(i)}+{s.Bonus(i)}" : s.Get(i).ToString(), _label);
 
             int cost = s.CostToRaise(i);
             GUI.enabled = s.statPoints >= cost && s.Get(i) < 99;
