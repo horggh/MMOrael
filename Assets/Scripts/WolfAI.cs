@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
@@ -5,6 +6,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Health))]
 public class WolfAI : MonoBehaviour
 {
+    /// Lobos na cena (a barra de vida do HUD percorre esta lista em vez de procurar na cena).
+    public static readonly List<WolfAI> All = new List<WolfAI>();
+    private void OnEnable() { if (!All.Contains(this)) All.Add(this); }
+    private void OnDisable() => All.Remove(this);
+
     [Header("Movimento")]
     public float wanderSpeed = 1.1f;
     public float chaseSpeed = 3.2f;
@@ -25,6 +31,12 @@ public class WolfAI : MonoBehaviour
     [Header("Morte")]
     public float respawnDelay = 8f;
     [Range(0f, 1f)] public float potionDropChance = 0.35f;
+
+    [Header("Recompensa (Lobo do Ragnarok, pré-Renewal: nível 25, 919 HP)")]
+    [Tooltip("XP base que o lobo dá, antes da taxa de XP (ExpTable.Rate).")]
+    public int baseExp = 329;
+    [Tooltip("XP de skill que o lobo dá, antes da taxa de XP (ExpTable.Rate).")]
+    public int jobExp = 199;
 
     private Rigidbody2D _body;
     private Health _health;
@@ -56,6 +68,10 @@ public class WolfAI : MonoBehaviour
         _collider = GetComponent<Collider2D>();
         _home = transform.position;
         _wanderTarget = _home;
+        // Perfil do Lobo do Ragnarok pré-Renewal (RateMyServer, mob 1013): nível 25, 919 HP,
+        // ATQ 37–46, DEF 0, MDEF 0, FOR 1 AGI 20 VIT 28 INT 15 DES 32 SOR 20, ataque a cada 1,05 s.
+        if (_stats != null) _stats.SetMonster(25, 919, 37, 46, 0, 0, 1, 20, 28, 15, 32, 20);
+        attackCooldown = 1.054f;
         _health.Died += OnDied;
     }
 
@@ -128,7 +144,7 @@ public class WolfAI : MonoBehaviour
     {
         _attackTimer = attackDuration;
         _hitDone = false;
-        _cooldown = attackCooldown / (_stats != null ? _stats.AttackSpeed : 1f);
+        _cooldown = attackCooldown;
         _body.linearVelocity = Vector2.zero;
         _sprite.flipX = _player.position.x < transform.position.x;
         if (_animator != null)
@@ -159,7 +175,11 @@ public class WolfAI : MonoBehaviour
     private void OnDied(Health h)
     {
         var playerStats = _player != null ? _player.GetComponent<CharacterStats>() : null;
-        if (playerStats != null && _stats != null) playerStats.GainExp(_stats.expReward);
+        if (playerStats != null)
+        {
+            playerStats.GainExp(baseExp * ExpTable.Rate);
+            playerStats.GainJobExp(jobExp * ExpTable.Rate);
+        }
 
         var bag = _player != null ? _player.GetComponent<Inventory>() : null;
         if (bag != null && Random.value < potionDropChance) bag.Add("pocao_vermelha", 1);

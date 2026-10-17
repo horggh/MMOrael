@@ -9,6 +9,8 @@ public enum SkillKind
     AreaSelf,
     /// Ação de ferramenta num quadrado do chão (anda até ele se precisar).
     Tool,
+    /// Martelo: abre o modo de mexer em móveis e decoração (Placement).
+    Furniture,
 }
 
 public class SkillDef
@@ -59,7 +61,7 @@ public static class SkillDB
             id = "golpe_fulminante",
             name = "Golpe Fulminante",
             description = "Golpe concentrado que causa 5x o ATQ base.",
-            spCost = 15,
+            spCost = 8,   // como o Golpe Fulminante (Bash) nível 1 do Ragnarok: cabe no SP do nível 1
             cooldown = 1.2f,
             damageMult = 5f,
         });
@@ -116,6 +118,26 @@ public static class SkillDB
             innate = true,
             cooldown = 0.6f,
             radius = 2f,
+        });
+        Add(new SkillDef
+        {
+            id = "mover",
+            name = "Mover",
+            description = "Clique num móvel (baú, janela) e leve para outro lugar, com tudo dentro. Requer Martelo equipado.",
+            kind = SkillKind.Furniture,
+            requiredTool = "martelo",
+            innate = true,
+            cooldown = 0.2f,
+        });
+        Add(new SkillDef
+        {
+            id = "recolher",
+            name = "Recolher",
+            description = "Clique num móvel para guardá-lo na bolsa; o baú vai com os itens dentro. Requer Martelo equipado.",
+            kind = SkillKind.Furniture,
+            requiredTool = "martelo",
+            innate = true,
+            cooldown = 0.2f,
         });
     }
 

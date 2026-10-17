@@ -28,7 +28,7 @@ public class ActionBar : MonoBehaviour
     private void Update()
     {
         var kb = Keyboard.current;
-        if (kb == null) return;
+        if (kb == null || UIKit.Typing) return;
         for (int i = 0; i < Size; i++)
         {
             if (kb[Keys[i]].wasPressedThisFrame) Trigger(i);

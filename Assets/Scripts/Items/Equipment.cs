@@ -23,6 +23,17 @@ public class Equipment : MonoBehaviour
         _stats = GetComponent<CharacterStats>();
     }
 
+    /// Veste o que veio do jogo salvo (o item não sai da bolsa: a bolsa também vem do save).
+    public void Restore(string[] saved)
+    {
+        for (int i = 0; i < Size; i++)
+        {
+            string id = saved != null && i < saved.Length ? saved[i] : null;
+            slots[i] = Fits(ItemDB.Get(id), (EquipSlot)i) ? id : null;   // item removido do jogo some
+        }
+        Apply();
+    }
+
     public string Get(EquipSlot s) => slots[(int)s];
 
     public static bool Fits(ItemDef d, EquipSlot s)
@@ -80,16 +91,17 @@ public class Equipment : MonoBehaviour
     /// Soma os bônus de tudo que está vestido e entrega aos atributos.
     private void Apply()
     {
-        int atk = 0, def = 0, hp = 0;
+        int atk = 0, def = 0, hp = 0, dmg = 0;
         var attrs = new int[6];
+        var weapon = ItemDB.Get(Get(EquipSlot.Weapon));
         foreach (var id in slots)
         {
             var d = ItemDB.Get(id);
             if (d == null) continue;
-            atk += d.atk; def += d.def; hp += d.hp;
+            atk += d.atk; def += d.def; hp += d.hp; dmg += d.damagePct;
             for (int i = 0; i < 6; i++) attrs[i] += d.attrs[i];
         }
-        if (_stats != null) _stats.SetEquipBonus(attrs, atk, def, hp);
+        if (_stats != null) _stats.SetEquipBonus(attrs, atk, def, hp, weapon != null ? weapon.weaponType : WeaponType.Fist, dmg);
         Changed?.Invoke();
     }
 }

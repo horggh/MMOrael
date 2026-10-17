@@ -22,11 +22,57 @@ public class CombatHUD : MonoBehaviour
         color = color,
         born = Time.time,
     });
-    private bool _showStats;
     private GUIStyle _label, _popup;
+    private float _resetConfirmUntil;
+    private float _helpY = 70f;   // linha de atalhos logo abaixo da barra de informações
 
-    private void OnEnable() => Combat.Resolved += OnResolved;
-    private void OnDisable() => Combat.Resolved -= OnResolved;
+    // Janela de atributos no estilo do kit (pixels da arte).
+    // Textos no mesmo padrão da janela de habilidades: 16 para nomes, 14 para valores.
+    private const int StatsW = 380, StatsRows = 102, StatsRowH = 26;
+    private readonly KitWindow _statsWin = new KitWindow(40, 110, StatsW, StatsRows + 6 * StatsRowH + 57, "titulo_atributos");
+
+    private void OnEnable()
+    {
+        Combat.Resolved += OnResolved;
+        DrakeBoss.Announce += OnAnnounce;
+    }
+
+    private void OnDisable()
+    {
+        Combat.Resolved -= OnResolved;
+        DrakeBoss.Announce -= OnAnnounce;
+    }
+
+    private void OnAnnounce(string text) => AddPlayerPopup(text, new Color(1f, 0.82f, 0.25f));
+
+    private GUIStyle _bossName;
+
+    /// Barra de vida do boss no alto da tela, centralizada, quando ele está perto.
+    private void DrawBossBar()
+    {
+        if (player == null) return;
+        foreach (var boss in DrakeBoss.All)
+        {
+            var h = boss.GetComponent<Health>();
+            if (boss.IsDead || h == null || Vector2.Distance(boss.transform.position, player.transform.position) > 16f) continue;
+            float w = Screen.width * 0.36f, bh = Mathf.Max(8f, Screen.height * 0.016f);
+            float x = (Screen.width - w) / 2f, y = _helpY + Screen.height * 0.05f;
+            _bossName ??= new GUIStyle(GUI.skin.label) { fontStyle = FontStyle.Bold, alignment = TextAnchor.LowerCenter };
+            _bossName.fontSize = Mathf.Max(11, Mathf.RoundToInt(Screen.height * 0.022f));
+            var nameRect = new Rect(x, y - _bossName.fontSize * 1.6f, w, _bossName.fontSize * 1.5f);
+            _bossName.normal.textColor = new Color(0f, 0f, 0f, 0.8f);
+            GUI.Label(new Rect(nameRect.x + 1, nameRect.y + 1, w, nameRect.height), $"{DrakeBoss.DisplayName}  ·  MVP", _bossName);
+            _bossName.normal.textColor = new Color(1f, 0.82f, 0.4f);
+            GUI.Label(nameRect, $"{DrakeBoss.DisplayName}  ·  MVP", _bossName);
+            DrawFill(new Rect(x, y, w, bh), h.Hp, h.maxHp, new Color(0.8f, 0.15f, 0.12f));
+            _bossName.fontSize = Mathf.Max(9, Mathf.RoundToInt(bh * 0.85f));
+            _bossName.alignment = TextAnchor.MiddleCenter;
+            _bossName.normal.textColor = Color.white;
+            GUI.Label(new Rect(x, y, w, bh), $"{h.Hp:#,0} / {h.maxHp:#,0}", _bossName);
+            _bossName.alignment = TextAnchor.LowerCenter;
+            break;
+        }
+    }
     private void Start()
     {
         _su = player != null ? player.GetComponent<SkillUser>() : null;
@@ -37,10 +83,14 @@ public class CombatHUD : MonoBehaviour
         {
             _bag.Healed += n => AddPlayerPopup($"+{n}", new Color(0.4f, 1f, 0.4f));
             _bag.Gained += (id, n) => AddPlayerPopup($"+{n} {ItemDB.Get(id)?.name}", new Color(0.6f, 0.85f, 1f));
+            _bag.Notice += text => AddPlayerPopup(text, new Color(1f, 0.55f, 0.5f));
+            _bag.MoneyGained += n => AddPlayerPopup("+" + Inventory.MoneyText(n), new Color(1f, 0.85f, 0.3f));
         }
 
         _stats = player != null ? player.GetComponent<CharacterStats>() : null;
         if (_stats == null) return;
+        _stats.JobLeveled += ups => AddPlayerPopup($"Nível de skill {_stats.jobLevel}! +{ups} ponto" + (ups > 1 ? "s" : ""),
+                                                    new Color(0.55f, 0.85f, 1f));
         _stats.Changed += leveled =>
         {
             if (!leveled) return;
@@ -56,7 +106,7 @@ public class CombatHUD : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current != null && Keyboard.current.cKey.wasPressedThisFrame) _showStats = !_showStats;
+        if (Keyboard.current != null && !UIKit.Typing && Keyboard.current.cKey.wasPressedThisFrame) _statsWin.show = !_statsWin.show;
         _popups.RemoveAll(p => Time.time - p.born > PopupLife);
     }
 
@@ -84,24 +134,31 @@ public class CombatHUD : MonoBehaviour
 
         if (player != null)
         {
-            // Painel fixo: HP e SP com números.
-            GUI.color = new Color(0f, 0f, 0f, 0.45f);
-            GUI.DrawTexture(new Rect(10, 10, 270, 56), Texture2D.whiteTexture);
-            GUI.color = Color.white;
-            DrawFill(new Rect(16, 16, 200, 18), player.Hp, player.maxHp, new Color(0.8f, 0.15f, 0.15f));
-            GUI.Label(new Rect(222, 13, 80, 24), $"{player.Hp}/{player.maxHp}", _label);
+            // Barra de informações no topo (arte em Resources/UI/Status).
             int sp = _su != null ? _su.Sp : 0, maxSp = _su != null ? _su.maxSp : 0;
-            DrawFill(new Rect(16, 40, 200, 14), sp, maxSp, new Color(0.2f, 0.45f, 0.9f));
-            GUI.Label(new Rect(222, 35, 80, 24), $"{sp}/{maxSp}", _label);
+            int used = 0;
+            if (_bag != null) foreach (var st in _bag.slots) if (st != null && !st.Empty) used++;
+            // Espaço até o botão DEV no canto direito (a barra encolhe para caber).
+            float margin = Screen.height * 0.01f;
+            float room = Screen.width - margin * 2 - Screen.height * 0.09f;
+            var bar = StatusBar.Draw(new Vector2(margin, margin), room, player.Hp, player.maxHp, sp, maxSp,
+                                     _stats != null ? _stats.level : 1, _stats != null ? _stats.exp : 0,
+                                     _stats != null ? _stats.ExpToNext : 0,
+                                     _stats != null ? _stats.jobExp : 0, _stats != null ? _stats.JobExpToNext : 0,
+                                     _bag != null ? _bag.money : 0,
+                                     used, Inventory.Size);
+            _helpY = bar.yMax + 4;
 
             // Barra sob os pés do personagem, como no Ragnarok: sempre à vista no meio da luta.
             Vector3 feet = Camera.main.WorldToScreenPoint(player.transform.position);
             DrawFill(new Rect(feet.x - 22, Screen.height - feet.y + 4, 44, 5), player.Hp, player.maxHp,
                      player.Hp * 3 < player.maxHp ? new Color(1f, 0.3f, 0.2f) : new Color(0.3f, 0.9f, 0.3f));
         }
-        GUI.Label(new Rect(14, 70, 500, 24), "I: inventário    E: equipamento    C: atributos    K: habilidades    1–0: atalhos", _label);
+        GUI.Label(new Rect(14, _helpY, 500, 24), "I: inventário    E: equipamento    C: atributos    K: habilidades    1–0: atalhos", _label);
 
-        foreach (var wolf in FindObjectsByType<WolfAI>(FindObjectsSortMode.None))
+        DrawBossBar();
+
+        foreach (var wolf in WolfAI.All)
         {
             var h = wolf.GetComponent<Health>();
             if (h == null || h.IsDead || h.Hp == h.maxHp) continue;
@@ -117,60 +174,61 @@ public class CombatHUD : MonoBehaviour
             GUI.Label(new Rect(s.x - 50, Screen.height - s.y - 15, 100, 30), p.text, _popup);
         }
 
-        if (_showStats && _stats != null) DrawStats();
-        else PointerOverUI = false;
+        if (_statsWin.show && _stats != null) DrawStats();
+        PointerOverUI = _statsWin.show && _statsWin.ScreenRect.Contains(Event.current.mousePosition);
     }
-
-    private Rect _statsWin = new Rect(16, 100, 330, 330);
 
     /// Verdadeiro com o mouse sobre a janela: o clique é da interface, não um golpe.
     public static bool PointerOverUI { get; private set; }
 
     private void DrawStats()
     {
-        PointerOverUI = _statsWin.Contains(Event.current.mousePosition);
-        _statsWin = GUI.Window(1, _statsWin, StatsWindow, "Atributos");
-        // Mantém a janela dentro da tela mesmo se arrastada para fora.
-        _statsWin.x = Mathf.Clamp(_statsWin.x, 0, Screen.width - _statsWin.width);
-        _statsWin.y = Mathf.Clamp(_statsWin.y, 0, Screen.height - _statsWin.height);
-    }
-
-    private void StatsWindow(int id)
-    {
         var s = _stats;
-        float x = 14, y = 26;
-        GUI.Label(new Rect(x, y, 300, 22), $"Nível {s.level}    XP {s.exp}/{s.ExpToNext}", _label);
-        y += 24;
-        GUI.Label(new Rect(x, y, 300, 22), $"Pontos disponíveis: {s.statPoints}", _label);
-        y += 30;
+        var w = _statsWin;
+        w.DrawFrame();
+
+        UIKit.Label(w.Art(16, 38, 160, 22), $"Nível {s.level}", 16, UIKit.Gold);
+        UIKit.Label(w.Art(180, 40, StatsW - 196, 20), (s.ExpToNext > 0 ? $"XP {s.exp}/{s.ExpToNext}" : "XP máximo"), 14, UIKit.Cream, TextAnchor.MiddleRight);
+        UIKit.Label(w.Art(16, 64, StatsW - 32, 20), $"Pontos disponíveis: {s.statPoints}", 14, s.statPoints > 0 ? UIKit.Gold : UIKit.Cream);
+
+        // Reset de build: dois cliques (o primeiro pede confirmação por 3 s).
+        bool confirming = Time.unscaledTime < _resetConfirmUntil;
+        if (UIKit.Button(w.Art(StatsW - 16 - 96, 62, 96, 19), confirming ? "Confirmar?" : "Resetar", true, 9, confirming))
+        {
+            if (!confirming) _resetConfirmUntil = Time.unscaledTime + 3f;
+            else
+            {
+                _resetConfirmUntil = 0f;
+                int back = s.ResetAttributes();
+                AddPlayerPopup($"+{back} pontos para redistribuir", new Color(1f, 0.85f, 0.3f));
+                SaveGame.Save();
+            }
+        }
+        UIKit.DividerH(w.pos, StatsW, 90);
 
         string[] derived =
         {
-            $"ATQ {s.Atk}", $"ESQUIVA {s.Flee}", $"HP {s.MaxHp}  DEF {s.Def}",
-            $"SP {s.MaxSp}  ATQ.MÁG {s.Matk}", $"PRECISÃO {s.Hit}", $"CRÍTICO {s.CritChance:0.#}%",
+            $"ATQ {s.StatusAtk} + {s.WeaponAtk}", $"ESQUIVA {s.Flee} + {s.PerfectDodge:0}", $"HP {s.MaxHp}  DEF {s.HardDef} + {s.SoftDef}",
+            $"SP {s.MaxSp}  ATQ.MÁG {s.MatkMin}~{s.MatkMax}", $"PRECISÃO {s.Hit}", $"CRÍTICO {s.CritChance:0.#}%",
         };
 
         for (int i = 0; i < 6; i++)
         {
-            GUI.Label(new Rect(x, y, 40, 24), CharacterStats.Names[i], _label);
-            GUI.Label(new Rect(x + 34, y, 40, 24), s.Bonus(i) > 0 ? $"{s.Get(i)}+{s.Bonus(i)}" : s.Get(i).ToString(), _label);
+            float y = StatsRows + i * StatsRowH;
+            UIKit.Label(w.Art(16, y, 40, 22), CharacterStats.Names[i], 16, UIKit.Gold);
+            UIKit.Label(w.Art(58, y, 50, 22), s.Bonus(i) > 0 ? $"{s.Get(i)}+{s.Bonus(i)}" : s.Get(i).ToString(), 16, UIKit.Cream);
 
             int cost = s.CostToRaise(i);
-            GUI.enabled = s.statPoints >= cost && s.Get(i) < 99;
-            if (GUI.Button(new Rect(x + 72, y, 26, 22), "+")) s.TryRaise(i);
-            GUI.enabled = true;
-
-            GUI.Label(new Rect(x + 102, y, 30, 24), $"({cost})", _label);
-            GUI.Label(new Rect(x + 140, y, 170, 24), derived[i], _label);
-            y += 28;
+            if (UIKit.Button(w.Art(110, y + 1, 20, 19), "+", s.statPoints >= cost && s.Get(i) < 99)) s.TryRaise(i);
+            UIKit.Label(w.Art(136, y, 34, 22), $"({cost})", 14, UIKit.Dim);
+            UIKit.Label(w.Art(176, y, StatsW - 192, 22), derived[i], 14, UIKit.Cream);
         }
 
-        y += 6;
-        GUI.Label(new Rect(x, y, 300, 22), $"Velocidade de ataque {s.AttackSpeed:0.00}x", _label);
-        GUI.Label(new Rect(x, y + 22, 300, 22), "(n) = pontos para subir o atributo", _label);
+        float yEnd = StatsRows + 6 * StatsRowH + 4;
+        UIKit.Label(w.Art(16, yEnd, StatsW - 32, 20), $"ASPD {s.Aspd}   ({s.AttacksPerSecond:0.00} ataques/s, {ItemDef.WeaponName(s.Weapon)})", 14, UIKit.Cream);
+        UIKit.Label(w.Art(16, yEnd + 22, StatsW - 32, 16), "(n) = pontos para subir o atributo", 12, UIKit.Dim);
 
-        // Só a faixa do título arrasta; o resto da janela continua clicável.
-        GUI.DragWindow(new Rect(0, 0, 10000, 20));
+        w.HandleInput(Event.current);
     }
 
     private static void DrawBar(Rect r, Health h, Color color)

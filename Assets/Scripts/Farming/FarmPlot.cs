@@ -11,21 +11,26 @@ public class FarmPlot : MonoBehaviour
     // morango_02 (sementes) .. morango_05 (maduro)
     private const int FirstStage = 2, LastStage = 5;
 
-    public int Stage { get; private set; }   // 0 = só terra arada
+    // Campos serializados: sobrevivem se o Unity recompilar no meio do Play.
+    [SerializeField] private int _stage;
+    [SerializeField] private bool _wet;
+    public int Stage { get => _stage; private set => _stage = value; }   // 0 = só terra arada
     public bool Planted => Stage > 0;
     public bool Ripe => Stage == LastStage;
-    public bool Wet { get; private set; }
+    public bool Wet { get => _wet; private set => _wet = value; }
 
     // Sprites por estágio, seco e molhado (molhado = só os tons de terra escurecidos).
     private static readonly Dictionary<string, Sprite> Cache = new Dictionary<string, Sprite>();
     private SpriteRenderer _sr;
-    private float _timer;
+    [SerializeField] private float _timer;
 
     private void Awake()
     {
         _sr = gameObject.AddComponent<SpriteRenderer>();
         Refresh();
     }
+
+    private void OnEnable() => FarmGrid.Register(this);
 
     private void Update()
     {
@@ -71,6 +76,16 @@ public class FarmPlot : MonoBehaviour
         GUI.Label(new Rect(r.x + 1, r.y + 1, r.width, r.height), text, _clock);   // sombra
         _clock.normal.textColor = color;
         GUI.Label(r, text, _clock);
+    }
+
+    public float Timer => _timer;
+
+    public void Restore(int stage, bool wet, float timer)
+    {
+        Stage = stage;
+        Wet = wet;
+        _timer = timer;
+        Refresh();
     }
 
     public void Plant() { Stage = FirstStage; _timer = 0f; Refresh(); }

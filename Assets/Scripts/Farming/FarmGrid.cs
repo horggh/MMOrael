@@ -15,7 +15,13 @@ public static class FarmGrid
 
     public static Vector2 Center(Vector2Int c) => new Vector2((c.x + 0.5f) * Cell, (c.y + 0.5f) * Cell);
 
+    /// Ponto dentro do mapa de fora (Campo).
+    public static bool InMap(Vector2 p) => Bounds.Contains(p);
+
     public static FarmPlot At(Vector2Int c) => Plots.TryGetValue(c, out var p) && p != null ? p : null;
+
+    /// Todos os canteiros, com o quadrado de cada um (para o jogo salvo).
+    public static IEnumerable<KeyValuePair<Vector2Int, FarmPlot>> All => Plots;
 
     /// Dá para arar: dentro do mapa, ainda não arado e sem obstáculo sólido (tronco).
     public static bool CanTill(Vector2Int c)
@@ -73,6 +79,9 @@ public static class FarmGrid
         if (list.Count > max) list.RemoveRange(max, list.Count - max);
         return list;
     }
+
+    /// O canteiro se inscreve ao ligar (também depois de o Unity recompilar no meio do Play).
+    public static void Register(FarmPlot p) => Plots[CellOf(p.transform.position)] = p;
 
     /// Canteiro abandonado: some e o chão volta a ser grama.
     public static void Remove(FarmPlot p)

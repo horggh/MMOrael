@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// SP, habilidades aprendidas, pontos de habilidade e recarga.
-public class SkillUser : MonoBehaviour
+public class SkillUser : MonoBehaviour, ISerializationCallbackReceiver
 {
+    /// SP máximo: vem de CharacterStats.MaxSp (fórmula do Ragnarok).
     public int maxSp = 100;
-    public int Sp { get; private set; }
-    [Tooltip("SP recuperado por segundo, parado ou andando.")]
-    public float spRegenPerSecond = 0.7f;
+    [SerializeField] private int _sp;
+    public int Sp { get => _sp; private set => _sp = value; }
     public int skillPoints = 2;   // dá para aprender as duas habilidades já no teste
 
     public event Action Changed;
@@ -16,27 +16,71 @@ public class SkillUser : MonoBehaviour
     public event Action<SkillDef> Used;
 
     private readonly Dictionary<string, int> _levels = new Dictionary<string, int>();
+    // Cópia em listas: dicionário o Unity não guarda quando recompila no meio do Play, e as
+    // habilidades aprendidas sumiam (e o salvamento automático gravava isso).
+    [SerializeField] private List<string> _levelIds = new List<string>();
+    [SerializeField] private List<int> _levelValues = new List<int>();
+
+    public void OnBeforeSerialize()
+    {
+        _levelIds.Clear();
+        _levelValues.Clear();
+        foreach (var kv in _levels) { _levelIds.Add(kv.Key); _levelValues.Add(kv.Value); }
+    }
+
+    public void OnAfterDeserialize()
+    {
+        _levels.Clear();
+        for (int i = 0; i < _levelIds.Count && i < _levelValues.Count; i++) _levels[_levelIds[i]] = _levelValues[i];
+    }
     private readonly Dictionary<string, float> _readyAt = new Dictionary<string, float>();
     private PlayerController2D _ctrl;
-    private float _regen;
 
     private void Awake()
     {
-        Sp = maxSp;
         _ctrl = GetComponent<PlayerController2D>();
         foreach (var d in SkillDB.All) if (d.innate) _levels[d.id] = 1;
         var stats = GetComponent<CharacterStats>();
-        if (stats != null) stats.Changed += leveled => { if (leveled) { skillPoints++; Changed?.Invoke(); } };
+        if (stats != null)
+        {
+            maxSp = Mathf.Max(1, stats.MaxSp);
+            // Subir de nível enche o SP (como o HP); mudar INT só ajusta o máximo.
+            stats.Changed += leveled =>
+            {
+                maxSp = Mathf.Max(1, stats.MaxSp);
+                Sp = leveled ? maxSp : Mathf.Min(Sp, maxSp);
+                Changed?.Invoke();
+            };
+        }
+        Sp = maxSp;
+        // Pontos de habilidade vêm do nível de skill (como o nível de classe do Ragnarok).
+        if (stats != null) stats.JobLeveled += ups => { skillPoints += ups; Changed?.Invoke(); };
     }
 
-    private void Update()
+    /// Regeneração natural (NaturalRegen) e afins.
+    public void AddSp(int amount)
     {
-        if (Sp >= maxSp) return;
-        _regen += spRegenPerSecond * Time.deltaTime;
-        if (_regen >= 1f) { int k = (int)_regen; _regen -= k; Sp = Mathf.Min(maxSp, Sp + k); }
+        if (amount <= 0 || Sp >= maxSp) return;
+        Sp = Mathf.Min(maxSp, Sp + amount);
+        Changed?.Invoke();
     }
+
+    /// SP cheio (DEV: ao ligar o SP infinito).
+    public void RefillSp() { Sp = maxSp; Changed?.Invoke(); }
 
     public int Level(string id) => _levels.TryGetValue(id, out var l) ? l : 0;
+
+    /// Habilidades aprendidas (id, nível), para o jogo salvo.
+    public IEnumerable<KeyValuePair<string, int>> Levels => _levels;
+
+    public void Restore(int points, int sp, IEnumerable<KeyValuePair<string, int>> levels)
+    {
+        skillPoints = points;
+        Sp = Mathf.Clamp(sp, 0, maxSp);
+        foreach (var kv in levels)
+            if (SkillDB.Get(kv.Key) != null) _levels[kv.Key] = kv.Value;
+        Changed?.Invoke();
+    }
 
     public bool Learn(string id)
     {
@@ -56,11 +100,20 @@ public class SkillUser : MonoBehaviour
         return Mathf.Clamp01((t - Time.time) / def.cooldown);
     }
 
+    /// A ferramenta que a habilidade pede está na mão (ou ela não pede nenhuma).
+    public bool HasTool(SkillDef def)
+    {
+        if (def == null || string.IsNullOrEmpty(def.requiredTool)) return true;
+        var eq = GetComponent<Equipment>();
+        var weapon = eq != null ? ItemDB.Get(eq.Get(EquipSlot.Weapon)) : null;
+        return weapon != null && weapon.tool == def.requiredTool;
+    }
+
     /// Aprendida, com SP e com a ferramenta na mão (ignora a recarga).
     public bool Usable(string id)
     {
         var def = SkillDB.Get(id);
-        if (def == null || Level(id) == 0 || Sp < def.spCost) return false;
+        if (def == null || Level(id) == 0 || (Sp < def.spCost && !DevCheats.InfiniteSp)) return false;
         if (!string.IsNullOrEmpty(def.requiredItem))
         {
             var bag = GetComponent<Inventory>();
@@ -84,7 +137,7 @@ public class SkillUser : MonoBehaviour
     public bool Spend(SkillDef def)
     {
         if (!CanUse(def.id)) return false;
-        Sp -= def.spCost;
+        if (!DevCheats.InfiniteSp) Sp -= def.spCost;   // DEV: SP infinito
         _readyAt[def.id] = Time.time + def.cooldown;
         Used?.Invoke(def);
         Changed?.Invoke();

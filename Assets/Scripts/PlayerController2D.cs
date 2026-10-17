@@ -18,6 +18,7 @@ public class PlayerController2D : MonoBehaviour
     public float hitDelay = 0.15f;
     public float hitRadius = 0.75f;
     public float hitReach = 0.65f;
+    [Tooltip("Empurrão base das skills (o golpe básico não empurra).")]
     public float knockback = 4.5f;
     [Tooltip("Distância em que, perseguindo um alvo, o cavaleiro para e começa a bater.")]
     public float engageRange = 1.1f;
@@ -36,13 +37,33 @@ public class PlayerController2D : MonoBehaviour
     private SpriteRenderer _sprite;
     private Health _health;
     private CharacterStats _stats;
-    private Vector2 _spawn;
+    [SerializeField] private Vector2 _spawn;
+    [SerializeField] private Vector2 _sceneSpawn;   // início do mapa, quando não há portal ativo
+
+    /// Vai direto para um ponto (pedra de retorno): para de andar e de atacar.
+    public void Teleport(Vector2 p)
+    {
+        _moveTo = null; _target = null; _holdMove = false; _queuedSkill = null; _queuedTool = null; _aimSkill = null;
+        transform.position = new Vector3(p.x, p.y, transform.position.z);
+        if (_body != null) { _body.position = p; _body.linearVelocity = Vector2.zero; }
+        var cam = FindAnyObjectByType<CameraFollow2D>();
+        if (cam != null) cam.Snap();
+    }
+
+    /// Onde renasce ao morrer (o portal ativo chama isto).
+    public void SetRespawn(Vector2 p) => _spawn = p;
+    public void ResetRespawn() => _spawn = _sceneSpawn;
     private float _attackTimer, _attackLength;
     private float _hitTimer = -1f;
+    private float _nextAttackAt;   // ASPD: antes disto o próximo golpe básico não sai
     private Health _target;
     private SkillUser _skills;
     private SkillDef _queuedSkill;   // espera chegar ao alcance do alvo
     private SkillDef _activeSkill;   // golpe em andamento
+    private SkillDef _aimSkill;      // mirando: o cursor vira círculo e o clique escolhe o monstro
+
+    /// Habilidade esperando o clique no monstro (cursor de seleção).
+    public SkillDef AimingSkill => _aimSkill;
     private bool _strikePending;
     private SkillDef _queuedTool;      // ação de ferramenta esperando chegar perto do quadrado
     private Vector2Int _toolCell;
@@ -52,6 +73,9 @@ public class PlayerController2D : MonoBehaviour
     private bool _holdMove;
     private float _lastDist = float.MaxValue;
     private int _stuck;
+    private float _chaseDist = float.MaxValue;
+    private int _chaseStuck;
+    private int _whiffs;   // golpes seguidos que não acertaram nada
 
     private void Awake()
     {
@@ -59,6 +83,8 @@ public class PlayerController2D : MonoBehaviour
         _sprite = GetComponentInChildren<SpriteRenderer>();
         _health = GetComponent<Health>();
         _stats = GetComponent<CharacterStats>();
+        // Jogo novo: pontos livres pela regra do Ragnarok (o jogo salvo refaz a conta ao carregar).
+        if (_stats != null) _stats.RecountPoints();
         // A cena atual foi montada antes destes componentes existirem.
         _bag = GetComponent<Inventory>();
         if (_bag == null) _bag = gameObject.AddComponent<Inventory>();
@@ -67,9 +93,11 @@ public class PlayerController2D : MonoBehaviour
         if (GetComponent<ItemUI>() == null) gameObject.AddComponent<ItemUI>();
         if (GetComponent<KnightAnimator>() == null) gameObject.AddComponent<KnightAnimator>();
         if (GetComponent<CursorManager>() == null) gameObject.AddComponent<CursorManager>();
+        if (GetComponent<NaturalRegen>() == null) gameObject.AddComponent<NaturalRegen>();
         _skills = GetComponent<SkillUser>();
         if (_skills == null) _skills = gameObject.AddComponent<SkillUser>();
         _spawn = transform.position;
+        _sceneSpawn = _spawn;
         if (_health != null) _health.Died += _ => StartCoroutine(Respawn());
     }
 
@@ -85,24 +113,59 @@ public class PlayerController2D : MonoBehaviour
             if (_hitTimer < 0f && _strikePending) Strike();
         }
 
-        bool overUI = CombatHUD.PointerOverUI || ItemUI.PointerOverUI;
+        // Posicionando um móvel, o clique é do posicionamento (ver Placement).
+        bool overUI = CombatHUD.PointerOverUI || ItemUI.PointerOverUI || Building.PointerOverUI || Placement.BlocksInput;
         Vector2 mouse = MouseWorld();
         Health hovered = overUI ? null : MonsterAt(mouse);
-        CursorManager.SetSword(hovered != null);
+        if (_aimSkill != null) CursorManager.SetTarget(hovered != null);
+        else CursorManager.SetSword(hovered != null);
 
         if (_target != null && _target.IsDead) _target = null;
 
-        if (_attackTimer > 0f)
+        // Esc: larga alvo, caminho e ação pendente (destrava se algo der errado).
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            _attackTimer -= Time.deltaTime;
+            _target = null; _moveTo = null; _holdMove = false; _queuedSkill = null; _queuedTool = null; _aimSkill = null;
         }
-        else if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame && !overUI)
+        // Botão direito desiste da mira.
+        if (_aimSkill != null && Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame) _aimSkill = null;
+
+        if (_attackTimer > 0f) _attackTimer -= Time.deltaTime;
+
+        // WASD sempre larga o alvo, mesmo no meio do golpe. Antes o ataque automático
+        // emendava um golpe no outro e o teclado nunca era lido: o personagem ficava preso.
+        if (MoveKeysHeld())
+        {
+            _target = null; _moveTo = null; _holdMove = false; _queuedSkill = null; _queuedTool = null;
+        }
+
+        // O clique também vale durante o golpe: troca a ação assim que ele termina.
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame && !overUI)
         {
             // Clique no monstro: trava o alvo e deixa o resto automático.
             // Clique no chão: anda até o ponto.
             _queuedTool = null;   // um clique novo substitui a ação pendente
-            if (hovered != null) { _target = hovered; _moveTo = null; _holdMove = false; }
+            if (_aimSkill != null)
+            {
+                // Mirando: clique no monstro trava o alvo com a habilidade na fila (anda até ele
+                // se estiver longe); clique no chão só desiste da mira.
+                if (hovered != null)
+                {
+                    _target = hovered; _moveTo = null; _holdMove = false;
+                    _queuedSkill = _aimSkill;
+                }
+                _aimSkill = null;
+            }
+            else if (hovered != null) { _target = hovered; _moveTo = null; _holdMove = false; }
             else { _target = null; _moveTo = mouse; _holdMove = true; }
+        }
+
+        // Habilidade tem preferência sobre o golpe básico: no alcance, corta o golpe básico em
+        // andamento (o dano dele não sai) e a habilidade sai na hora.
+        if (_queuedSkill != null && _attackTimer > 0f && _activeSkill == null && _strikePending &&
+            _target != null && DistanceTo(_target) <= engageRange && _skills.CanUse(_queuedSkill.id))
+        {
+            _attackTimer = 0f; _hitTimer = -1f; _strikePending = false;
         }
 
         // Segurando o botão, o destino acompanha o cursor (como no Ragnarok).
@@ -114,14 +177,15 @@ public class PlayerController2D : MonoBehaviour
             }
             else _holdMove = false;
         }
-        else if (_queuedTool != null &&
+        else if (_queuedTool != null && _attackTimer <= 0f &&
                  Vector2.Distance(transform.position, FarmGrid.Center(_toolCell)) <= ToolReach)
         {
             DoTool(_queuedTool, _toolCell);
             _queuedTool = null;
             _moveTo = null;
         }
-        else if (_target != null && DistanceTo(_target) <= engageRange)
+        else if (_target != null && _attackTimer <= 0f && (Time.time >= _nextAttackAt || _queuedSkill != null) &&
+                 (DistanceTo(_target) <= engageRange || ChaseBlocked()))
         {
             Vector2 dir = (Vector2)_target.transform.position + Vector2.up * 0.3f - Chest;
             SkillDef skill = _queuedSkill != null && _skills.Spend(_queuedSkill) ? _queuedSkill : null;
@@ -135,6 +199,14 @@ public class PlayerController2D : MonoBehaviour
     public void UseSkill(SkillDef def)
     {
         if (Dead) return;
+
+        if (def.kind == SkillKind.Furniture)
+        {
+            if (!_skills.Spend(def)) return;
+            _target = null; _queuedSkill = null; _holdMove = false; _moveTo = null;
+            Placement.BeginHammer(_bag, def.id == "recolher");
+            return;
+        }
 
         if (def.kind == SkillKind.Tool)
         {
@@ -157,17 +229,31 @@ public class PlayerController2D : MonoBehaviour
             return;
         }
 
-        Health t = _target != null ? _target : MonsterAt(MouseWorld());
-        if (t != null)
-        {
-            _target = t;
-            _moveTo = null;
-            _queuedSkill = def;   // dispara ao chegar no alcance (ou já, se estiver perto)
-        }
-        else if (_attackTimer <= 0f && _skills.Spend(def))
-        {
-            BeginAttack(MouseWorld() - Chest, def);
-        }
+        // Corpo a corpo: o cursor vira um círculo de seleção e o clique no monstro escolhe o
+        // alvo (ver Update). Longe, o personagem anda até ele e solta a habilidade ao chegar.
+        _aimSkill = def;
+        _queuedTool = null;
+    }
+
+    /// Perseguindo o alvo sem conseguir chegar mais perto (bloqueado por árvore, baú ou pelo
+    /// corpo do monstro): se já está quase no alcance, golpeia daqui; se está longe, desiste
+    /// do alvo em vez de ficar empurrando parado.
+    private bool ChaseBlocked()
+    {
+        if (_chaseStuck < 20) return false;   // ~0,4 s sem avançar (contado no FixedUpdate)
+        _chaseStuck = 0;
+        if (DistanceTo(_target) <= engageRange * 1.8f) return true;
+        _target = null;
+        _queuedSkill = null;
+        return false;
+    }
+
+    private static bool MoveKeysHeld()
+    {
+        var k = Keyboard.current;
+        return k != null && (k.aKey.isPressed || k.dKey.isPressed || k.wKey.isPressed || k.sKey.isPressed ||
+                             k.leftArrowKey.isPressed || k.rightArrowKey.isPressed ||
+                             k.upArrowKey.isPressed || k.downArrowKey.isPressed);
     }
 
     private Vector2 Chest => (Vector2)transform.position + Vector2.up * 0.45f;
@@ -183,7 +269,7 @@ public class PlayerController2D : MonoBehaviour
     {
         Health best = null;
         float bestY = float.MaxValue;
-        foreach (var h in FindObjectsByType<Health>(FindObjectsSortMode.None))
+        foreach (var h in Health.All)
         {
             if (h == _health || h.IsDead) continue;
             var sr = h.GetComponentInChildren<SpriteRenderer>();
@@ -210,7 +296,7 @@ public class PlayerController2D : MonoBehaviour
         {
             var target = col.GetComponentInParent<Health>();
             if (target == null || target == _health || target.IsDead || !hit.Add(target)) continue;
-            Combat.ApplyFixed(target, def.fixedDamage, center, knockback * 1.4f);
+            Combat.ApplyFixed(target, def.fixedDamage, center, knockback * 1.4f, _stats);
         }
         SkillFx.Ring(center, def.radius);
     }
@@ -221,10 +307,12 @@ public class PlayerController2D : MonoBehaviour
         _strikePending = strike;
         AttackDir = dir.sqrMagnitude > 0.0001f ? dir.normalized : AttackDir;
 
-        // Agilidade acelera o golpe inteiro: animação, momento do impacto e recuperação.
-        float speed = _stats != null ? _stats.AttackSpeed : 1f;
-        _attackLength = _attackTimer = attackDuration / speed;
-        _hitTimer = hitDelay / speed;
+        // ASPD (Ragnarok): o golpe dura o amotion e o próximo só sai depois do intervalo
+        // inteiro (2 × amotion). AGI e DES encurtam os dois; a arma define a base.
+        float motion = _stats != null ? _stats.AttackMotion : attackDuration;
+        _attackLength = _attackTimer = motion;
+        _hitTimer = motion * hitDelay / attackDuration;   // impacto na mesma fração do golpe
+        if (strike) _nextAttackAt = Time.time + (_stats != null ? _stats.AttackInterval : attackDuration);
         _body.linearVelocity = Vector2.zero;
     }
 
@@ -236,11 +324,19 @@ public class PlayerController2D : MonoBehaviour
         foreach (var col in Physics2D.OverlapCircleAll(center, hitRadius))
         {
             var target = col.GetComponentInParent<Health>();
-            if (target == null || target == _health || !hit.Add(target)) continue;
+            if (target == null || target == _health || target.IsDead || !hit.Add(target)) continue;
             bool skill = _activeSkill != null;
-            Combat.Apply(_stats, target, transform.position, skill ? knockback * 1.6f : knockback,
+            // O golpe básico corpo a corpo não empurra o monstro; só as skills empurram.
+            Combat.Apply(_stats, target, transform.position, skill ? knockback * 1.6f : 0f,
                          skill ? _activeSkill.damageMult : 1f, skill);
         }
+        // Golpe no ar com alvo travado (atrás de algo, de lado): depois de 3 seguidos, larga o
+        // alvo em vez de ficar golpeando o vazio para sempre.
+        if (_target != null && !hit.Contains(_target))
+        {
+            if (++_whiffs >= 3) { _target = null; _queuedSkill = null; _whiffs = 0; }
+        }
+        else _whiffs = 0;
     }
 
     private void FixedUpdate()
@@ -261,6 +357,8 @@ public class PlayerController2D : MonoBehaviour
 
         Running = keyboard != null && (keyboard.leftShiftKey.isPressed || keyboard.rightShiftKey.isPressed);
 
+        if (_target == null) { _chaseStuck = 0; _chaseDist = float.MaxValue; }
+
         // Qualquer movimento manual cancela o alvo.
         if (input.sqrMagnitude > 0f)
         {
@@ -269,6 +367,9 @@ public class PlayerController2D : MonoBehaviour
         else if (_target != null && _attackTimer <= 0f && DistanceTo(_target) > engageRange)
         {
             input = ((Vector2)_target.transform.position - (Vector2)transform.position).normalized;
+            float dist = DistanceTo(_target);
+            _chaseStuck = dist > _chaseDist - 0.005f ? _chaseStuck + 1 : 0;
+            _chaseDist = dist;
         }
         else if (_target == null && _moveTo.HasValue && _attackTimer <= 0f)
         {
@@ -286,10 +387,14 @@ public class PlayerController2D : MonoBehaviour
     private IEnumerator Respawn()
     {
         _body.linearVelocity = Vector2.zero;
-        if (_sprite != null) _sprite.color = new Color(1f, 1f, 1f, 0.35f);
+        _aimSkill = null; _queuedSkill = null; _target = null;
+        // Skin com animação de morte: ela mostra a queda; sem ela, o personagem fica translúcido.
+        var anim = GetComponent<KnightAnimator>();
+        if (_sprite != null && (anim == null || !anim.HasDeath)) _sprite.color = new Color(1f, 1f, 1f, 0.35f);
 
         yield return new WaitForSeconds(respawnDelay);
 
+        if (HouseInterior.Inside != null) HouseInterior.Exit();   // renasce do lado de fora
         transform.position = _spawn;
         _health.Restore();
         if (_sprite != null) _sprite.color = Color.white;

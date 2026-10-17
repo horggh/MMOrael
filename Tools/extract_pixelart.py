@@ -7,6 +7,13 @@ os sprites e limpa o ruído de compressão do JPEG.
 Uso:
     python3 Tools/extract_pixelart.py imagens/Arvores.jpeg Assets/Art/Sprites/Environment arvore
     python3 Tools/extract_pixelart.py imagens/Cavaleiro.jpeg Assets/Art/Sprites/Characters cavaleiro --single
+    python3 Tools/extract_pixelart.py imagens/planta-casa.jpeg Assets/Resources/Items planta_casa --single --sem-ruido
+    python3 Tools/extract_pixelart.py imagens/botao-dev.png Assets/Resources/UI/Kit botao_dev --single --sem-ruido --grid 88
+    python3 Tools/extract_pixelart.py imagens/pedra-madeira.jpeg <pasta> mat --sem-ruido   (mat_01 = pedra, mat_02 = madeira)
+    python3 Tools/extract_pixelart.py imagens/corda.jpeg Assets/Resources/Items corda --single --sem-ruido
+
+--sem-ruido descarta grupinhos soltos de pixels que o JPEG deixa no meio do fundo
+(sem isso eles esticam o recorte até a borda da imagem).
 """
 import sys
 import os
@@ -137,6 +144,31 @@ def background_mask(grid):
     return bg
 
 
+def drop_specks(fg, min_size=12):
+    """Tira grupos de pixels conectados menores que min_size (ruído do JPEG no fundo)."""
+    H, W = fg.shape
+    seen = np.zeros_like(fg)
+    out = fg.copy()
+    for y, x in zip(*np.where(fg)):
+        if seen[y, x]:
+            continue
+        comp, stack = [], [(y, x)]
+        seen[y, x] = True
+        while stack:
+            cy, cx = stack.pop()
+            comp.append((cy, cx))
+            for dy in (-1, 0, 1):
+                for dx in (-1, 0, 1):
+                    ny, nx = cy + dy, cx + dx
+                    if 0 <= ny < H and 0 <= nx < W and fg[ny, nx] and not seen[ny, nx]:
+                        seen[ny, nx] = True
+                        stack.append((ny, nx))
+        if len(comp) < min_size:
+            for cy, cx in comp:
+                out[cy, cx] = False
+    return out
+
+
 def split_columns(fg, min_width=5):
     fill = fg.sum(0)
     groups, start = [], None
@@ -193,6 +225,9 @@ def main():
 
     bg = background_mask(grid)
     fg = ~bg
+    if "--sem-ruido" in sys.argv:
+        fg = drop_specks(fg)
+        bg = ~fg
 
     if single:
         groups = [(0, gw - 1)]

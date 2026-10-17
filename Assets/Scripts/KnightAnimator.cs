@@ -1,60 +1,76 @@
 using UnityEngine;
 
-/// Escolhe e toca os quadros do cavaleiro conforme direção e ação.
-/// As folhas ficam em Resources/Characters e são fatiadas em tempo de execução.
+/// Escolhe e toca os quadros do personagem conforme direção e ação, com a skin em uso
+/// (SkinDB). As folhas ficam em Resources e são fatiadas em tempo de execução.
 [RequireComponent(typeof(SpriteRenderer))]
 public class KnightAnimator : MonoBehaviour
 {
     public float walkFps = 8f;
     public float runFps = 12f;
+    [Tooltip("Quadros por segundo da animação de morte.")]
+    public float deathFps = 6f;
 
-    private const int FW = 64, FH = 48, PPU = 32;
-    private Sprite[] _down, _side, _up, _run, _attack;
     private SpriteRenderer _sr;
     private PlayerController2D _ctrl;
+    private Health _health;
     private enum Dir { Down, Up, Left, Right }
     private Dir _dir = Dir.Down;
-    private float _t;
+    private float _t, _deathT;
+    private SkinDef _skin;
+
+    /// A skin tem animação de morte (o controlador então não deixa o personagem transparente).
+    public bool HasDeath => _skin != null && _skin.Get("death") != null;
 
     private void Awake()
     {
         _sr = GetComponent<SpriteRenderer>();
         _ctrl = GetComponent<PlayerController2D>();
+        _health = GetComponent<Health>();
         // O Animator antigo trocaria o sprite por cima deste.
         var old = GetComponent<Animator>();
         if (old != null) old.enabled = false;
-
-        _down = Load("cav_walk_down");
-        _side = Load("cav_walk_side");
-        _up = Load("cav_walk_up");
-        _run = Load("cav_run_side");
-        _attack = Load("cav_attack_side");
+        _skin = SkinDB.Current;
     }
 
-    private static Sprite[] Load(string name)
-    {
-        var tex = Resources.Load<Texture2D>($"Characters/{name}");
-        if (tex == null) { Debug.LogError($"[KnightAnimator] falta Resources/Characters/{name}"); return new Sprite[0]; }
-        tex.filterMode = FilterMode.Point;
-        int n = tex.width / FW;
-        var frames = new Sprite[n];
-        // Pivô nos pés (2px acima da base), igual ao alinhamento da extração.
-        var pivot = new Vector2(0.5f, 2f / FH);
-        for (int i = 0; i < n; i++)
-            frames[i] = Sprite.Create(tex, new Rect(i * FW, 0, FW, FH), pivot, PPU, 0, SpriteMeshType.FullRect);
-        return frames;
-    }
+    private void OnEnable() => SkinDB.Changed += OnSkinChanged;
+    private void OnDisable() => SkinDB.Changed -= OnSkinChanged;
+    private void OnSkinChanged() => _skin = SkinDB.Current;
 
     private void LateUpdate()
     {
-        if (_ctrl == null) return;
+        if (_ctrl == null || _skin == null) return;
+
+        if (_health != null && _health.IsDead)
+        {
+            var death = _skin.Get("death");
+            if (death != null)
+            {
+                // Toca uma vez e fica no último quadro até renascer.
+                _deathT += Time.deltaTime * deathFps;
+                Show(death, Mathf.Min((int)_deathT, death.sprites.Length - 1), _dir == Dir.Left);
+                return;
+            }
+        }
+        else _deathT = 0f;
 
         if (_ctrl.Attacking)
         {
-            // Ataque só existe de perfil: vira para o lado do mouse.
-            _sr.flipX = _ctrl.AttackDir.x < 0f;   // arte original olha para a direita
-            Play(_attack, Mathf.Min(_attack.Length - 1, (int)(_ctrl.AttackProgress * _attack.Length)));
-            return;
+            Vector2 ad = _ctrl.AttackDir;
+            // Ataque na direção do golpe; sem a de frente/costas, usa a de perfil.
+            SkinAnim atk = null;
+            bool flip = false;
+            if (Mathf.Abs(ad.y) > Mathf.Abs(ad.x))
+                atk = _skin.Get(ad.y > 0f ? "attack_up" : "attack_down");
+            if (atk == null)
+            {
+                atk = _skin.Get("attack_side");
+                flip = atk != null && (ad.x < 0f) != atk.facesLeft;
+            }
+            if (atk != null)
+            {
+                Show(atk, Mathf.Min(atk.sprites.Length - 1, (int)(_ctrl.AttackProgress * atk.sprites.Length)), flip);
+                return;
+            }
         }
 
         Vector2 v = _ctrl.Velocity;
@@ -67,30 +83,37 @@ public class KnightAnimator : MonoBehaviour
         }
 
         bool side = _dir == Dir.Left || _dir == Dir.Right;
-        if (moving && _ctrl.Running && side)
+        if (moving && _ctrl.Running)
         {
-            _sr.flipX = _dir == Dir.Left;         // corrida olha para a direita
-            Loop(_run, runFps);
-            return;
+            var run = side ? _skin.Get("run_side") : _dir == Dir.Up ? _skin.Get("run_up") : null;
+            if (run != null)
+            {
+                Loop(run, runFps, side && (_dir == Dir.Left) != run.facesLeft);
+                return;
+            }
         }
 
-        Sprite[] set = _dir == Dir.Down ? _down : _dir == Dir.Up ? _up : _side;
-        // A caminhada de perfil foi desenhada olhando para a esquerda.
-        _sr.flipX = _dir == Dir.Right;
+        var set = _dir == Dir.Down ? _skin.Get("walk_down") : _dir == Dir.Up ? _skin.Get("walk_up") : _skin.Get("walk_side");
+        if (set == null) return;
+        bool flipWalk = side && (_dir == Dir.Left) != set.facesLeft;
 
-        if (moving) Loop(set, _ctrl.Running ? runFps : walkFps);
-        else Play(set, 0);
+        if (moving) Loop(set, _ctrl.Running ? runFps : walkFps, flipWalk);
+        else
+        {
+            var idle = _dir == Dir.Down ? _skin.Get("idle_down") : null;
+            Show(idle ?? set, 0, flipWalk);
+        }
     }
 
-    private void Loop(Sprite[] set, float fps)
+    private void Loop(SkinAnim a, float fps, bool flip)
     {
-        if (set.Length == 0) return;
         _t += Time.deltaTime * fps;
-        Play(set, (int)_t % set.Length);
+        Show(a, (int)_t % a.sprites.Length, flip);
     }
 
-    private void Play(Sprite[] set, int i)
+    private void Show(SkinAnim a, int i, bool flip)
     {
-        if (set.Length > 0) _sr.sprite = set[Mathf.Clamp(i, 0, set.Length - 1)];
+        _sr.sprite = a.sprites[Mathf.Clamp(i, 0, a.sprites.Length - 1)];
+        _sr.flipX = flip;
     }
 }
