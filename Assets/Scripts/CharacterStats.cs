@@ -235,7 +235,9 @@ public class CharacterStats : MonoBehaviour
     /// ATQ da arma (equipamento).
     public int WeaponAtk => weaponAtk + _eqAtk;
     /// ATQ total mostrado nas janelas (monstro: o máximo da faixa).
-    public int Atk => IsMonster ? _monAtkMax : StatusAtk + WeaponAtk;
+    public int Atk => IsMonster ? _monAtkMax : StatusAtk + WeaponAtk + AtkBuff;
+    /// ATQ mínimo (monstro: o começo da faixa).
+    public int AtkMin => IsMonster ? _monAtkMin : Atk;
 
     /// ATQ mágico: mínimo INT + (INT/7)², máximo INT + (INT/5)².
     public int MatkMin => Int + (Int / 7) * (Int / 7);
@@ -252,7 +254,63 @@ public class CharacterStats : MonoBehaviour
     public int Mdef => IsMonster ? _monMdef : Int;
 
     /// Precisão = nível + DES; esquiva = nível + AGI. Chance de acertar: 80 + PRECISÃO − ESQUIVA.
-    public int Hit => level + Dex;
+    public int Hit => level + Dex + (Time.time < _hitBuffEnd ? _hitBuff : 0);
+
+    // Precisão extra de comida (pudim): valor e até quando vale.
+    private int _hitBuff;
+    private float _hitBuffEnd;
+
+    /// Precisão extra por `seconds` segundos (um bônus novo substitui o anterior).
+    public string HitBuffItem { get; private set; }
+    public void AddHitBuff(int amount, float seconds, string item = null)
+    {
+        if (!string.IsNullOrEmpty(item)) HitBuffItem = item;
+        _hitBuff = amount;
+        _hitBuffEnd = Time.time + seconds;
+        Changed?.Invoke(false);
+    }
+
+    /// Bônus de precisão ativo e segundos restantes (para o jogo salvo e a janela).
+    public int HitBuff => Time.time < _hitBuffEnd ? _hitBuff : 0;
+    public float HitBuffLeft => Mathf.Max(0f, _hitBuffEnd - Time.time);
+
+    // ASPD extra de comida (bife): valor e até quando vale.
+    private int _aspdBuff;
+    private float _aspdBuffEnd;
+
+    public string AspdBuffItem { get; private set; }
+    public void AddAspdBuff(int amount, float seconds, string item = null)
+    {
+        if (!string.IsNullOrEmpty(item)) AspdBuffItem = item;
+        _aspdBuff = amount;
+        _aspdBuffEnd = Time.time + seconds;
+        Changed?.Invoke(false);
+    }
+
+    public int AspdBuff => Time.time < _aspdBuffEnd ? _aspdBuff : 0;
+    public float AspdBuffLeft => Mathf.Max(0f, _aspdBuffEnd - Time.time);
+
+    // ATQ extra de comida (hambúrguer): valor e até quando vale.
+    private int _atkBuff;
+    private float _atkBuffEnd;
+
+    public string AtkBuffItem { get; private set; }
+    public void AddAtkBuff(int amount, float seconds, string item = null)
+    {
+        if (!string.IsNullOrEmpty(item)) AtkBuffItem = item;
+        _atkBuff = amount;
+        _atkBuffEnd = Time.time + seconds;
+        Changed?.Invoke(false);
+    }
+
+    public int AtkBuff => !IsMonster && Time.time < _atkBuffEnd ? _atkBuff : 0;
+    public float AtkBuffLeft => Mathf.Max(0f, _atkBuffEnd - Time.time);
+
+    // Impacto Explosivo: golpes normais com +20% de dano de fogo por 10 s.
+    private float _fireEnd;
+    public void AddFireBonus(float seconds) => _fireEnd = Time.time + seconds;
+    public bool FireBonus => Time.time < _fireEnd;
+    public float FireBonusLeft => Mathf.Max(0f, _fireEnd - Time.time);
     public int Flee => level + Agi;
     /// Esquiva perfeita (%): desvia de qualquer golpe normal; 1 + SOR/10.
     public float PerfectDodge => IsMonster ? 0f : 1f + Luk / 10;
@@ -268,7 +326,7 @@ public class CharacterStats : MonoBehaviour
         // sempre sai com o máximo.
         int w = WeaponAtk;
         int wMin = Mathf.Min(Dex, w);
-        return StatusAtk + (critical ? w : Random.Range(wMin, w + 1));
+        return StatusAtk + AtkBuff + (critical ? w : Random.Range(wMin, w + 1));
     }
 
     /// DEF macia sorteada a cada golpe recebido.
@@ -307,6 +365,14 @@ public class CharacterStats : MonoBehaviour
         WeaponType.Axe2H => 750,
         WeaponType.Mace => 650,
         WeaponType.Mace2H => 700,
+        WeaponType.Crossbow => 700,
+        WeaponType.Staff => 650,
+        WeaponType.Book => 600,
+        WeaponType.Instrument => 600,
+        WeaponType.Whip => 600,
+        WeaponType.Knuckle => 450,
+        WeaponType.Katar => 500,
+        WeaponType.Huuma => 650,
         _ => 400,   // mãos vazias
     };
 
@@ -316,7 +382,8 @@ public class CharacterStats : MonoBehaviour
         get
         {
             int b = BaseAmotion(Weapon);
-            return Mathf.Max(100, b - b * (4 * Agi + Dex) / 1000);
+            // ASPD extra de comida: cada ponto de ASPD tira 10 ms do golpe (ASPD = 200 − amotion/10).
+            return Mathf.Max(100, b - b * (4 * Agi + Dex) / 1000 - AspdBuff * 10);
         }
     }
 

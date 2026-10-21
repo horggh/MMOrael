@@ -15,17 +15,18 @@ sys.path.insert(0, "Tools")
 import extract_pixelart as EP
 
 SRC = "imagens/sprite-sheet-cavaleiro.jpeg"
-OUT = "Assets/Resources/Characters"
-GRID = 688
-FW, FH = 64, 48
-FEET_Y = 2          # pés a 2px da base do quadro
+# Na altura do "Cavaleiro (camadas)" (~106px, PPU 64).
+OUT = "Assets/Resources/Characters/Skins/cavaleiro"
+GRID = 2025
+FW, FH = 188, 142
+FEET_Y = 6          # pés a 2px da base do quadro
 
 ANIMS = {
-    "cav_walk_down": (0, range(0, 4)),
-    "cav_walk_side": (2, range(0, 4)),
-    "cav_walk_up": (4, range(0, 4)),
-    "cav_run_side": (0, range(4, 8)),
-    "cav_attack_side": (0, range(8, 12)),
+    "walk_down": (0, range(0, 4)),
+    "walk_side": (2, range(0, 4)),
+    "walk_up": (4, range(0, 4)),
+    "run_side": (0, range(4, 8)),
+    "attack_side": (0, range(8, 12)),
 }
 
 
@@ -49,8 +50,8 @@ def main():
     bg = EP.background_mask(grid)
     fg = ~bg
 
-    rows = bands(fg.any(1), 3)
-    cells = [[(y0, y1, c0, c1) for c0, c1 in bands(fg[y0:y1 + 1].any(0), 2)] for y0, y1 in rows]
+    rows = bands(fg.any(1), 9)
+    cells = [[(y0, y1, c0, c1) for c0, c1 in bands(fg[y0:y1 + 1].any(0), 6)] for y0, y1 in rows]
 
     import os
     os.makedirs(OUT, exist_ok=True)
@@ -65,7 +66,7 @@ def main():
             # âncora = centro dos pixels das 4 linhas de baixo (os pés)
             ys, xs = np.where(alpha)
             bottom = ys.max()
-            feet_x = int(round(xs[ys >= bottom - 3].mean()))
+            feet_x = int(round(xs[ys >= bottom - 9].mean()))
 
             f = np.zeros((FH, FW, 4), np.uint8)
             ox = FW // 2 - feet_x

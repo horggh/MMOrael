@@ -35,6 +35,18 @@ public class SkillDef
     /// Multiplicador sobre o ATQ base.
     public float damageMult = 1f;
     public int maxLevel = 1;
+    /// Alcance em quadrados (0 = corpo a corpo): anda até essa distância e usa dali.
+    public float range;
+    /// Por nível (índice = nível − 1); vazio = usa spCost / cooldown / sem conjuração.
+    public int[] spByLevel;
+    public float[] cooldownByLevel;
+    public float[] castByLevel;
+    /// Tipos de arma exigidos na mão (vazio = qualquer).
+    public WeaponType[] requiredWeapons;
+
+    public int SpAt(int lv) => spByLevel != null && spByLevel.Length > 0 ? spByLevel[Mathf.Clamp(lv, 1, spByLevel.Length) - 1] : spCost;
+    public float CooldownAt(int lv) => cooldownByLevel != null && cooldownByLevel.Length > 0 ? cooldownByLevel[Mathf.Clamp(lv, 1, cooldownByLevel.Length) - 1] : cooldown;
+    public float CastAt(int lv) => castByLevel != null && castByLevel.Length > 0 ? castByLevel[Mathf.Clamp(lv, 1, castByLevel.Length) - 1] : 0f;
     public Texture2D icon;
 }
 
@@ -67,14 +79,39 @@ public static class SkillDB
         });
         Add(new SkillDef
         {
+            id = "perfurar_espiral",
+            name = "Perfurar em Espiral",
+            // Spiral Pierce (Ragnarok pré-Renewal, rAthena skill 397): só com lança; alcance 4;
+            // 5 golpes que ignoram a DEF; dano = peso da arma × 0,8 × (1 + 0,5 × Nv) + (FOR/10)²
+            // por golpe; prende o alvo 1 s (não funciona em chefes); conjuração 0,3→1 s;
+            // espera depois 1,2→2 s; SP 18→30.
+            description = "Investida com a lança girando: 5 golpes que ignoram a DEF, a até 4 quadrados. " +
+                          "Dano por golpe: peso da arma × 0,8 × (1 + 0,5×Nv) + (FOR/10)². Prende o alvo por 1 s. Precisa de lança.",
+            kind = SkillKind.Melee,
+            maxLevel = 5,
+            range = 4f,
+            spCost = 18,
+            spByLevel = new[] { 18, 21, 24, 27, 30 },
+            cooldown = 1.2f,
+            cooldownByLevel = new[] { 1.2f, 1.4f, 1.6f, 1.8f, 2f },
+            castByLevel = new[] { 0.3f, 0.5f, 0.7f, 0.9f, 1f },
+            requiredWeapons = new[] { WeaponType.Spear1H, WeaponType.Spear2H },
+        });
+        Add(new SkillDef
+        {
             id = "impacto_explosivo",
             name = "Impacto Explosivo",
-            description = "Explosão em volta do personagem: 50 de dano em raio 2.",
+            // Magnum Break (Ragnarok pré-Renewal, rAthena skill 7): área 5x5 em volta, golpe de
+            // arma de fogo; centro 3x3 = ATQ × (100 + 20×Nv)%, borda = ATQ × (100 + 10×Nv)%;
+            // precisão +10×Nv %; empurra 2 quadrados; 30 SP e 20→16 HP; espera 2 s depois.
+            // Por 10 s, os golpes normais causam +20% (dano de fogo).
+            description = "Explosão de fogo em volta (5x5). Centro: ATQ × (100 + 20×Nv)%; borda: ATQ × (100 + 10×Nv)%; Nv 10: 500% em toda a área. " +
+                          "Precisão +10×Nv %. Depois, golpes normais com +20% de fogo por 10 s. Custa HP.",
             kind = SkillKind.AreaSelf,
-            spCost = 25,
-            cooldown = 3f,
-            fixedDamage = 50,
-            radius = 2f,
+            spCost = 30,
+            cooldown = 2f,
+            radius = 2.5f,
+            maxLevel = 10,
         });
         Add(new SkillDef
         {

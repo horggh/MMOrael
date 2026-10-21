@@ -12,7 +12,27 @@ public class HouseInterior : MonoBehaviour
     // Sala em unidades do mapa (1 unidade = 32 px, um quadrado da grade).
     // Parede do fundo com 4 quadrados de altura: é personalizável (papel de parede, e depois
     // quadros, janelas e adornos). O piso continua com 12x6.
-    private const float RoomW = 12f, RoomH = 10f, WallTop = 4f, Wall = 0.5f, DoorW = 2f;
+    public const float RoomW = 12f, RoomH = 10f, WallTop = 4f, Wall = 0.5f, DoorW = 2f;
+    // Corredor (o andar de cima das escadas): comprido de lado a lado e baixo.
+    public const float CorridorW = 24f, CorridorH = 7f, CorridorWallTop = 3f;
+
+    /// Tamanho da sala (largura, altura, altura da parede do fundo): casa ou corredor.
+    public static Vector3 SizeFor(bool corredor) =>
+        corredor ? new Vector3(CorridorW, CorridorH, CorridorWallTop) : new Vector3(RoomW, RoomH, WallTop);
+
+    /// Área inteira da sala de um interior (piso e parede do fundo).
+    public static Rect RoomRect(int id, bool corredor)
+    {
+        var s = SizeFor(corredor);
+        Vector2 o = OriginFor(id);
+        return new Rect(o.x - s.x / 2f, o.y, s.x, s.y);
+    }
+
+    // Sala atual.
+    private static Vector3 _size = new Vector3(RoomW, RoomH, WallTop);
+    private static float W => _size.x;
+    private static float H => _size.y;
+    private static float Top => _size.z;
     private const float FirstX = 1000f, Spacing = 40f;
     private static Vector2 Origin;   // meio da parede de baixo da sala da casa atual
 
@@ -34,19 +54,26 @@ public class HouseInterior : MonoBehaviour
         _room = this;
         Inside = _house;
         Origin = _origin;
+        _size = SizeFor(_house.corredor);
     }
 
     /// Ponto logo acima da porta, onde o personagem aparece ao entrar.
     public static Vector2 EntryPoint => Origin + new Vector2(0f, Wall + 0.8f);
 
     /// Piso livre da sala atual (sem a parede do fundo): onde dá para colocar móveis.
-    public static Rect Floor => new Rect(Origin.x - RoomW / 2f, Origin.y, RoomW, RoomH - WallTop);
+    public static Rect Floor => new Rect(Origin.x - W / 2f, Origin.y, W, H - Top);
 
     /// Parede do fundo da sala atual: onde vai papel de parede (e, no futuro, quadros e adornos).
-    public static Rect BackWall => new Rect(Origin.x - RoomW / 2f, Origin.y + RoomH - WallTop, RoomW, WallTop);
+    public static Rect BackWall => new Rect(Origin.x - W / 2f, Origin.y + H - Top, W, Top);
 
     /// Cada casa tem a sala num lugar só dela, pelo número do interior (inteiro: fica na grade).
-    private static Vector2 OriginFor(Building house) => new Vector2(FirstX + house.interiorId * Spacing, 0f);
+    private static Vector2 OriginFor(Building house) => OriginFor(house.interiorId);
+
+    /// Meio da parede de baixo da sala do interior número id (o editor decora os prédios aqui).
+    public static Vector2 OriginFor(int id) => new Vector2(FirstX + id * Spacing, 0f);
+
+    /// Dentro de um prédio da cidade: a decoração é do mapa (feita no editor), o jogador não mexe.
+    public static bool InCityBuilding => Inside != null && Inside.IsCity;
 
     public static void Enter(Building house, Vector2? playerPos = null)
     {
@@ -54,14 +81,36 @@ public class HouseInterior : MonoBehaviour
         if (pc == null) return;
         if (_room != null) Destroy(_room.gameObject);
         Origin = OriginFor(house);
+        _size = SizeFor(house.corredor);
         _room = Build();
         Inside = house;
         _room._house = house;
         _room._origin = Origin;
         _room._player = pc.transform;
         _room._exitArmed = 0f;
+        // Posição salva fora da sala (o número do interior mudou, ex.: prédio passou pelo menu
+        // "Editar interior"): entra pela porta em vez de cair no vazio.
+        var room = new Rect(Origin.x - W / 2f, Origin.y, W, H);
+        if (playerPos.HasValue && !room.Contains(playerPos.Value)) playerPos = null;
+        if (house.Passage) DecoracaoBasica(house.corredor);
         Teleport(pc.transform, playerPos ?? EntryPoint);
         SaveGame.Save();
+    }
+
+    /// Sala de porta/escada que não foi decorada no editor: usa a decoração básica salva
+    /// (Resources/DecoracaoBasica, botão no Inspector da sala). Some junto com a sala ao sair.
+    private static void DecoracaoBasica(bool corredor)
+    {
+        var area = new Rect(Origin.x - W / 2f, Origin.y, W, H);
+        foreach (var sr in Object.FindObjectsByType<SpriteRenderer>())
+            if (sr.transform.root != _room.transform && area.Contains(sr.transform.position)) return;   // já decorada
+        var prefab = Resources.Load<GameObject>("DecoracaoBasica/DecoracaoBasica_" + (corredor ? "Corredor" : "Sala"));
+        if (prefab == null) return;
+        foreach (Transform t in prefab.transform)
+        {
+            var c = Object.Instantiate(t.gameObject, (Vector3)Origin + t.localPosition, t.rotation, _room.transform);
+            c.transform.localScale = t.localScale;
+        }
     }
 
     public static void Exit()
@@ -71,7 +120,20 @@ public class HouseInterior : MonoBehaviour
         if (_room != null) { Destroy(_room.gameObject); _room = null; }
         var pc = FindAnyObjectByType<PlayerController2D>();
         if (pc != null && house != null)
-            Teleport(pc.transform, (Vector2)house.transform.position + Vector2.down * 0.6f);   // na frente da porta
+        {
+            Vector2 front = (Vector2)house.transform.position + Vector2.down * 0.6f;   // na frente da porta
+            // Porta ou escada dentro de outra sala (ex.: a escada de um prédio): volta para ela.
+            foreach (var b in Building.All)
+            {
+                if (b == house || !b.Done) continue;
+                if (RoomRect(b.interiorId, b.corredor).Contains(house.transform.position))
+                {
+                    Enter(b, front);
+                    return;
+                }
+            }
+            Teleport(pc.transform, front);
+        }
         SaveGame.Save();
     }
 
@@ -99,7 +161,7 @@ public class HouseInterior : MonoBehaviour
     {
         var root = new GameObject("Interior da Casa").AddComponent<HouseInterior>();
         var t = root.transform;
-        float left = Origin.x - RoomW / 2f, bottom = Origin.y;
+        float left = Origin.x - W / 2f, bottom = Origin.y;
 
         // Piso de tábuas (a madeira do kit, repetida).
         var floorTex = Resources.Load<Texture2D>("UI/Kit/madeira");
@@ -109,22 +171,22 @@ public class HouseInterior : MonoBehaviour
             floorTex.wrapMode = TextureWrapMode.Repeat;
             var floor = Sprite.Create(floorTex, new Rect(0, 0, floorTex.width, floorTex.height),
                                       new Vector2(0.5f, 0.5f), 32f, 0, SpriteMeshType.FullRect);
-            var sr = Part(t, "Piso", new Vector2(Origin.x, bottom + RoomH / 2f), floor, -10000);
+            var sr = Part(t, "Piso", new Vector2(Origin.x, bottom + H / 2f), floor, -10000);
             sr.drawMode = SpriteDrawMode.Tiled;
-            sr.size = new Vector2(RoomW, RoomH);
+            sr.size = new Vector2(W, H);
         }
 
         var wallColor = new Color(0.42f, 0.28f, 0.18f);
         var trimColor = new Color(0.25f, 0.16f, 0.1f);
 
         // Parede do fundo, alta, com rodapé escuro.
-        Block(t, "Parede fundo", new Rect(left, bottom + RoomH - WallTop, RoomW, WallTop), wallColor, -9000, true);
-        Block(t, "Rodapé", new Rect(left, bottom + RoomH - WallTop, RoomW, 0.15f), trimColor, -8980, false);
+        Block(t, "Parede fundo", new Rect(left, bottom + H - Top, W, Top), wallColor, -9000, true);
+        Block(t, "Rodapé", new Rect(left, bottom + H - Top, W, 0.15f), trimColor, -8980, false);
         // Laterais.
-        Block(t, "Parede esquerda", new Rect(left - Wall, bottom, Wall, RoomH), trimColor, -8000, true);
-        Block(t, "Parede direita", new Rect(left + RoomW, bottom, Wall, RoomH), trimColor, -8000, true);
+        Block(t, "Parede esquerda", new Rect(left - Wall, bottom, Wall, H), trimColor, -8000, true);
+        Block(t, "Parede direita", new Rect(left + W, bottom, Wall, H), trimColor, -8000, true);
         // Frente, com o vão da porta no meio (fica na frente do personagem).
-        float side = (RoomW - DoorW) / 2f;
+        float side = (W - DoorW) / 2f;
         Block(t, "Parede frente esq.", new Rect(left - Wall, bottom - Wall, side + Wall, Wall), trimColor, 9000, true);
         Block(t, "Parede frente dir.", new Rect(Origin.x + DoorW / 2f, bottom - Wall, side + Wall, Wall), trimColor, 9000, true);
         // Porta: escuro no vão e um capacho para indicar a saída.

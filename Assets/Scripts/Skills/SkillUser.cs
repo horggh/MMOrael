@@ -96,8 +96,9 @@ public class SkillUser : MonoBehaviour, ISerializationCallbackReceiver
     public float CooldownFraction(string id)
     {
         var def = SkillDB.Get(id);
-        if (def == null || def.cooldown <= 0f || !_readyAt.TryGetValue(id, out var t)) return 0f;
-        return Mathf.Clamp01((t - Time.time) / def.cooldown);
+        float cd = def != null ? def.CooldownAt(Level(id)) : 0f;
+        if (def == null || cd <= 0f || !_readyAt.TryGetValue(id, out var t)) return 0f;
+        return Mathf.Clamp01((t - Time.time) / cd);
     }
 
     /// A ferramenta que a habilidade pede está na mão (ou ela não pede nenhuma).
@@ -113,7 +114,13 @@ public class SkillUser : MonoBehaviour, ISerializationCallbackReceiver
     public bool Usable(string id)
     {
         var def = SkillDB.Get(id);
-        if (def == null || Level(id) == 0 || (Sp < def.spCost && !DevCheats.InfiniteSp)) return false;
+        if (def == null || Level(id) == 0 || (Sp < def.SpAt(Level(id)) && !DevCheats.InfiniteSp)) return false;
+        if (def.requiredWeapons != null && def.requiredWeapons.Length > 0)
+        {
+            var eqW = GetComponent<Equipment>();
+            var w = eqW != null ? ItemDB.Get(eqW.Get(EquipSlot.Weapon)) : null;
+            if (w == null || System.Array.IndexOf(def.requiredWeapons, w.weaponType) < 0) return false;
+        }
         if (!string.IsNullOrEmpty(def.requiredItem))
         {
             var bag = GetComponent<Inventory>();
@@ -137,8 +144,8 @@ public class SkillUser : MonoBehaviour, ISerializationCallbackReceiver
     public bool Spend(SkillDef def)
     {
         if (!CanUse(def.id)) return false;
-        if (!DevCheats.InfiniteSp) Sp -= def.spCost;   // DEV: SP infinito
-        _readyAt[def.id] = Time.time + def.cooldown;
+        if (!DevCheats.InfiniteSp) Sp -= def.SpAt(Level(def.id));   // DEV: SP infinito
+        _readyAt[def.id] = Time.time + def.CooldownAt(Level(def.id));
         Used?.Invoke(def);
         Changed?.Invoke();
         return true;

@@ -29,6 +29,8 @@ public class Inventory : MonoBehaviour
     public event Action<string, int> Gained;
     /// Aviso curto sobre o personagem (ex.: "Nenhum portal ativo").
     public event Action<string> Notice;
+    /// Aviso na tela (ex.: equipamento que pede nível maior).
+    public void Say(string msg) => Notice?.Invoke(msg);
 
     /// Dinheiro do personagem, em unidades (a moeda do jogo). Monstros não dão dinheiro:
     /// ele vem da venda de itens para NPCs (a fazer).
@@ -224,11 +226,34 @@ public class Inventory : MonoBehaviour
             // Teleporta para o portal ativo; sem portal, avisa e não gasta a pedra.
             if (!Portal.TeleportPlayer()) { Notice?.Invoke("Nenhum portal ativo"); return false; }
         }
-        else if (def.kind == ItemKind.Consumable && def.heal > 0)
+        else if (def.kind == ItemKind.Consumable && (def.heal > 0 || def.healSp > 0 || def.buffHit > 0 || def.buffAspd > 0 || def.buffAtk > 0))
         {
-            // Com vida cheia o item seria desperdiçado.
-            if (_health == null || _health.IsDead || _health.Hp >= _health.maxHp) return false;
-            Healed?.Invoke(_health.Heal(def.heal));
+            // Com vida (e SP) cheios o item seria desperdiçado.
+            var sk = GetComponent<SkillUser>();
+            bool hpFull = _health == null || _health.Hp >= _health.maxHp;
+            bool spFull = sk == null || sk.Sp >= sk.maxSp;
+            if (_health == null || _health.IsDead) return false;
+            if ((def.heal <= 0 || hpFull) && (def.healSp <= 0 || spFull) && def.buffHit <= 0 && def.buffAspd <= 0 && def.buffAtk <= 0) return false;
+            if (def.buffHit > 0)
+            {
+                var st = GetComponent<CharacterStats>();
+                if (st != null) st.AddHitBuff(def.buffHit, def.buffSeconds, def.id);
+                Notice?.Invoke($"+{def.buffHit} de precisão por {Mathf.RoundToInt(def.buffSeconds / 60f)} min");
+            }
+            if (def.buffAspd > 0)
+            {
+                var st = GetComponent<CharacterStats>();
+                if (st != null) st.AddAspdBuff(def.buffAspd, def.buffSeconds, def.id);
+                Notice?.Invoke($"+{def.buffAspd} de ASPD por {Mathf.RoundToInt(def.buffSeconds / 60f)} min");
+            }
+            if (def.buffAtk > 0)
+            {
+                var st = GetComponent<CharacterStats>();
+                if (st != null) st.AddAtkBuff(def.buffAtk, def.buffSeconds, def.id);
+                Notice?.Invoke($"+{def.buffAtk} de ATQ por {Mathf.RoundToInt(def.buffSeconds / 60f)} min");
+            }
+            if (def.heal > 0) Healed?.Invoke(_health.Heal(def.heal));
+            if (def.healSp > 0 && sk != null) sk.AddSp(def.healSp);
         }
         else return false;
 

@@ -11,7 +11,8 @@ public class StorageChest : MonoBehaviour
     // O desenho tem 148 px de largura, bem mais detalhado que o personagem (32 px por
     // unidade): com 112 px por unidade o baú fica com ~1,3 unidade de largura. Ele não segue
     // a grade de 1 quadrado: é posicionado livre e encosta exatamente no vizinho (Placement).
-    private const float PPU = 112f;
+    // Padrão do jogo: 64 px por quadrado da grade (ver Tools/padronizar_64.py).
+    private const float PPU = 64f;
     /// Fundo da base sólida (de frente para trás).
     public const float Depth = 0.42f;
     /// Largura real do baú no mapa.

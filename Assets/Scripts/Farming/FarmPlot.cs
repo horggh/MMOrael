@@ -117,7 +117,7 @@ public class FarmPlot : MonoBehaviour
         // Terra de 34 px na base da imagem: o pivô fica no centro dela, assim estágios altos
         // crescem para cima sem tirar o canteiro do lugar. 32 px por unidade.
         var pivot = new Vector2(0.5f, 17f / tex.height);
-        s = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), pivot, 32);
+        s = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), pivot, 64);
         Cache[key] = s;
         return s;
     }

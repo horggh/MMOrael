@@ -106,7 +106,7 @@ SLASH = {("atk", 1, 3), ("atk", 1, 4), ("atk", 1, 6), ("atk", 2, 2), ("atk", 2, 
 def main():
     os.makedirs(OUT, exist_ok=True)
     for key, (src, cells) in SHEETS.items():
-        grid, frames, alpha = extract(src, 512, cells, keep_effects=not NO_EFFECT)
+        grid, frames, alpha = extract(src, 862, cells, keep_effects=not NO_EFFECT)
         fw, fh, names = save_frames(grid, frames, TMP, key, alpha_map=alpha)
         print(f"{src}: {len(names)} quadros de {fw}x{fh}")
         for anim, picks in ANIMS[key].items():

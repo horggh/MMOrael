@@ -61,6 +61,12 @@ public class Equipment : MonoBehaviour
     {
         var d = ItemDB.Get(id);
         if (!Fits(d, s) || _bag == null || _bag.Count(id) == 0) return false;
+        // Nível mínimo da arma ou equipamento.
+        if (d.equipLevel > 0 && !DevCheats.IgnoreEquipLevel && _stats != null && _stats.level < d.equipLevel)
+        {
+            _bag.Say($"{d.name}: requer nível {d.equipLevel}");
+            return false;
+        }
 
         _bag.Remove(id, 1);
         string old = slots[(int)s];

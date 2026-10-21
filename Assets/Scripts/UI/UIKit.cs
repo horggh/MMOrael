@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// Peças da interface em pixel art (Resources/UI/Kit, geradas por Tools/gen_ui_kit.py)
@@ -280,5 +281,77 @@ public class KitWindow
             _moving = false;
             e.Use();
         }
+    }
+}
+
+
+/// Ordem das janelas na tela (de trás para a frente). Clicar numa janela a traz para a
+/// frente; abrir uma janela também. Onde duas se sobrepõem, só a de cima recebe o clique.
+/// As janelas informam a cada desenho se estão abertas e onde (Report).
+public static class WindowStack
+{
+    private static readonly List<string> _order = new List<string>();
+    private static readonly Dictionary<string, Rect> _rects = new Dictionary<string, Rect>();
+    private static readonly HashSet<string> _shown = new HashSet<string>();
+
+    /// De trás para a frente.
+    public static IReadOnlyList<string> Order => _order;
+
+    public static void Report(string id, bool shown, Rect screenRect)
+    {
+        if (!_order.Contains(id)) _order.Add(id);
+        // Acabou de abrir: vem para a frente.
+        if (shown && !_shown.Contains(id)) BringToFront(id);
+        if (shown) _shown.Add(id); else _shown.Remove(id);
+        _rects[id] = shown ? screenRect : Rect.zero;
+    }
+
+    public static void BringToFront(string id)
+    {
+        _order.Remove(id);
+        _order.Add(id);
+    }
+
+    /// Clique: a janela de cima que estiver sob o mouse vem para a frente.
+    public static void Focus(Vector2 mouse)
+    {
+        for (int i = _order.Count - 1; i >= 0; i--)
+        {
+            if (_rects.TryGetValue(_order[i], out var r) && r.Contains(mouse))
+            {
+                if (i != _order.Count - 1) BringToFront(_order[i]);
+                return;
+            }
+        }
+    }
+
+    /// Há outra janela aberta por cima desta, sob o mouse (o clique é dela, não desta).
+    public static bool CoveredAt(string id, Vector2 mouse)
+    {
+        int i = _order.IndexOf(id);
+        if (i < 0) return false;
+        for (int j = i + 1; j < _order.Count; j++)
+            if (_rects.TryGetValue(_order[j], out var r) && r.Contains(mouse)) return true;
+        return false;
+    }
+
+    /// É a janela aberta mais da frente.
+    public static bool IsFront(string id)
+    {
+        for (int i = _order.Count - 1; i >= 0; i--)
+            if (_shown.Contains(_order[i])) return _order[i] == id;
+        return false;
+    }
+
+    /// Desenha uma janela ignorando o mouse se outra estiver por cima dele (o evento volta
+    /// ao normal depois).
+    public static void Draw(string id, System.Action draw)
+    {
+        var e = Event.current;
+        bool block = e.isMouse && CoveredAt(id, e.mousePosition);
+        var type = e.type;
+        if (block) e.type = EventType.Ignore;
+        draw();
+        if (block && e.type == EventType.Ignore) e.type = type;
     }
 }

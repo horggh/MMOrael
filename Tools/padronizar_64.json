@@ -1,0 +1,4727 @@
+{
+ "Assets/Art/Sprites/Environment/Decoracao/alambique.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   57
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/armario_madeira.png": {
+  "regra": "dobrar",
+  "antes": [
+   49,
+   60
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/balanca.png": {
+  "regra": "dobrar",
+  "antes": [
+   33,
+   30
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/balanca_dourada.png": {
+  "regra": "dobrar",
+  "antes": [
+   43,
+   37
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/balanca_mercado.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   61
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/balcao.png": {
+  "regra": "dobrar",
+  "antes": [
+   90,
+   70
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/balcao_cofre.png": {
+  "regra": "dobrar",
+  "antes": [
+   61,
+   56
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/balcao_lanterna.png": {
+  "regra": "dobrar",
+  "antes": [
+   53,
+   59
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/balde.png": {
+  "regra": "dobrar",
+  "antes": [
+   25,
+   36
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/balde_agua.png": {
+  "regra": "dobrar",
+  "antes": [
+   24,
+   26
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_aboboras_alhos.png": {
+  "regra": "dobrar",
+  "antes": [
+   82,
+   56
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_abobora_legumes.png": {
+  "regra": "dobrar",
+  "antes": [
+   106,
+   45
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_azeites.png": {
+  "regra": "dobrar",
+  "antes": [
+   80,
+   59
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_balas.png": {
+  "regra": "dobrar",
+  "antes": [
+   84,
+   54
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_bananas.png": {
+  "regra": "dobrar",
+  "antes": [
+   52,
+   43
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_bolos.png": {
+  "regra": "dobrar",
+  "antes": [
+   81,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_carnes_penduradas.png": {
+  "regra": "dobrar",
+  "antes": [
+   85,
+   63
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_chas_bules.png": {
+  "regra": "dobrar",
+  "antes": [
+   87,
+   58
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_chas_folhas.png": {
+  "regra": "dobrar",
+  "antes": [
+   84,
+   60
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_cogumelos.png": {
+  "regra": "dobrar",
+  "antes": [
+   84,
+   56
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_conservas.png": {
+  "regra": "dobrar",
+  "antes": [
+   83,
+   57
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_couve_flor.png": {
+  "regra": "dobrar",
+  "antes": [
+   82,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_ervas.png": {
+  "regra": "dobrar",
+  "antes": [
+   83,
+   60
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_ervas_medicinais.png": {
+  "regra": "dobrar",
+  "antes": [
+   85,
+   61
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_especiarias.png": {
+  "regra": "dobrar",
+  "antes": [
+   83,
+   59
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_flores.png": {
+  "regra": "dobrar",
+  "antes": [
+   83,
+   60
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_frutas_tropicais.png": {
+  "regra": "dobrar",
+  "antes": [
+   82,
+   56
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_frutas_vermelhas.png": {
+  "regra": "dobrar",
+  "antes": [
+   82,
+   56
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_frutos_do_mar.png": {
+  "regra": "dobrar",
+  "antes": [
+   85,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_graos_caixas.png": {
+  "regra": "dobrar",
+  "antes": [
+   84,
+   56
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_hortalicas.png": {
+  "regra": "dobrar",
+  "antes": [
+   84,
+   59
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_laranjas.png": {
+  "regra": "dobrar",
+  "antes": [
+   51,
+   42
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_legumes.png": {
+  "regra": "dobrar",
+  "antes": [
+   91,
+   46
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_legumes_coloridos.png": {
+  "regra": "dobrar",
+  "antes": [
+   83,
+   60
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_macas.png": {
+  "regra": "dobrar",
+  "antes": [
+   55,
+   41
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_macas_verdes.png": {
+  "regra": "dobrar",
+  "antes": [
+   79,
+   56
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_melancias.png": {
+  "regra": "dobrar",
+  "antes": [
+   80,
+   56
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_mel_queijo.png": {
+  "regra": "dobrar",
+  "antes": [
+   83,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_nozes.png": {
+  "regra": "dobrar",
+  "antes": [
+   83,
+   60
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_ovos.png": {
+  "regra": "dobrar",
+  "antes": [
+   83,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_paes_cestos.png": {
+  "regra": "dobrar",
+  "antes": [
+   81,
+   59
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_paes_doces.png": {
+  "regra": "dobrar",
+  "antes": [
+   86,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_peixe_seco.png": {
+  "regra": "dobrar",
+  "antes": [
+   82,
+   57
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_peras.png": {
+  "regra": "dobrar",
+  "antes": [
+   48,
+   42
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_picles.png": {
+  "regra": "dobrar",
+  "antes": [
+   83,
+   54
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_pimentas_alhos.png": {
+  "regra": "dobrar",
+  "antes": [
+   79,
+   60
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_pratos_prontos.png": {
+  "regra": "dobrar",
+  "antes": [
+   86,
+   54
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_presuntos.png": {
+  "regra": "dobrar",
+  "antes": [
+   83,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_queijos.png": {
+  "regra": "dobrar",
+  "antes": [
+   86,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_raizes.png": {
+  "regra": "dobrar",
+  "antes": [
+   84,
+   58
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_sacos_graos.png": {
+  "regra": "dobrar",
+  "antes": [
+   85,
+   58
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_temperos_caixas.png": {
+  "regra": "dobrar",
+  "antes": [
+   84,
+   59
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banca_uvas.png": {
+  "regra": "dobrar",
+  "antes": [
+   55,
+   40
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banquinho.png": {
+  "regra": "dobrar",
+  "antes": [
+   29,
+   42
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barraca_paes.png": {
+  "regra": "dobrar",
+  "antes": [
+   87,
+   85
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barraca_peixes.png": {
+  "regra": "dobrar",
+  "antes": [
+   110,
+   85
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barraca_temperos.png": {
+  "regra": "dobrar",
+  "antes": [
+   104,
+   86
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barraca_verde.png": {
+  "regra": "dobrar",
+  "antes": [
+   93,
+   84
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barraca_vermelha.png": {
+  "regra": "dobrar",
+  "antes": [
+   102,
+   86
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril.png": {
+  "regra": "dobrar",
+  "antes": [
+   34,
+   41
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   28,
+   38
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   25,
+   33
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_3.png": {
+  "regra": "dobrar",
+  "antes": [
+   20,
+   26
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_4.png": {
+  "regra": "dobrar",
+  "antes": [
+   20,
+   26
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_5.png": {
+  "regra": "dobrar",
+  "antes": [
+   20,
+   25
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_6.png": {
+  "regra": "dobrar",
+  "antes": [
+   18,
+   23
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_aberto.png": {
+  "regra": "dobrar",
+  "antes": [
+   26,
+   38
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_hera_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   31
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_hera_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   25,
+   31
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_largo.png": {
+  "regra": "dobrar",
+  "antes": [
+   32,
+   38
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_pequeno.png": {
+  "regra": "dobrar",
+  "antes": [
+   23,
+   24
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_pequeno_mercado.png": {
+  "regra": "dobrar",
+  "antes": [
+   29,
+   36
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_tampado.png": {
+  "regra": "dobrar",
+  "antes": [
+   31,
+   39
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/bau_aberto.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   30
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/bau_fechado.png": {
+  "regra": "dobrar",
+  "antes": [
+   44,
+   33
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/bau_ferro.png": {
+  "regra": "dobrar",
+  "antes": [
+   37,
+   35
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/bau_pocoes.png": {
+  "regra": "dobrar",
+  "antes": [
+   31,
+   30
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixa_ferramentas.png": {
+  "regra": "dobrar",
+  "antes": [
+   33,
+   35
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixa_legumes.png": {
+  "regra": "dobrar",
+  "antes": [
+   35,
+   31
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixa_macas.png": {
+  "regra": "dobrar",
+  "antes": [
+   34,
+   29
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixote.png": {
+  "regra": "dobrar",
+  "antes": [
+   32,
+   33
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixotes_empilhados.png": {
+  "regra": "dobrar",
+  "antes": [
+   43,
+   46
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixotes_pilha.png": {
+  "regra": "dobrar",
+  "antes": [
+   37,
+   44
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixote_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   29,
+   31
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixote_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   29,
+   31
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixote_3.png": {
+  "regra": "dobrar",
+  "antes": [
+   32,
+   30
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixote_4.png": {
+  "regra": "dobrar",
+  "antes": [
+   27,
+   28
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixote_5.png": {
+  "regra": "dobrar",
+  "antes": [
+   25,
+   25
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixote_6.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   30
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixote_7.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   30
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixote_aberto.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   31
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixote_aberto_mercado.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   37
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixote_alto.png": {
+  "regra": "dobrar",
+  "antes": [
+   27,
+   35
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caldeirao_cobre.png": {
+  "regra": "dobrar",
+  "antes": [
+   27,
+   26
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caldeirao_fervendo.png": {
+  "regra": "dobrar",
+  "antes": [
+   43,
+   70
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caldeirao_preto.png": {
+  "regra": "dobrar",
+  "antes": [
+   31,
+   24
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caldeirao_roxo.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   31
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cama.png": {
+  "regra": "dobrar",
+  "antes": [
+   52,
+   43
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cama_roxa.png": {
+  "regra": "dobrar",
+  "antes": [
+   76,
+   45
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/candelabro.png": {
+  "regra": "dobrar",
+  "antes": [
+   25,
+   35
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caneca.png": {
+  "regra": "dobrar",
+  "antes": [
+   15,
+   17
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/carrinho_mao.png": {
+  "regra": "dobrar",
+  "antes": [
+   77,
+   44
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/carroca.png": {
+  "regra": "dobrar",
+  "antes": [
+   58,
+   43
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_alhos.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   33
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_bananas.png": {
+  "regra": "dobrar",
+  "antes": [
+   40,
+   34
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_batatas.png": {
+  "regra": "dobrar",
+  "antes": [
+   25,
+   22
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_batatas_mercado.png": {
+  "regra": "dobrar",
+  "antes": [
+   38,
+   33
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_cebolas.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   34
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_cenouras.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   33
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_cogumelos.png": {
+  "regra": "dobrar",
+  "antes": [
+   27,
+   30
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_laranjas.png": {
+  "regra": "dobrar",
+  "antes": [
+   40,
+   33
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_legumes.png": {
+  "regra": "dobrar",
+  "antes": [
+   25,
+   26
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_macas.png": {
+  "regra": "dobrar",
+  "antes": [
+   40,
+   34
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_peras.png": {
+  "regra": "dobrar",
+  "antes": [
+   37,
+   35
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_repolhos.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   35
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_tomates.png": {
+  "regra": "dobrar",
+  "antes": [
+   26,
+   24
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_tomates_mercado.png": {
+  "regra": "dobrar",
+  "antes": [
+   35,
+   32
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_uvas.png": {
+  "regra": "dobrar",
+  "antes": [
+   40,
+   35
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cesto_verduras.png": {
+  "regra": "dobrar",
+  "antes": [
+   28,
+   25
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/colher.png": {
+  "regra": "dobrar",
+  "antes": [
+   5,
+   22
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/corda_rolo.png": {
+  "regra": "dobrar",
+  "antes": [
+   35,
+   35
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cutelo.png": {
+  "regra": "dobrar",
+  "antes": [
+   31,
+   36
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/ervas_secas.png": {
+  "regra": "dobrar",
+  "antes": [
+   18,
+   33
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/ervas_secas_varias.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   37
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/escrivaninha.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   113,
+   90
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estante_livros.png": {
+  "regra": "dobrar",
+  "antes": [
+   32,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estante_livros_grande.png": {
+  "regra": "dobrar",
+  "antes": [
+   56,
+   56
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estante_mantimentos.png": {
+  "regra": "dobrar",
+  "antes": [
+   32,
+   68
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estante_pocoes.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   66
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estante_potes.png": {
+  "regra": "dobrar",
+  "antes": [
+   53,
+   60
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estante_pratos.png": {
+  "regra": "dobrar",
+  "antes": [
+   51,
+   60
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/faca.png": {
+  "regra": "dobrar",
+  "antes": [
+   20,
+   37
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/faca_garfo.png": {
+  "regra": "dobrar",
+  "antes": [
+   12,
+   24
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/guarda_roupa.png": {
+  "regra": "dobrar",
+  "antes": [
+   33,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/lanterna.png": {
+  "regra": "dobrar",
+  "antes": [
+   23,
+   35
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/lanterna_mesa.png": {
+  "regra": "dobrar",
+  "antes": [
+   22,
+   43
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/leiteira.png": {
+  "regra": "dobrar",
+  "antes": [
+   23,
+   37
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/lenha.png": {
+  "regra": "dobrar",
+  "antes": [
+   59,
+   30
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/lenha_pilha.png": {
+  "regra": "dobrar",
+  "antes": [
+   39,
+   33
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/linguica.png": {
+  "regra": "dobrar",
+  "antes": [
+   9,
+   26
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/linguicas.png": {
+  "regra": "dobrar",
+  "antes": [
+   33,
+   34
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/livro_aberto_velas.png": {
+  "regra": "dobrar",
+  "antes": [
+   38,
+   36
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/livro_fechado.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   30
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/lousa_cerveja.png": {
+  "regra": "dobrar",
+  "antes": [
+   35,
+   48
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/martelo_madeira.png": {
+  "regra": "dobrar",
+  "antes": [
+   24,
+   37
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_cadeira.png": {
+  "regra": "dobrar",
+  "antes": [
+   46,
+   49
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_carnes.png": {
+  "regra": "dobrar",
+  "antes": [
+   86,
+   49
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_corte.png": {
+  "regra": "dobrar",
+  "antes": [
+   69,
+   46
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_garrafas.png": {
+  "regra": "dobrar",
+  "antes": [
+   46,
+   50
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_graos.png": {
+  "regra": "dobrar",
+  "antes": [
+   77,
+   49
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_paes.png": {
+  "regra": "dobrar",
+  "antes": [
+   66,
+   48
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_peixes.png": {
+  "regra": "dobrar",
+  "antes": [
+   75,
+   49
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_potes.png": {
+  "regra": "dobrar",
+  "antes": [
+   70,
+   48
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_queijos.png": {
+  "regra": "dobrar",
+  "antes": [
+   72,
+   48
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_telescopio.png": {
+  "regra": "dobrar",
+  "antes": [
+   43,
+   56
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/panela.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   24
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/pergaminhos.png": {
+  "regra": "dobrar",
+  "antes": [
+   23,
+   15
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/pilao.png": {
+  "regra": "dobrar",
+  "antes": [
+   22,
+   24
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/pinca.png": {
+  "regra": "dobrar",
+  "antes": [
+   40,
+   36
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/placa_loja.png": {
+  "regra": "dobrar",
+  "antes": [
+   35,
+   58
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/pocao_azul.png": {
+  "regra": "dobrar",
+  "antes": [
+   18,
+   25
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/pocao_roxa_pequena.png": {
+  "regra": "dobrar",
+  "antes": [
+   12,
+   24
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/pocao_vermelha_deco.png": {
+  "regra": "dobrar",
+  "antes": [
+   17,
+   25
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/pocoes_verde_roxa.png": {
+  "regra": "dobrar",
+  "antes": [
+   31,
+   25
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/portal_mapa.png": {
+  "regra": "dobrar",
+  "antes": [
+   80,
+   90
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/pote_roxo.png": {
+  "regra": "dobrar",
+  "antes": [
+   18,
+   30
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/pote_verde.png": {
+  "regra": "dobrar",
+  "antes": [
+   13,
+   25
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/prateleira_pocoes.png": {
+  "regra": "dobrar",
+  "antes": [
+   45,
+   30
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/prato.png": {
+  "regra": "dobrar",
+  "antes": [
+   20,
+   11
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/prato_barro.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   17
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/presunto.png": {
+  "regra": "dobrar",
+  "antes": [
+   12,
+   30
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/redoma_caveiras.png": {
+  "regra": "dobrar",
+  "antes": [
+   51,
+   37
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/sacos.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   24
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/saco_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   23,
+   31
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/saco_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   25,
+   31
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/saco_farinha.png": {
+  "regra": "dobrar",
+  "antes": [
+   35,
+   36
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/saco_fechado.png": {
+  "regra": "dobrar",
+  "antes": [
+   31,
+   37
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/saco_feijao.png": {
+  "regra": "dobrar",
+  "antes": [
+   27,
+   27
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/saco_graos.png": {
+  "regra": "dobrar",
+  "antes": [
+   27,
+   23
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/saco_milho.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   38
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/saco_pequeno.png": {
+  "regra": "dobrar",
+  "antes": [
+   23,
+   25
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/saco_sementes.png": {
+  "regra": "dobrar",
+  "antes": [
+   31,
+   30
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/tigela.png": {
+  "regra": "dobrar",
+  "antes": [
+   18,
+   12
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/tigela_cobre.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   17
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/tina.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   33
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/tocha.png": {
+  "regra": "dobrar",
+  "antes": [
+   22,
+   42
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/vaso_azul.png": {
+  "regra": "dobrar",
+  "antes": [
+   18,
+   24
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/vaso_barro.png": {
+  "regra": "dobrar",
+  "antes": [
+   23,
+   25
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/vassoura.png": {
+  "regra": "dobrar",
+  "antes": [
+   24,
+   47
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/velas.png": {
+  "regra": "dobrar",
+  "antes": [
+   18,
+   24
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/entrada_caverna.png": {
+  "regra": "dobrar",
+  "antes": [
+   128,
+   121
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/entrada_caverna_escura.png": {
+  "regra": "dobrar",
+  "antes": [
+   128,
+   126
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/escada_madeira.png": {
+  "regra": "dobrar",
+  "antes": [
+   96,
+   109
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/escada_pedra.png": {
+  "regra": "dobrar",
+  "antes": [
+   96,
+   101
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_01.png": {
+  "regra": "dobrar",
+  "antes": [
+   33,
+   56
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_02.png": {
+  "regra": "dobrar",
+  "antes": [
+   37,
+   60
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_03.png": {
+  "regra": "dobrar",
+  "antes": [
+   37,
+   58
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_04.png": {
+  "regra": "dobrar",
+  "antes": [
+   37,
+   63
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_05.png": {
+  "regra": "dobrar",
+  "antes": [
+   42,
+   65
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_06.png": {
+  "regra": "dobrar",
+  "antes": [
+   39,
+   66
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_07.png": {
+  "regra": "dobrar",
+  "antes": [
+   44,
+   67
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_08.png": {
+  "regra": "dobrar",
+  "antes": [
+   41,
+   67
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_09.png": {
+  "regra": "dobrar",
+  "antes": [
+   39,
+   65
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_10.png": {
+  "regra": "dobrar",
+  "antes": [
+   42,
+   65
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_11.png": {
+  "regra": "dobrar",
+  "antes": [
+   40,
+   66
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_12.png": {
+  "regra": "dobrar",
+  "antes": [
+   42,
+   66
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_13.png": {
+  "regra": "dobrar",
+  "antes": [
+   43,
+   67
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_14.png": {
+  "regra": "dobrar",
+  "antes": [
+   42,
+   68
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_15.png": {
+  "regra": "dobrar",
+  "antes": [
+   42,
+   68
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_16.png": {
+  "regra": "dobrar",
+  "antes": [
+   47,
+   68
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_17.png": {
+  "regra": "dobrar",
+  "antes": [
+   44,
+   63
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_18.png": {
+  "regra": "dobrar",
+  "antes": [
+   43,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_19.png": {
+  "regra": "dobrar",
+  "antes": [
+   44,
+   63
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_20.png": {
+  "regra": "dobrar",
+  "antes": [
+   40,
+   64
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_21.png": {
+  "regra": "dobrar",
+  "antes": [
+   52,
+   66
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_22.png": {
+  "regra": "dobrar",
+  "antes": [
+   64,
+   68
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_23.png": {
+  "regra": "dobrar",
+  "antes": [
+   59,
+   68
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_24.png": {
+  "regra": "dobrar",
+  "antes": [
+   61,
+   71
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_25.png": {
+  "regra": "dobrar",
+  "antes": [
+   67,
+   71
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_26.png": {
+  "regra": "dobrar",
+  "antes": [
+   56,
+   71
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_27.png": {
+  "regra": "dobrar",
+  "antes": [
+   57,
+   72
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_28.png": {
+  "regra": "dobrar",
+  "antes": [
+   58,
+   71
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/Passagens/porta_29.png": {
+  "regra": "dobrar",
+  "antes": [
+   53,
+   72
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/acougueiro.png": {
+  "regra": "dobrar",
+  "antes": [
+   37,
+   52
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/amazona.png": {
+  "regra": "dobrar",
+  "antes": [
+   35,
+   54
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/aprendiz_elmo.png": {
+  "regra": "dobrar",
+  "antes": [
+   29,
+   54
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/aprendiz_lamina.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   51
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/armeiro.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   50
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/artesa.png": {
+  "regra": "dobrar",
+  "antes": [
+   22,
+   51
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/batedora.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   54
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/bruxa_viajante.png": {
+  "regra": "dobrar",
+  "antes": [
+   39,
+   54
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/camponesa_cesto.png": {
+  "regra": "dobrar",
+  "antes": [
+   27,
+   49
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/cavalarico.png": {
+  "regra": "dobrar",
+  "antes": [
+   39,
+   50
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/costureira.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   53
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/dama.png": {
+  "regra": "dobrar",
+  "antes": [
+   35,
+   50
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/domadora.png": {
+  "regra": "dobrar",
+  "antes": [
+   31,
+   50
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/engenheira.png": {
+  "regra": "dobrar",
+  "antes": [
+   31,
+   49
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/espadachim.png": {
+  "regra": "dobrar",
+  "antes": [
+   38,
+   50
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/espadeira.png": {
+  "regra": "dobrar",
+  "antes": [
+   32,
+   49
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/explorador.png": {
+  "regra": "dobrar",
+  "antes": [
+   44,
+   51
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/falcoeiro.png": {
+  "regra": "dobrar",
+  "antes": [
+   37,
+   53
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/fazendeiro_feno.png": {
+  "regra": "dobrar",
+  "antes": [
+   34,
+   51
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/ferreira.png": {
+  "regra": "dobrar",
+  "antes": [
+   38,
+   51
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/ferreiro.png": {
+  "regra": "dobrar",
+  "antes": [
+   40,
+   52
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/ferreiro_espada.png": {
+  "regra": "dobrar",
+  "antes": [
+   40,
+   51
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/ferreiro_velho.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   51
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/garoto_maca.png": {
+  "regra": "dobrar",
+  "antes": [
+   32,
+   52
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/guarda_escudo.png": {
+  "regra": "dobrar",
+  "antes": [
+   34,
+   50
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/maga.png": {
+  "regra": "dobrar",
+  "antes": [
+   34,
+   51
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/mensageiro.png": {
+  "regra": "dobrar",
+  "antes": [
+   39,
+   54
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/mercador.png": {
+  "regra": "dobrar",
+  "antes": [
+   32,
+   52
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/mestre_seleiro.png": {
+  "regra": "dobrar",
+  "antes": [
+   43,
+   54
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/moca_tigelas.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   54
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/nobre.png": {
+  "regra": "dobrar",
+  "antes": [
+   43,
+   53
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/padeira.png": {
+  "regra": "dobrar",
+  "antes": [
+   35,
+   49
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/padre.png": {
+  "regra": "dobrar",
+  "antes": [
+   27,
+   51
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/pescador.png": {
+  "regra": "dobrar",
+  "antes": [
+   41,
+   51
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/queijeira.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   54
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/seleiro_velho.png": {
+  "regra": "dobrar",
+  "antes": [
+   41,
+   51
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/taverneira.png": {
+  "regra": "dobrar",
+  "antes": [
+   35,
+   50
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/tratadora_cavalos.png": {
+  "regra": "dobrar",
+  "antes": [
+   33,
+   51
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/velha_ervas.png": {
+  "regra": "dobrar",
+  "antes": [
+   37,
+   48
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/viajante.png": {
+  "regra": "dobrar",
+  "antes": [
+   33,
+   51
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/curandeira_costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   45,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/curandeira_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   43,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/curandeira_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   59
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/curandeira_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   41,
+   57
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/fazendeiro_costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   45,
+   64
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/fazendeiro_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   43,
+   64
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/fazendeiro_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/fazendeiro_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   33,
+   60
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/ferreiro_costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   45,
+   59
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/ferreiro_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   51,
+   60
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/ferreiro_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   59
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/ferreiro_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   46,
+   59
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/guarda_costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   46,
+   64
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/guarda_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   43,
+   64
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/guarda_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/guarda_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/idosa_costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   53,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/idosa_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   51,
+   61
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/idosa_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   47,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/idosa_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   44,
+   61
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/idoso_costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   53,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/idoso_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   44,
+   61
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/idoso_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   48,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/idoso_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   44,
+   60
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/lojista_costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   47,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/lojista_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   51,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/lojista_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   58
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/lojista_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   45,
+   59
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/mercador_costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   53,
+   58
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/mercador_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   58
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/mercador_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   58
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/mercador_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   51,
+   59
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/moca_costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   53,
+   64
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/moca_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   29,
+   58
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/moca_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   64
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/moca_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   32,
+   64
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/padeira_costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   53,
+   61
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/padeira_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   34,
+   61
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/padeira_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   42,
+   61
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/padeira_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   44,
+   58
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/pescador_costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   53,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/pescador_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   33,
+   56
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/pescador_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   41,
+   61
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/pescador_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   44,
+   57
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/rapaz_costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   53,
+   64
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/rapaz_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   51,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/rapaz_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   64
+  ]
+ },
+ "Assets/Art/Sprites/NPCs/Vila/rapaz_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   62
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/barranco_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   79,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/barranco_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   78,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/barranco_3.png": {
+  "regra": "dobrar",
+  "antes": [
+   78,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/barranco_4.png": {
+  "regra": "dobrar",
+  "antes": [
+   78,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/barranco_ladrilho.png": {
+  "regra": "dobrar",
+  "antes": [
+   279,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/barranco_longo.png": {
+  "regra": "dobrar",
+  "antes": [
+   837,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/cachoeira_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   78,
+   58
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/cachoeira_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   79,
+   58
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/cachoeira_3.png": {
+  "regra": "dobrar",
+  "antes": [
+   78,
+   58
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/cachoeira_4.png": {
+  "regra": "dobrar",
+  "antes": [
+   77,
+   51
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/cerca_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   51,
+   50
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/cerca_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   52,
+   50
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/cerca_ladrilho.png": {
+  "regra": "dobrar",
+  "antes": [
+   17,
+   22
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/cerca_longa.png": {
+  "regra": "dobrar",
+  "antes": [
+   181,
+   50
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/gramado_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   79,
+   56
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/gramado_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   80,
+   57
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/gramado_3.png": {
+  "regra": "dobrar",
+  "antes": [
+   80,
+   59
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/gramado_4.png": {
+  "regra": "dobrar",
+  "antes": [
+   80,
+   50
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/mureta_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   53,
+   44
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/mureta_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   53,
+   45
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/mureta_ladrilho.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   20
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/mureta_longa.png": {
+  "regra": "dobrar",
+  "antes": [
+   215,
+   45
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/paredao_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   77,
+   54
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/paredao_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   76,
+   54
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/paredao_3.png": {
+  "regra": "dobrar",
+  "antes": [
+   78,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/paredao_4.png": {
+  "regra": "dobrar",
+  "antes": [
+   78,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/pedra.png": {
+  "regra": "dobrar",
+  "antes": [
+   45,
+   46
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/tronco_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   52,
+   34
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/tronco_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   52,
+   36
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Borda/tronco_3.png": {
+  "regra": "dobrar",
+  "antes": [
+   53,
+   33
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Predios/loja.png": {
+  "regra": "dobrar",
+  "antes": [
+   192,
+   199
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Predios/mercearia.png": {
+  "regra": "dobrar",
+  "antes": [
+   192,
+   136
+  ]
+ },
+ "Assets/Resources/Buildings/casa_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   192,
+   199
+  ]
+ },
+ "Assets/Resources/Buildings/casa_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   192,
+   199
+  ]
+ },
+ "Assets/Resources/Buildings/casa_3.png": {
+  "regra": "dobrar",
+  "antes": [
+   192,
+   199
+  ]
+ },
+ "Assets/Resources/Buildings/casa_4.png": {
+  "regra": "dobrar",
+  "antes": [
+   192,
+   199
+  ]
+ },
+ "Assets/Resources/Buildings/casa_5.png": {
+  "regra": "dobrar",
+  "antes": [
+   192,
+   199
+  ]
+ },
+ "Assets/Resources/Buildings/loja.png": {
+  "regra": "dobrar",
+  "antes": [
+   192,
+   199
+  ]
+ },
+ "Assets/Resources/Crops/morango_01.png": {
+  "regra": "dobrar",
+  "antes": [
+   34,
+   34
+  ]
+ },
+ "Assets/Resources/Crops/morango_02.png": {
+  "regra": "dobrar",
+  "antes": [
+   34,
+   34
+  ]
+ },
+ "Assets/Resources/Crops/morango_03.png": {
+  "regra": "dobrar",
+  "antes": [
+   34,
+   34
+  ]
+ },
+ "Assets/Resources/Crops/morango_04.png": {
+  "regra": "dobrar",
+  "antes": [
+   34,
+   40
+  ]
+ },
+ "Assets/Resources/Crops/morango_05.png": {
+  "regra": "dobrar",
+  "antes": [
+   34,
+   44
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/andar_costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   480,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/andar_costas_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   480,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/andar_costas_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   480,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/andar_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   480,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/andar_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   480,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/costas_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/costas_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/dor_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/dor_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/golpe_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/golpe_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/morte_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/morte_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/morte_3.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/parado.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/tiro_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Monsters/MVP/Resources/Drake/tiro_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/andar_costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   120,
+   83
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/andar_costas_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   204,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/andar_costas_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   182,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/andar_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   178,
+   83
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/andar_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   178,
+   81
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/andar_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   126,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/andar_frente_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   172,
+   81
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/andar_frente_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   150,
+   81
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/ataque.png": {
+  "regra": "dobrar",
+  "antes": [
+   576,
+   77
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/dano.png": {
+  "regra": "dobrar",
+  "antes": [
+   231,
+   66
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/efeito_1.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   74
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/efeito_2.png": {
+  "regra": "dobrar",
+  "antes": [
+   66,
+   76
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/efeito_3.png": {
+  "regra": "dobrar",
+  "antes": [
+   50,
+   70
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/efeito_4.png": {
+  "regra": "dobrar",
+  "antes": [
+   78,
+   65
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/habilidade.png": {
+  "regra": "dobrar",
+  "antes": [
+   304,
+   81
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/morte.png": {
+  "regra": "dobrar",
+  "antes": [
+   182,
+   71
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/parado_costas.png": {
+  "regra": "dobrar",
+  "antes": [
+   60,
+   83
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/parado_costas_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   81,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/parado_costas_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   91,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/parado_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   86,
+   83
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/parado_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   81,
+   81
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/parado_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   63,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/parado_frente_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   75,
+   81
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/MVP/Resources/CavaleiroSangue/parado_frente_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   72,
+   81
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/SerialKiller/Resources/SerialKiller/andar_direita.png": {
+  "regra": "dobrar",
+  "antes": [
+   219,
+   71
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/SerialKiller/Resources/SerialKiller/andar_esquerda.png": {
+  "regra": "dobrar",
+  "antes": [
+   213,
+   69
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/SerialKiller/Resources/SerialKiller/andar_frente.png": {
+  "regra": "dobrar",
+  "antes": [
+   213,
+   70
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/SerialKiller/Resources/SerialKiller/ataque.png": {
+  "regra": "dobrar",
+  "antes": [
+   670,
+   93
+  ]
+ },
+ "Assets/Art/Sprites/Monsters/SerialKiller/Resources/SerialKiller/morte.png": {
+  "regra": "dobrar",
+  "antes": [
+   252,
+   72
+  ]
+ },
+ "Assets/Art/Sprites/Environment/arbusto_01.png": {
+  "regra": "dobrar",
+  "antes": [
+   27,
+   26
+  ]
+ },
+ "Assets/Art/Sprites/Environment/arbusto_02.png": {
+  "regra": "dobrar",
+  "antes": [
+   28,
+   26
+  ]
+ },
+ "Assets/Art/Sprites/Environment/arbusto_03.png": {
+  "regra": "dobrar",
+  "antes": [
+   30,
+   27
+  ]
+ },
+ "Assets/Art/Sprites/Environment/arbusto_04.png": {
+  "regra": "dobrar",
+  "antes": [
+   24,
+   25
+  ]
+ },
+ "Assets/Art/Sprites/Environment/arbusto_05.png": {
+  "regra": "dobrar",
+  "antes": [
+   29,
+   27
+  ]
+ },
+ "Assets/Art/Sprites/Environment/arbusto_06.png": {
+  "regra": "dobrar",
+  "antes": [
+   29,
+   17
+  ]
+ },
+ "Assets/Art/Sprites/Environment/arbusto_07.png": {
+  "regra": "dobrar",
+  "antes": [
+   26,
+   27
+  ]
+ },
+ "Assets/Art/Sprites/Environment/arvore_01.png": {
+  "regra": "arvore x5",
+  "antes": [
+   39,
+   41
+  ]
+ },
+ "Assets/Art/Sprites/Environment/arvore_02.png": {
+  "regra": "arvore x5",
+  "antes": [
+   31,
+   41
+  ]
+ },
+ "Assets/Art/Sprites/Environment/arvore_03.png": {
+  "regra": "arvore x5",
+  "antes": [
+   36,
+   40
+  ]
+ },
+ "Assets/Art/Sprites/Environment/arvore_04.png": {
+  "regra": "arvore x5",
+  "antes": [
+   39,
+   42
+  ]
+ },
+ "Assets/Art/Sprites/Environment/arvore_05.png": {
+  "regra": "arvore x5",
+  "antes": [
+   38,
+   42
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_02_01.png": {
+  "regra": "dobrar",
+  "antes": [
+   4,
+   5
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_02_02.png": {
+  "regra": "dobrar",
+  "antes": [
+   4,
+   4
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_02_03.png": {
+  "regra": "dobrar",
+  "antes": [
+   4,
+   6
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_02_04.png": {
+  "regra": "dobrar",
+  "antes": [
+   3,
+   4
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_02_05.png": {
+  "regra": "dobrar",
+  "antes": [
+   4,
+   5
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_02_06.png": {
+  "regra": "dobrar",
+  "antes": [
+   3,
+   4
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_02_07.png": {
+  "regra": "dobrar",
+  "antes": [
+   3,
+   6
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_02_08.png": {
+  "regra": "dobrar",
+  "antes": [
+   3,
+   4
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_02_09.png": {
+  "regra": "dobrar",
+  "antes": [
+   3,
+   4
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_03_01.png": {
+  "regra": "dobrar",
+  "antes": [
+   6,
+   7
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_03_02.png": {
+  "regra": "dobrar",
+  "antes": [
+   8,
+   6
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_03_03.png": {
+  "regra": "dobrar",
+  "antes": [
+   3,
+   3
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_03_04.png": {
+  "regra": "dobrar",
+  "antes": [
+   3,
+   3
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_03_05.png": {
+  "regra": "dobrar",
+  "antes": [
+   9,
+   7
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_03_06.png": {
+  "regra": "dobrar",
+  "antes": [
+   5,
+   5
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_03_07.png": {
+  "regra": "dobrar",
+  "antes": [
+   3,
+   3
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_04_01.png": {
+  "regra": "dobrar",
+  "antes": [
+   8,
+   6
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_04_02.png": {
+  "regra": "dobrar",
+  "antes": [
+   4,
+   4
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_04_03.png": {
+  "regra": "dobrar",
+  "antes": [
+   4,
+   3
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_04_04.png": {
+  "regra": "dobrar",
+  "antes": [
+   5,
+   3
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_04_05.png": {
+  "regra": "dobrar",
+  "antes": [
+   12,
+   3
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_04_06.png": {
+  "regra": "dobrar",
+  "antes": [
+   11,
+   7
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_04_07.png": {
+  "regra": "dobrar",
+  "antes": [
+   6,
+   6
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_05_01.png": {
+  "regra": "dobrar",
+  "antes": [
+   9,
+   7
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_05_02.png": {
+  "regra": "dobrar",
+  "antes": [
+   14,
+   10
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_05_03.png": {
+  "regra": "dobrar",
+  "antes": [
+   14,
+   11
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_05_04.png": {
+  "regra": "dobrar",
+  "antes": [
+   5,
+   4
+  ]
+ },
+ "Assets/Art/Sprites/Environment/deco_06_01.png": {
+  "regra": "dobrar",
+  "antes": [
+   5,
+   4
+  ]
+ },
+ "Assets/Art/Sprites/Environment/dirt_00.png": {
+  "regra": "dobrar",
+  "antes": [
+   16,
+   16
+  ]
+ },
+ "Assets/Art/Sprites/Environment/dirt_01.png": {
+  "regra": "dobrar",
+  "antes": [
+   16,
+   16
+  ]
+ },
+ "Assets/Art/Sprites/Environment/dirt_02.png": {
+  "regra": "dobrar",
+  "antes": [
+   16,
+   16
+  ]
+ },
+ "Assets/Art/Sprites/Environment/grama_02.png": {
+  "regra": "dobrar",
+  "antes": [
+   32,
+   32
+  ]
+ },
+ "Assets/Art/Sprites/Environment/grama_03.png": {
+  "regra": "dobrar",
+  "antes": [
+   32,
+   32
+  ]
+ },
+ "Assets/Art/Sprites/Environment/grama_04.png": {
+  "regra": "dobrar",
+  "antes": [
+   32,
+   32
+  ]
+ },
+ "Assets/Art/Sprites/Environment/grama_alta_01.png": {
+  "regra": "dobrar",
+  "antes": [
+   10,
+   14
+  ]
+ },
+ "Assets/Art/Sprites/Environment/grama_alta_02.png": {
+  "regra": "dobrar",
+  "antes": [
+   12,
+   11
+  ]
+ },
+ "Assets/Art/Sprites/Environment/grama_alta_03.png": {
+  "regra": "dobrar",
+  "antes": [
+   12,
+   9
+  ]
+ },
+ "Assets/Art/Sprites/Environment/grama_alta_04.png": {
+  "regra": "dobrar",
+  "antes": [
+   6,
+   9
+  ]
+ },
+ "Assets/Art/Sprites/Environment/grama_base.png": {
+  "regra": "dobrar",
+  "antes": [
+   128,
+   128
+  ]
+ },
+ "Assets/Art/Sprites/Environment/grass_00.png": {
+  "regra": "dobrar",
+  "antes": [
+   16,
+   16
+  ]
+ },
+ "Assets/Art/Sprites/Environment/grass_01.png": {
+  "regra": "dobrar",
+  "antes": [
+   16,
+   16
+  ]
+ },
+ "Assets/Art/Sprites/Environment/grass_02.png": {
+  "regra": "dobrar",
+  "antes": [
+   16,
+   16
+  ]
+ },
+ "Assets/Art/Sprites/Environment/grass_03.png": {
+  "regra": "dobrar",
+  "antes": [
+   16,
+   16
+  ]
+ },
+ "Assets/Art/Sprites/Environment/piso_01.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   39
+  ]
+ },
+ "Assets/Art/Sprites/Environment/piso_02.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   39
+  ]
+ },
+ "Assets/Art/Sprites/Environment/piso_03.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   39
+  ]
+ },
+ "Assets/Art/Sprites/Environment/piso_04.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   39
+  ]
+ },
+ "Assets/Art/Sprites/Environment/piso_05.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   39
+  ]
+ },
+ "Assets/Art/Sprites/Environment/piso_06.png": {
+  "regra": "dobrar",
+  "antes": [
+   36,
+   40
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_barril.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   34,
+   41
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_barril_corrente.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   48,
+   41
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_bau.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   41,
+   41
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_bau_redondo.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   41,
+   41
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_bloco.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   41,
+   41
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_caixotes.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   62,
+   41
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_canto_dir.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   34,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_canto_esq.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   34,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_escada.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   34,
+   41
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_estatua.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   34,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_muro_grade.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   153,
+   48
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_parede_1.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   69,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_parede_2.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   61,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_parede_canto.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   55,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_parede_l.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   34,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_parede_u.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   104,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_pedestal.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   48,
+   42
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_poca_mancha.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   78,
+   41
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_tocha_1.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   27,
+   48
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_tocha_2.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   27,
+   48
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Masmorra/masm_tocha_apagada.png": {
+  "regra": "masmorra x4",
+  "antes": [
+   13,
+   41
+  ]
+ },
+ "Assets/Resources/Props/bau_aberto.png": {
+  "regra": "reamostrar x0.571",
+  "antes": [
+   148,
+   140
+  ]
+ },
+ "Assets/Resources/Props/bau_fechado.png": {
+  "regra": "reamostrar x0.571",
+  "antes": [
+   148,
+   121
+  ]
+ },
+ "Assets/Resources/Props/portal_1.png": {
+  "regra": "reamostrar x1.600",
+  "antes": [
+   79,
+   125
+  ]
+ },
+ "Assets/Resources/Props/portal_2.png": {
+  "regra": "reamostrar x1.600",
+  "antes": [
+   79,
+   125
+  ]
+ },
+ "Assets/Resources/Props/portal_3.png": {
+  "regra": "reamostrar x1.600",
+  "antes": [
+   79,
+   125
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_longa.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   201,
+   78
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_banquete.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   199,
+   85
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cadeira_vermelha.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   43,
+   72
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_redonda.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   70,
+   66
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cadeira_azul.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   43,
+   71
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cadeira_estofada.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   47,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/trono_vermelho.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   57,
+   94
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/trono_azul.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   57,
+   95
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cadeira_ferro.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   48,
+   80
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banco_madeira.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   89,
+   52
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estatua_cavaleiro_1.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   50,
+   116
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estatua_cavaleiro_2.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   51,
+   116
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/gargula_1.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   71,
+   103
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/gargula_2.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   71,
+   103
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/armadura_1.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   47,
+   110
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/armadura_penacho.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   48,
+   117
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/armadura_2.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   47,
+   112
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estandarte_vermelho.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   67,
+   116
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estandarte_leao.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   67,
+   116
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estandarte_aguia.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   67,
+   117
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estandarte_aguia_2.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   61,
+   116
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/bandeira_aguia.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   71,
+   109
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/lustre_1.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   84,
+   86
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/lustre_2.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   84,
+   86
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/lustre_3.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   84,
+   86
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/candelabro_ferro.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   42,
+   95
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/candelabro_cobre.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   42,
+   94
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/candelabro_prata.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   40,
+   83
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/candelabro_ouro.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   40,
+   86
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/candelabro_cobre_2.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   47,
+   79
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/tocheiro.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   34,
+   89
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/tocha_parede_1.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   37,
+   85
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/tocha_parede_2.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   39,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/braseiro_1.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   63,
+   79
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/braseiro_2.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   63,
+   77
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/armario_1.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   87,
+   99
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/armario_2.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   87,
+   99
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/armario_3.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   86,
+   99
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estante_livros_castelo.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   86,
+   99
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estante_pergaminhos.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   86,
+   99
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/livros_banquinho.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   38,
+   63
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/bau_dourado.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   69,
+   67
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/bau_tesouro.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   76,
+   80
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/bau_aberto_vazio.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   76,
+   75
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/lareira.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   97,
+   102
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/tapecaria_batalha.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   117,
+   76
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/tapecaria_brasao.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   117,
+   76
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/escudo_espadas_1.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   72,
+   75
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/escudo_espadas_2.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   73,
+   75
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_castelo.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   44,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_caixotes.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   88,
+   82
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/tapete_urso.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   113,
+   68
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/tapete_vermelho.png": {
+  "regra": "castelo, já em 64",
+  "antes": [
+   147,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estandarte_roxo.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   65,
+   129
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/trono_roxo.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   62,
+   125
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estandarte_roxo_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   66,
+   129
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/biombo_tapecaria.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   148,
+   111
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_festa.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   271,
+   112
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/harpa.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   58,
+   102
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/piano.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   93,
+   114
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/relogio_pendulo.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   54,
+   125
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/suporte_espadas.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   87,
+   100
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/suporte_arcos.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   52,
+   80
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/escudo_redondo.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   41,
+   40
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/escudo_vermelho.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   38,
+   45
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/escudo_espada.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   37,
+   44
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/escudo_branco.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   40,
+   48
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/escudo_leao.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   35,
+   43
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/escudo_redondo_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   40,
+   45
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/prateleira_elmos.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   109,
+   104
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/sino_grande.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   122,
+   108
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/canhao_barris.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   164,
+   86
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/besta_cerco.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   86,
+   73
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/suporte_lancas.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   95,
+   106
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/castical_alto.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   18,
+   70
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/candelabro_triplo.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   24,
+   77
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/altar_biblia.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   118,
+   110
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/candelabro_triplo_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   24,
+   77
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/castical_alto_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   18,
+   70
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/dossel_roxo.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   110,
+   125
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/vitral_cavaleiro.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   54,
+   92
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/vitral_santo.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   58,
+   99
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/vitral_santa.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   54,
+   92
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/tumulo.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   113,
+   92
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/relicario.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   49,
+   81
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/calice_fogo.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   25,
+   60
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/fonte_parede.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   52,
+   89
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caldeirao_verde.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   56,
+   73
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estante_livros_media.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   89,
+   81
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/globo_grande.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   78,
+   95
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/luneta.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   59,
+   84
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesinha_pergaminho.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   49,
+   60
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_mapa.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   132,
+   94
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/forno_tijolo.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   186,
+   127
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_acougue.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   304,
+   187
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/prateleira_panelas.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   111,
+   90
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_vinho.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   78,
+   81
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_vinho_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   77,
+   81
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caixotes_madeira.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   69,
+   75
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/forno_barro.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   166,
+   146
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/tina_lavar.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   103,
+   100
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/varal_roupas.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   168,
+   115
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/moinho_mao.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   90,
+   121
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caldeirao_sopa.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   95,
+   107
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/sacos_farinha.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   97,
+   87
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/varal_peixes.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   117,
+   117
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/horta.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   181,
+   113
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/trelica_trepadeira.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   103,
+   110
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/poco_balde.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   111,
+   107
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/carrinho_mao_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   139,
+   90
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/picareta_pa.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   88,
+   93
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/regador.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   69,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/vaso_planta.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   48,
+   95
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/vaso_lilas.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   45,
+   98
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/colmeia.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   62,
+   87
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/alambique_cobre.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   129,
+   98
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/pilao_ervas.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   101,
+   80
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/balanca_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   97,
+   86
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/prensa_livros.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   87,
+   90
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/ervas_secas_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   106,
+   91
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/secador_ervas.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   97,
+   81
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/garrafao_vermelho.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   43,
+   59
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/frasco_verde.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   22,
+   34
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/garrafao_verde.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   57,
+   80
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/frasco_roxo.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   39,
+   74
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/garrafao_amarelo.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   38,
+   74
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caldeirao_engrenagem.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   101,
+   92
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/guindaste.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   154,
+   173
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/pedras_pilha.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   88,
+   63
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/caldeirao_preto_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   60,
+   55
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/escada_mao.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   83,
+   104
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barreira_estacas.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   105,
+   90
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/orgao.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   107,
+   157
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/vitral_colorido.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   57,
+   151
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/pia_pedra.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   61,
+   77
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/pia_pedra_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   62,
+   79
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/confessionario.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   86,
+   118
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/sino_portico.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   102,
+   106
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/altar_livro.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   110,
+   104
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/guilhotina.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   101,
+   135
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/donzela_ferro.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   55,
+   115
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/sarcofago_espinhos.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   81,
+   113
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/pelourinho.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   98,
+   101
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/correntes_parede.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   91,
+   74
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/gaiola_pendurada.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   57,
+   122
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/suporte_alabardas.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   136,
+   122
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/suporte_alabardas_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   136,
+   120
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/javali_assado.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   200,
+   66
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/barril_torneira.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   93,
+   97
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/altar_velas.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   136,
+   108
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/confessionario_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   110,
+   109
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/atril_livro.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   73,
+   107
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/trono_ouro.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   66,
+   107
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/trono_ouro_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   65,
+   101
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_alquimista.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   220,
+   101
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/astrolabio.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   50,
+   66
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/luneta_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   64,
+   88
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estante_passagem.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   162,
+   91
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/quadro_mapas.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   98,
+   80
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/globo.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   60,
+   76
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/globo_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   60,
+   78
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/cama_dossel.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   140,
+   154
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banheira.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   106,
+   94
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/biombo_verde.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   147,
+   90
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/banquinho_verde.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   32,
+   64
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/penteadeira.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   71,
+   92
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/penteadeira_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   65,
+   98
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/bau_tecidos.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   97,
+   89
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/relogio_pendulo_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   45,
+   110
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/vaso_arbusto.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   53,
+   88
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/vaso_laranjeira.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   50,
+   65
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/vaso_lavanda.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   52,
+   86
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/muro_hera.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   86,
+   87
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/muro_hera_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   86,
+   87
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/chafariz.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   106,
+   87
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/poco_manivela.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   96,
+   87
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/gongo.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   80,
+   88
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/relogio_sol.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   116,
+   74
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/trono_roxo_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   64,
+   96
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/tumulo_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   81,
+   93
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/mesa_alquimia.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   181,
+   89
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estante_canto.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   72,
+   92
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/estante_canto_2.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   76,
+   97
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/sacos_graos.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   78,
+   69
+  ]
+ },
+ "Assets/Art/Sprites/Environment/Decoracao/fardos_feno.png": {
+  "regra": "folhas 20/10, já em 64",
+  "antes": [
+   72,
+   71
+  ]
+ }
+}

@@ -1,0 +1,299 @@
+{
+ "ppu": 64,
+ "escala_espada": 1.0,
+ "escala_escudo": 0.65,
+ "biblioteca": "Characters/Skins/modular/ancoras",
+ "anims": [
+  {
+   "chave": "attack_down",
+   "largura": 188,
+   "altura": 158,
+   "corpo": [
+    {
+     "mao_arma": [
+      109,
+      90
+     ],
+     "mao_escudo": [
+      59,
+      119
+     ],
+     "arma_chave": "attack_up",
+     "arma_quadro": 1,
+     "arma_escala": 1.163,
+     "escudo_chave": "attack_down",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      109,
+      90
+     ],
+     "mao_escudo": [
+      42,
+      103
+     ],
+     "arma_chave": "attack_up",
+     "arma_quadro": 1,
+     "arma_escala": 1.163,
+     "escudo_chave": "attack_down",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      109,
+      90
+     ],
+     "mao_escudo": [
+      40,
+      112
+     ],
+     "arma_chave": "attack_up",
+     "arma_quadro": 1,
+     "arma_escala": 1.163,
+     "escudo_chave": "attack_down",
+     "escudo_quadro": 0
+    }
+   ],
+   "arma_na_frente": true,
+   "escudo_na_frente": true
+  },
+  {
+   "chave": "attack_side",
+   "largura": 188,
+   "altura": 158,
+   "corpo": [
+    {
+     "mao_arma": [
+      98,
+      94
+     ],
+     "mao_escudo": [
+      127,
+      84
+     ],
+     "arma_chave": "attack_down",
+     "arma_quadro": 2,
+     "arma_escala": 0.696,
+     "escudo_chave": "attack_right",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      98,
+      94
+     ],
+     "mao_escudo": [
+      48,
+      104
+     ],
+     "arma_chave": "attack_down",
+     "arma_quadro": 2,
+     "arma_escala": 0.696,
+     "escudo_chave": "attack_right",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      91,
+      101
+     ],
+     "mao_escudo": [
+      48,
+      104
+     ],
+     "arma_chave": "death_up",
+     "arma_quadro": 2,
+     "arma_escala": 1.336,
+     "escudo_chave": "attack_right",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      91,
+      101
+     ],
+     "mao_escudo": [
+      132,
+      112
+     ],
+     "arma_chave": "death_up",
+     "arma_quadro": 2,
+     "arma_escala": 1.336,
+     "escudo_chave": "attack_right",
+     "escudo_quadro": 0
+    }
+   ],
+   "arma_na_frente": true,
+   "escudo_na_frente": false
+  },
+  {
+   "chave": "attack_up",
+   "largura": 188,
+   "altura": 158,
+   "corpo": [
+    {
+     "mao_arma": [
+      133,
+      76
+     ],
+     "mao_escudo": [
+      38,
+      95
+     ],
+     "arma_chave": "attack_down",
+     "arma_quadro": 0,
+     "arma_escala": 0.503,
+     "escudo_chave": "attack_up",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      133,
+      76
+     ],
+     "mao_escudo": [
+      54,
+      97
+     ],
+     "arma_chave": "attack_down",
+     "arma_quadro": 0,
+     "arma_escala": 0.503,
+     "escudo_chave": "attack_up",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      114,
+      37
+     ],
+     "mao_escudo": [
+      45,
+      98
+     ],
+     "arma_chave": "attack_left",
+     "arma_quadro": 1,
+     "arma_escala": 0.86,
+     "escudo_chave": "attack_up",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      114,
+      37
+     ],
+     "mao_escudo": [
+      35,
+      89
+     ],
+     "arma_chave": "attack_left",
+     "arma_quadro": 1,
+     "arma_escala": 0.86,
+     "escudo_chave": "attack_up",
+     "escudo_quadro": 0
+    }
+   ],
+   "arma_na_frente": false,
+   "escudo_na_frente": false
+  },
+  {
+   "chave": "death",
+   "largura": 188,
+   "altura": 158,
+   "corpo": [
+    {
+     "mao_arma": [
+      110,
+      127
+     ],
+     "mao_escudo": [
+      37,
+      104
+     ],
+     "arma_chave": "walk_down",
+     "arma_quadro": 2,
+     "arma_escala": 0.562,
+     "escudo_chave": "attack_right",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      64,
+      113
+     ],
+     "mao_escudo": [
+      141,
+      106
+     ],
+     "arma_chave": "walk_right",
+     "arma_quadro": 0,
+     "arma_escala": 1.179,
+     "escudo_chave": "attack_right",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      64,
+      113
+     ],
+     "mao_escudo": [
+      35,
+      108
+     ],
+     "arma_chave": "walk_right",
+     "arma_quadro": 0,
+     "arma_escala": 1.179,
+     "escudo_chave": "attack_right",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      64,
+      113
+     ],
+     "mao_escudo": [
+      13,
+      129
+     ],
+     "arma_chave": "walk_right",
+     "arma_quadro": 0,
+     "arma_escala": 1.179,
+     "escudo_chave": "attack_right",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      81,
+      128
+     ],
+     "mao_escudo": [
+      29,
+      125
+     ],
+     "arma_chave": "walk_left",
+     "arma_quadro": 2,
+     "arma_escala": 0.349,
+     "escudo_chave": "attack_right",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      81,
+      128
+     ],
+     "mao_escudo": [
+      184,
+      118
+     ],
+     "arma_chave": "walk_left",
+     "arma_quadro": 2,
+     "arma_escala": 0.349,
+     "escudo_chave": "attack_right",
+     "escudo_quadro": 0
+    }
+   ],
+   "arma_na_frente": true,
+   "escudo_na_frente": false
+  }
+ ]
+}

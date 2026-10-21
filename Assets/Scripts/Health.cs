@@ -63,6 +63,21 @@ public class Health : MonoBehaviour
     /// Vida do jogo salvo (pelo menos 1: salvar morto não deixa nascer morto).
     public void Restore(int hp) => Hp = Mathf.Clamp(hp, 1, maxHp);
 
+    /// Prende no lugar por `seconds` (não funciona em chefes: immovable).
+    public void Hold(float seconds)
+    {
+        if (!immovable) _stunEnd = Mathf.Max(_stunEnd, Time.time + seconds);
+    }
+
+    /// Gasta vida como custo de habilidade (sem empurrão nem piscar). Não deixa morrer: com
+    /// vida igual ou menor que o custo, não paga.
+    public bool PayHp(int amount)
+    {
+        if (IsDead || Hp <= amount) return false;
+        if (!(DevCheats.InfiniteHp && GetComponent<PlayerController2D>() != null)) Hp -= amount;
+        return true;
+    }
+
     public bool TakeDamage(int amount, Vector2 from, float knockback = 3f)
     {
         if (IsDead || Time.time < _invulnerableEnd) return false;

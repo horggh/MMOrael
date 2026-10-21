@@ -8,8 +8,11 @@ using UnityEngine.SceneManagement;
 /// Perfil do bRO (rAthena db/re/mob_db.yml, mob 1112; confere com o Divine Pride): nível 91,
 /// 804.500 HP, ATQ 2.227–3.234, DEF 279, MDEF 135, recebe só 10% do dano, ataca a cada 0,62 s.
 /// Corpo a corpo com o sabre; de longe, de vez em quando, atira com a pistola.
-/// Sprites: Resources/Characters/Drake (Tools/extract_boss_pirata.py).
+/// Sprites: Art/Sprites/Monsters/MVP/Resources/Drake (Tools/extract_boss_pirata.py).
 [RequireComponent(typeof(Rigidbody2D), typeof(Health), typeof(CharacterStats))]
+// Clicar no desenho na Scene seleciona o monstro inteiro (não só o desenho, que se
+// soltaria do corpo ao mover ou apagar).
+[SelectionBase]
 public class DrakeBoss : MonoBehaviour
 {
     public static readonly List<DrakeBoss> All = new List<DrakeBoss>();
@@ -19,20 +22,22 @@ public class DrakeBoss : MonoBehaviour
     public const string DisplayName = "Drake";
     /// Avisos para o HUD (ex.: "MVP!").
     public static event Action<string> Announce;
+    /// Aviso na tela (outros MVPs também usam).
+    public static void Anunciar(string msg) => Announce?.Invoke(msg);
 
-    private static readonly Vector2 SpawnPoint = new Vector2(-14f, 10f);
-
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-    private static void AutoSpawn()
-    {
-        if (SceneManager.GetActiveScene().name == "Campo" && All.Count == 0) Create(SpawnPoint);
-    }
 
     /// Monta o boss inteiro por código (corpo, colisor, arte, vida e atributos).
     public static DrakeBoss Create(Vector2 pos)
     {
         var go = new GameObject("Drake (boss)");
         go.transform.position = pos;
+        return Build(go);
+    }
+
+    /// Põe no objeto tudo que o boss precisa. O editor usa isto para colocar o Drake na cena
+    /// (janela RaelMMO > Mapa > Monstros, aba MVPs): fica como os lobos, para mover, apagar e editar.
+    public static DrakeBoss Build(GameObject go)
+    {
         var body = go.AddComponent<Rigidbody2D>();
         body.gravityScale = 0f;
         body.freezeRotation = true;
@@ -46,6 +51,7 @@ public class DrakeBoss : MonoBehaviour
         art.transform.SetParent(go.transform, false);
         art.AddComponent<SpriteRenderer>();
         art.AddComponent<YSortRenderer>();
+        go.AddComponent<DrakePreview>();
         go.AddComponent<CharacterStats>();
         go.AddComponent<Health>().immovable = true;
         return go.AddComponent<DrakeBoss>();
@@ -87,7 +93,8 @@ public class DrakeBoss : MonoBehaviour
     [Tooltip("Respawn do Drake no Ragnarok: 2 horas.")]
     public float respawnDelay = 7200f;
 
-    private const float PPU = 32f;
+    // Padrão do jogo: 64 px por quadrado da grade (ver Tools/padronizar_64.py).
+    private const float PPU = 64f;
     private static readonly string[] FrameNames =
     {
         "frente", "esquerda", "costas_direita", "costas_esquerda", "costas", "parado", "golpe_1", "golpe_2",
@@ -122,6 +129,7 @@ public class DrakeBoss : MonoBehaviour
 
     private void Awake()
     {
+        _drops = MonsterDrops.Ensure(gameObject, DisplayName, true);
         _body = GetComponent<Rigidbody2D>();
         _health = GetComponent<Health>();
         _stats = GetComponent<CharacterStats>();
@@ -144,31 +152,31 @@ public class DrakeBoss : MonoBehaviour
         _walk = new Dictionary<string, Sprite[]>();
         foreach (var n in WalkNames)
         {
-            var sheet = Resources.Load<Texture2D>("Characters/Drake/andar_" + n);
+            var sheet = Resources.Load<Texture2D>("Drake/andar_" + n);
             if (sheet == null) continue;
             sheet.filterMode = FilterMode.Point;
             int fw = sheet.width / 4;
             var walk = new Sprite[4];
             for (int i = 0; i < 4; i++)
                 walk[i] = Sprite.Create(sheet, new Rect(i * fw, 0, fw, sheet.height),
-                                        new Vector2(0.5f, 2f / sheet.height), PPU, 0, SpriteMeshType.FullRect);
+                                        new Vector2(0.5f, 4f / sheet.height), PPU, 0, SpriteMeshType.FullRect);
             _walk[n] = walk;
         }
         _frames = new Dictionary<string, Sprite>();
         foreach (var n in FrameNames)
         {
-            var tex = Resources.Load<Texture2D>("Characters/Drake/" + n);
-            if (tex == null) { Debug.LogError("[Drake] falta Resources/Characters/Drake/" + n); continue; }
+            var tex = Resources.Load<Texture2D>("Drake/" + n);
+            if (tex == null) { Debug.LogError("[Drake] falta Monsters/MVP/Resources/Drake/" + n); continue; }
             tex.filterMode = FilterMode.Point;
             // Pés 2 px acima da base, como na extração.
             _frames[n] = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height),
-                                       new Vector2(0.5f, 2f / tex.height), PPU, 0, SpriteMeshType.FullRect);
+                                       new Vector2(0.5f, 4f / tex.height), PPU, 0, SpriteMeshType.FullRect);
         }
     }
 
     private void Start()
     {
-        var player = FindFirstObjectByType<PlayerController2D>();
+        var player = FindAnyObjectByType<PlayerController2D>();
         if (player == null) return;
         _player = player.transform;
         _playerHealth = player.GetComponent<Health>();
@@ -343,8 +351,13 @@ public class DrakeBoss : MonoBehaviour
 
     // ── Morte e respawn ──
 
+    private MonsterDrops _drops;
+
     private void OnDied(Health h)
     {
+        // Drops (ainda não definidos: lista vazia no MonsterDrops).
+        var dropBag = _player != null ? _player.GetComponent<Inventory>() : null;
+        if (_drops != null) _drops.Roll(dropBag);
         var playerStats = _player != null ? _player.GetComponent<CharacterStats>() : null;
         if (playerStats != null)
         {

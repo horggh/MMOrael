@@ -1,0 +1,1251 @@
+{
+ "ppu": 64,
+ "escala_espada": 0.8,
+ "escala_escudo": 0.65,
+ "anims": [
+  {
+   "chave": "walk_down",
+   "largura": 52,
+   "altura": 109,
+   "corpo": [
+    {
+     "mao_arma": [
+      7,
+      59
+     ],
+     "mao_escudo": [
+      41,
+      56
+     ]
+    },
+    {
+     "mao_arma": [
+      9,
+      59
+     ],
+     "mao_escudo": [
+      41,
+      54
+     ]
+    },
+    {
+     "mao_arma": [
+      8,
+      61
+     ],
+     "mao_escudo": [
+      43,
+      57
+     ]
+    },
+    {
+     "mao_arma": [
+      10,
+      55
+     ],
+     "mao_escudo": [
+      45,
+      58
+     ]
+    }
+   ],
+   "espada": {
+    "largura": 22,
+    "altura": 72,
+    "quadros": [
+     {
+      "empunhadura": [
+       10,
+       18
+      ]
+     },
+     {
+      "empunhadura": [
+       9,
+       17
+      ]
+     },
+     {
+      "empunhadura": [
+       10,
+       21
+      ]
+     },
+     {
+      "empunhadura": [
+       10,
+       17
+      ]
+     }
+    ]
+   },
+   "espada_quadros": 4,
+   "escudo": {
+    "largura": 47,
+    "altura": 50,
+    "quadros": [
+     {
+      "empunhadura": [
+       23,
+       24
+      ]
+     },
+     {
+      "empunhadura": [
+       23,
+       25
+      ]
+     },
+     {
+      "empunhadura": [
+       22,
+       24
+      ]
+     },
+     {
+      "empunhadura": [
+       23,
+       25
+      ]
+     }
+    ]
+   },
+   "escudo_quadros": 4,
+   "arma_na_frente": true,
+   "escudo_na_frente": true
+  },
+  {
+   "chave": "walk_left",
+   "largura": 62,
+   "altura": 108,
+   "corpo": [
+    {
+     "mao_arma": [
+      13,
+      58
+     ],
+     "mao_escudo": [
+      46,
+      65
+     ]
+    },
+    {
+     "mao_arma": [
+      16,
+      63
+     ],
+     "mao_escudo": [
+      44,
+      58
+     ]
+    },
+    {
+     "mao_arma": [
+      16,
+      61
+     ],
+     "mao_escudo": [
+      48,
+      61
+     ]
+    },
+    {
+     "mao_arma": [
+      15,
+      60
+     ],
+     "mao_escudo": [
+      50,
+      62
+     ]
+    }
+   ],
+   "espada": {
+    "largura": 43,
+    "altura": 53,
+    "quadros": [
+     {
+      "empunhadura": [
+       31,
+       15
+      ]
+     },
+     {
+      "empunhadura": [
+       31,
+       16
+      ]
+     },
+     {
+      "empunhadura": [
+       26,
+       15
+      ]
+     },
+     {
+      "empunhadura": [
+       27,
+       15
+      ]
+     }
+    ]
+   },
+   "espada_quadros": 4,
+   "escudo": {
+    "largura": 32,
+    "altura": 60,
+    "quadros": [
+     {
+      "empunhadura": [
+       16,
+       29
+      ]
+     },
+     {
+      "empunhadura": [
+       16,
+       29
+      ]
+     },
+     {
+      "empunhadura": [
+       16,
+       29
+      ]
+     },
+     {
+      "empunhadura": [
+       16,
+       29
+      ]
+     }
+    ]
+   },
+   "escudo_quadros": 4,
+   "arma_na_frente": true,
+   "escudo_na_frente": false
+  },
+  {
+   "chave": "walk_up",
+   "largura": 60,
+   "altura": 107,
+   "corpo": [
+    {
+     "mao_arma": [
+      46,
+      57
+     ],
+     "mao_escudo": [
+      13,
+      59
+     ]
+    },
+    {
+     "mao_arma": [
+      46,
+      58
+     ],
+     "mao_escudo": [
+      7,
+      63
+     ]
+    },
+    {
+     "mao_arma": [
+      46,
+      58
+     ],
+     "mao_escudo": [
+      11,
+      59
+     ]
+    },
+    {
+     "mao_arma": [
+      48,
+      59
+     ],
+     "mao_escudo": [
+      15,
+      55
+     ]
+    }
+   ],
+   "espada": {
+    "largura": 23,
+    "altura": 69,
+    "quadros": [
+     {
+      "empunhadura": [
+       12,
+       51
+      ]
+     },
+     {
+      "empunhadura": [
+       11,
+       51
+      ]
+     },
+     {
+      "empunhadura": [
+       12,
+       51
+      ]
+     },
+     {
+      "empunhadura": [
+       12,
+       47
+      ]
+     }
+    ]
+   },
+   "espada_quadros": 4,
+   "escudo": {
+    "largura": 45,
+    "altura": 52,
+    "quadros": [
+     {
+      "empunhadura": [
+       22,
+       25
+      ]
+     },
+     {
+      "empunhadura": [
+       22,
+       26
+      ]
+     },
+     {
+      "empunhadura": [
+       22,
+       25
+      ]
+     },
+     {
+      "empunhadura": [
+       23,
+       26
+      ]
+     }
+    ]
+   },
+   "escudo_quadros": 4,
+   "arma_na_frente": false,
+   "escudo_na_frente": false
+  },
+  {
+   "chave": "walk_right",
+   "largura": 64,
+   "altura": 108,
+   "corpo": [
+    {
+     "mao_arma": [
+      49,
+      62
+     ],
+     "mao_escudo": [
+      14,
+      60
+     ]
+    },
+    {
+     "mao_arma": [
+      47,
+      55
+     ],
+     "mao_escudo": [
+      16,
+      62
+     ]
+    },
+    {
+     "mao_arma": [
+      49,
+      60
+     ],
+     "mao_escudo": [
+      16,
+      61
+     ]
+    },
+    {
+     "mao_arma": [
+      49,
+      59
+     ],
+     "mao_escudo": [
+      20,
+      63
+     ]
+    }
+   ],
+   "espada": {
+    "largura": 43,
+    "altura": 50,
+    "quadros": [
+     {
+      "empunhadura": [
+       14,
+       14
+      ]
+     },
+     {
+      "empunhadura": [
+       13,
+       13
+      ]
+     },
+     {
+      "empunhadura": [
+       13,
+       14
+      ]
+     },
+     {
+      "empunhadura": [
+       12,
+       15
+      ]
+     }
+    ]
+   },
+   "espada_quadros": 4,
+   "escudo": {
+    "largura": 33,
+    "altura": 60,
+    "quadros": [
+     {
+      "empunhadura": [
+       14,
+       30
+      ]
+     },
+     {
+      "empunhadura": [
+       15,
+       29
+      ]
+     },
+     {
+      "empunhadura": [
+       15,
+       29
+      ]
+     },
+     {
+      "empunhadura": [
+       15,
+       29
+      ]
+     }
+    ]
+   },
+   "escudo_quadros": 4,
+   "arma_na_frente": true,
+   "escudo_na_frente": false
+  },
+  {
+   "chave": "attack_down",
+   "largura": 68,
+   "altura": 108,
+   "corpo": [
+    {
+     "mao_arma": [
+      14,
+      51
+     ],
+     "mao_escudo": [
+      53,
+      59
+     ]
+    },
+    {
+     "mao_arma": [
+      7,
+      43
+     ],
+     "mao_escudo": [
+      54,
+      66
+     ]
+    },
+    {
+     "mao_arma": [
+      10,
+      49
+     ],
+     "mao_escudo": [
+      54,
+      58
+     ]
+    }
+   ],
+   "espada": {
+    "largura": 53,
+    "altura": 68,
+    "quadros": [
+     {
+      "empunhadura": [
+       23,
+       51
+      ]
+     },
+     {
+      "empunhadura": [
+       33,
+       49
+      ]
+     },
+     {
+      "empunhadura": [
+       36,
+       38
+      ]
+     }
+    ]
+   },
+   "espada_quadros": 3,
+   "escudo": {
+    "largura": 52,
+    "altura": 57,
+    "quadros": [
+     {
+      "empunhadura": [
+       26,
+       27
+      ]
+     },
+     {
+      "empunhadura": [
+       26,
+       27
+      ]
+     },
+     {
+      "empunhadura": [
+       26,
+       28
+      ]
+     }
+    ]
+   },
+   "escudo_quadros": 3,
+   "arma_na_frente": true,
+   "escudo_na_frente": true
+  },
+  {
+   "chave": "attack_left",
+   "largura": 78,
+   "altura": 107,
+   "corpo": [
+    {
+     "mao_arma": [
+      14,
+      39
+     ],
+     "mao_escudo": [
+      58,
+      68
+     ]
+    },
+    {
+     "mao_arma": [
+      7,
+      39
+     ],
+     "mao_escudo": [
+      59,
+      59
+     ]
+    },
+    {
+     "mao_arma": [
+      20,
+      47
+     ],
+     "mao_escudo": [
+      59,
+      52
+     ]
+    }
+   ],
+   "espada": {
+    "largura": 64,
+    "altura": 60,
+    "quadros": [
+     {
+      "empunhadura": [
+       22,
+       45
+      ]
+     },
+     {
+      "empunhadura": [
+       42,
+       43
+      ]
+     },
+     {
+      "empunhadura": [
+       48,
+       30
+      ]
+     }
+    ]
+   },
+   "espada_quadros": 3,
+   "escudo": {
+    "largura": 41,
+    "altura": 59,
+    "quadros": [
+     {
+      "empunhadura": [
+       20,
+       29
+      ]
+     },
+     {
+      "empunhadura": [
+       21,
+       29
+      ]
+     },
+     {
+      "empunhadura": [
+       19,
+       28
+      ]
+     }
+    ]
+   },
+   "escudo_quadros": 3,
+   "arma_na_frente": true,
+   "escudo_na_frente": false
+  },
+  {
+   "chave": "attack_up",
+   "largura": 72,
+   "altura": 107,
+   "corpo": [
+    {
+     "mao_arma": [
+      61,
+      39
+     ],
+     "mao_escudo": [
+      14,
+      53
+     ]
+    },
+    {
+     "mao_arma": [
+      57,
+      60
+     ],
+     "mao_escudo": [
+      7,
+      38
+     ]
+    },
+    {
+     "mao_arma": [
+      63,
+      38
+     ],
+     "mao_escudo": [
+      16,
+      52
+     ]
+    }
+   ],
+   "espada": {
+    "largura": 47,
+    "altura": 69,
+    "quadros": [
+     {
+      "empunhadura": [
+       13,
+       44
+      ]
+     },
+     {
+      "empunhadura": [
+       13,
+       48
+      ]
+     },
+     {
+      "empunhadura": [
+       27,
+       51
+      ]
+     }
+    ]
+   },
+   "espada_quadros": 3,
+   "escudo": {
+    "largura": 54,
+    "altura": 53,
+    "quadros": [
+     {
+      "empunhadura": [
+       26,
+       26
+      ]
+     },
+     {
+      "empunhadura": [
+       27,
+       26
+      ]
+     },
+     {
+      "empunhadura": [
+       26,
+       26
+      ]
+     }
+    ]
+   },
+   "escudo_quadros": 3,
+   "arma_na_frente": false,
+   "escudo_na_frente": false
+  },
+  {
+   "chave": "attack_right",
+   "largura": 72,
+   "altura": 108,
+   "corpo": [
+    {
+     "mao_arma": [
+      63,
+      48
+     ],
+     "mao_escudo": [
+      16,
+      54
+     ]
+    },
+    {
+     "mao_arma": [
+      65,
+      39
+     ],
+     "mao_escudo": [
+      16,
+      60
+     ]
+    },
+    {
+     "mao_arma": [
+      60,
+      51
+     ],
+     "mao_escudo": [
+      11,
+      59
+     ]
+    }
+   ],
+   "espada": {
+    "largura": 62,
+    "altura": 51,
+    "quadros": [
+     {
+      "empunhadura": [
+       20,
+       37
+      ]
+     },
+     {
+      "empunhadura": [
+       16,
+       33
+      ]
+     },
+     {
+      "empunhadura": [
+       13,
+       26
+      ]
+     }
+    ]
+   },
+   "espada_quadros": 3,
+   "escudo": {
+    "largura": 47,
+    "altura": 57,
+    "quadros": [
+     {
+      "empunhadura": [
+       23,
+       28
+      ]
+     },
+     {
+      "empunhadura": [
+       23,
+       29
+      ]
+     },
+     {
+      "empunhadura": [
+       23,
+       28
+      ]
+     }
+    ]
+   },
+   "escudo_quadros": 3,
+   "arma_na_frente": true,
+   "escudo_na_frente": false
+  },
+  {
+   "chave": "death_down",
+   "largura": 62,
+   "altura": 102,
+   "corpo": [
+    {
+     "mao_arma": [
+      31,
+      60
+     ],
+     "mao_escudo": [
+      31,
+      60
+     ]
+    },
+    {
+     "mao_arma": [
+      32,
+      72
+     ],
+     "mao_escudo": [
+      32,
+      72
+     ]
+    },
+    {
+     "mao_arma": [
+      32,
+      78
+     ],
+     "mao_escudo": [
+      32,
+      78
+     ]
+    },
+    {
+     "mao_arma": [
+      30,
+      84
+     ],
+     "mao_escudo": [
+      30,
+      84
+     ]
+    }
+   ],
+   "espada": {
+    "largura": 49,
+    "altura": 66,
+    "quadros": [
+     {
+      "empunhadura": [
+       24,
+       48
+      ]
+     },
+     {
+      "empunhadura": [
+       28,
+       43
+      ]
+     },
+     {
+      "empunhadura": [
+       31,
+       40
+      ]
+     },
+     {
+      "empunhadura": [
+       34,
+       32
+      ]
+     }
+    ]
+   },
+   "espada_quadros": 4,
+   "escudo": {
+    "largura": 53,
+    "altura": 50,
+    "quadros": [
+     {
+      "empunhadura": [
+       26,
+       24
+      ]
+     },
+     {
+      "empunhadura": [
+       24,
+       24
+      ]
+     },
+     {
+      "empunhadura": [
+       22,
+       24
+      ]
+     },
+     {
+      "empunhadura": [
+       25,
+       24
+      ]
+     }
+    ]
+   },
+   "escudo_quadros": 4,
+   "arma_na_frente": true,
+   "escudo_na_frente": true
+  },
+  {
+   "chave": "death_left",
+   "largura": 68,
+   "altura": 99,
+   "corpo": [
+    {
+     "mao_arma": [
+      32,
+      59
+     ],
+     "mao_escudo": [
+      32,
+      59
+     ]
+    },
+    {
+     "mao_arma": [
+      33,
+      68
+     ],
+     "mao_escudo": [
+      33,
+      68
+     ]
+    },
+    {
+     "mao_arma": [
+      36,
+      75
+     ],
+     "mao_escudo": [
+      36,
+      75
+     ]
+    },
+    {
+     "mao_arma": [
+      34,
+      83
+     ],
+     "mao_escudo": [
+      34,
+      83
+     ]
+    }
+   ],
+   "espada": {
+    "largura": 52,
+    "altura": 50,
+    "quadros": [
+     {
+      "empunhadura": [
+       17,
+       37
+      ]
+     },
+     {
+      "empunhadura": [
+       34,
+       32
+      ]
+     },
+     {
+      "empunhadura": [
+       39,
+       25
+      ]
+     },
+     {
+      "empunhadura": [
+       37,
+       24
+      ]
+     }
+    ]
+   },
+   "espada_quadros": 4,
+   "escudo": {
+    "largura": 44,
+    "altura": 55,
+    "quadros": [
+     {
+      "empunhadura": [
+       22,
+       27
+      ]
+     },
+     {
+      "empunhadura": [
+       21,
+       27
+      ]
+     },
+     {
+      "empunhadura": [
+       19,
+       28
+      ]
+     },
+     {
+      "empunhadura": [
+       20,
+       27
+      ]
+     }
+    ]
+   },
+   "escudo_quadros": 4,
+   "arma_na_frente": true,
+   "escudo_na_frente": false
+  },
+  {
+   "chave": "death_up",
+   "largura": 64,
+   "altura": 98,
+   "corpo": [
+    {
+     "mao_arma": [
+      32,
+      58
+     ],
+     "mao_escudo": [
+      32,
+      58
+     ]
+    },
+    {
+     "mao_arma": [
+      33,
+      67
+     ],
+     "mao_escudo": [
+      33,
+      67
+     ]
+    },
+    {
+     "mao_arma": [
+      33,
+      73
+     ],
+     "mao_escudo": [
+      33,
+      73
+     ]
+    },
+    {
+     "mao_arma": [
+      31,
+      77
+     ],
+     "mao_escudo": [
+      31,
+      77
+     ]
+    }
+   ],
+   "espada": {
+    "largura": 45,
+    "altura": 69,
+    "quadros": [
+     {
+      "empunhadura": [
+       21,
+       51
+      ]
+     },
+     {
+      "empunhadura": [
+       26,
+       46
+      ]
+     },
+     {
+      "empunhadura": [
+       29,
+       39
+      ]
+     },
+     {
+      "empunhadura": [
+       32,
+       33
+      ]
+     }
+    ]
+   },
+   "espada_quadros": 4,
+   "escudo": {
+    "largura": 46,
+    "altura": 51,
+    "quadros": [
+     {
+      "empunhadura": [
+       22,
+       25
+      ]
+     },
+     {
+      "empunhadura": [
+       22,
+       25
+      ]
+     },
+     {
+      "empunhadura": [
+       22,
+       25
+      ]
+     },
+     {
+      "empunhadura": [
+       22,
+       25
+      ]
+     }
+    ]
+   },
+   "escudo_quadros": 4,
+   "arma_na_frente": false,
+   "escudo_na_frente": false
+  },
+  {
+   "chave": "death_right",
+   "largura": 60,
+   "altura": 100,
+   "corpo": [
+    {
+     "mao_arma": [
+      34,
+      59
+     ],
+     "mao_escudo": [
+      34,
+      59
+     ]
+    },
+    {
+     "mao_arma": [
+      32,
+      68
+     ],
+     "mao_escudo": [
+      32,
+      68
+     ]
+    },
+    {
+     "mao_arma": [
+      27,
+      80
+     ],
+     "mao_escudo": [
+      27,
+      80
+     ]
+    },
+    {
+     "mao_arma": [
+      30,
+      82
+     ],
+     "mao_escudo": [
+      30,
+      82
+     ]
+    }
+   ],
+   "espada": {
+    "largura": 48,
+    "altura": 41,
+    "quadros": [
+     {
+      "empunhadura": [
+       17,
+       27
+      ]
+     },
+     {
+      "empunhadura": [
+       19,
+       19
+      ]
+     },
+     {
+      "empunhadura": [
+       11,
+       21
+      ]
+     },
+     {
+      "empunhadura": [
+       32,
+       20
+      ]
+     }
+    ]
+   },
+   "espada_quadros": 4,
+   "escudo": {
+    "largura": 52,
+    "altura": 57,
+    "quadros": [
+     {
+      "empunhadura": [
+       25,
+       28
+      ]
+     },
+     {
+      "empunhadura": [
+       27,
+       28
+      ]
+     },
+     {
+      "empunhadura": [
+       22,
+       29
+      ]
+     },
+     {
+      "empunhadura": [
+       25,
+       29
+      ]
+     }
+    ]
+   },
+   "escudo_quadros": 4,
+   "arma_na_frente": true,
+   "escudo_na_frente": false
+  }
+ ]
+}

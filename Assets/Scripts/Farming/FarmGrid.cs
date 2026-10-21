@@ -6,7 +6,8 @@ public static class FarmGrid
 {
     public const float Cell = 1f;
     // Limite do mapa Campo (40x30), com 1 de margem.
-    private static readonly Rect Bounds = new Rect(-19f, -14f, 38f, 28f);
+    // Área do mapa: a mesma do limite (MapBounds), que é editável na cena.
+    private static Rect Bounds => MapBounds.Playable;
 
     private static readonly Dictionary<Vector2Int, FarmPlot> Plots = new Dictionary<Vector2Int, FarmPlot>();
 
@@ -16,7 +17,7 @@ public static class FarmGrid
     public static Vector2 Center(Vector2Int c) => new Vector2((c.x + 0.5f) * Cell, (c.y + 0.5f) * Cell);
 
     /// Ponto dentro do mapa de fora (Campo).
-    public static bool InMap(Vector2 p) => Bounds.Contains(p);
+    public static bool InMap(Vector2 p) => MapBounds.AnyContains(p);   // qualquer área da cena
 
     public static FarmPlot At(Vector2Int c) => Plots.TryGetValue(c, out var p) && p != null ? p : null;
 
@@ -27,7 +28,7 @@ public static class FarmGrid
     public static bool CanTill(Vector2Int c)
     {
         Vector2 center = Center(c);
-        if (!Bounds.Contains(center) || At(c) != null) return false;
+        if (!InMap(center) || At(c) != null) return false;
         foreach (var col in Physics2D.OverlapBoxAll(center, Vector2.one * Cell * 0.8f, 0f))
         {
             // Árvores têm colisor sólido sem Rigidbody; personagens e monstros não bloqueiam.

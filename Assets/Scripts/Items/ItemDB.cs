@@ -6,7 +6,7 @@ public enum ItemKind { Consumable, Equipment, Material, Placeable }
 public enum EquipSlot { Head, Armor, Gloves, Pants, Boots, Cape, Weapon, Shield, Accessory1, Accessory2 }
 
 /// Tipo de arma, como no Ragnarok: define o atraso base do ataque (ASPD, ver CharacterStats).
-public enum WeaponType { Fist, Dagger, Sword1H, Sword2H, Spear1H, Spear2H, Axe1H, Axe2H, Mace, Mace2H }
+public enum WeaponType { Fist, Dagger, Sword1H, Sword2H, Spear1H, Spear2H, Axe1H, Axe2H, Mace, Mace2H, Crossbow, Staff, Book, Instrument, Whip, Knuckle, Katar, Huuma }
 
 public class ItemDef
 {
@@ -15,6 +15,15 @@ public class ItemDef
     public ItemKind kind;
     public int maxStack = 99;
     public int heal;
+    /// Consumível: SP que recupera.
+    public int healSp;
+    /// Consumível: precisão extra por um tempo (bônus de comida, como no Ragnarok).
+    public int buffHit;
+    /// Consumível: ASPD extra pelo mesmo tempo (buffSeconds).
+    public int buffAspd;
+    /// Consumível: ATQ extra pelo mesmo tempo (buffSeconds).
+    public int buffAtk;
+    public float buffSeconds;
     /// Efeito especial ao usar (consumível): "retorno" = teleporta para o portal ativo.
     public string effect;
     /// Posicionável: o que é construído no mapa ao usar ("bau", "casa", "piso"), ou "raspar"
@@ -32,6 +41,18 @@ public class ItemDef
     public bool twoHanded;
     /// Arma: o tipo define a velocidade de ataque base (ASPD).
     public WeaponType weaponType;
+    /// Peso da arma (Ragnarok): entra no dano do Perfurar em Espiral. 0 = 100.
+    public int weight;
+    /// Alcance do ataque básico em quadrados (Ragnarok: lança 3). 0 = corpo a corpo comum.
+    public float range;
+    /// Nível mínimo para equipar (0 = qualquer).
+    public int equipLevel;
+    /// Nível da arma (Ragnarok 1–4) e espaços para cartas: informativos por enquanto.
+    public int weaponLevel, slots;
+    /// Efeitos que o jogo ainda não tem (mostrados no texto do item).
+    public string note;
+    /// Grupo do item nas abas da janela DEV ("espada", "lanca", "aljava"...).
+    public string category;
     public int atk, def, hp;
     /// Bônus de dano em % (soma ao dano de todos os golpes e habilidades: 1000 = +1000%, 11x).
     public int damagePct;
@@ -48,7 +69,13 @@ public class ItemDef
         if (hp != 0) parts.Add($"HP +{hp}");
         if (damagePct != 0) parts.Add($"Dano +{damagePct}%");
         for (int i = 0; i < 6; i++) if (attrs[i] != 0) parts.Add($"{CharacterStats.Names[i]} +{attrs[i]}");
-        return string.Join("  ", parts);
+        if (range > 0f) parts.Add($"Alcance {range:0}");
+        if (weight > 0) parts.Add($"Peso {weight}");
+        if (weaponLevel > 0) parts.Add($"Nível da arma {weaponLevel}");
+        if (slots > 0) parts.Add($"Espaços [{slots}]");
+        if (equipLevel > 0) parts.Add($"Requer nível {equipLevel}");
+        string text = string.Join("  ", parts);
+        return string.IsNullOrEmpty(note) ? text : text + "\n" + note;
     }
 
     public static string WeaponName(WeaponType t) => t switch
@@ -120,6 +147,102 @@ public static class ItemDB
         marteloGm.twoHanded = true;
         marteloGm.weaponType = WeaponType.Mace2H;
         marteloGm.damagePct = 1000;
+        // Bestas (Tools/extract_bestas.py): atacam de longe, a 5 quadrados do chão.
+        string[] bestas = { "Besta Simples", "Besta de Caça", "Besta de Aço", "Besta Reforçada", "Besta de Estribo",
+                            "Besta do Batedor", "Besta Escarlate", "Besta Pesada", "Besta Dourada", "Besta de Repetição",
+                            "Besta Real", "Besta Celeste", "Besta do Rubi", "Besta Solar", "Besta Ossuda",
+                            "Besta Sombria", "Besta da Floresta", "Besta de Gelo", "Besta Infernal", "Besta do Dragão" };
+        for (int i = 0; i < bestas.Length; i++)
+        {
+            var besta = Equip($"besta_{i + 1:00}", bestas[i], EquipSlot.Weapon, atk: 12 + i * 8, dex: i / 4);
+            besta.twoHanded = true;
+            besta.weaponType = WeaponType.Crossbow;
+        }
+        // Armas, escudos e aljavas das folhas de imagens/armas (Tools/extract_armas.py): ícones
+        // Items/<grupo>_NN. Ataque sobe com o número (as últimas das folhas são as mais fortes).
+        var grupos = new (string id, string nome, int n, WeaponType tipo, bool duasMaos)[]
+        {
+            ("espada", "Espada", 30, WeaponType.Sword1H, false), ("espada_magica", "Espada Mágica", 50, WeaponType.Sword1H, false),
+            ("lanca", "Lança", 15, WeaponType.Spear1H, false), ("alabarda", "Alabarda", 20, WeaponType.Spear2H, true),
+            ("machado", "Machado", 15, WeaponType.Axe1H, false), ("martelo_guerra", "Martelo de Guerra", 20, WeaponType.Mace2H, true),
+            ("maca", "Maça", 30, WeaponType.Mace, false), ("foice", "Foice", 20, WeaponType.Spear2H, true),
+            ("cajado", "Cajado", 30, WeaponType.Staff, false), ("katar", "Katar", 30, WeaponType.Katar, true),
+            ("soqueira", "Soqueira", 20, WeaponType.Knuckle, false), ("chicote", "Chicote", 30, WeaponType.Whip, false),
+            ("instrumento", "Instrumento", 30, WeaponType.Instrument, false), ("livro", "Livro", 30, WeaponType.Book, false),
+            ("shuriken", "Shuriken", 20, WeaponType.Huuma, true),
+        };
+        foreach (var g in grupos)
+            for (int i = 1; i <= g.n; i++)
+            {
+                var w = Equip($"{g.id}_{i:00}", $"{g.nome} {i}", EquipSlot.Weapon, atk: 10 + i * 160 / g.n);
+                w.weaponType = g.tipo;
+                w.twoHanded = g.duasMaos;
+                w.category = g.id;
+                // Lanças: peso como no Ragnarok (lança leve ~100, alabarda ~250) e sobe com a força.
+                if (g.tipo == WeaponType.Spear1H || g.tipo == WeaponType.Spear2H)
+                    w.weight = (g.duasMaos ? 200 : 100) + i * 10;
+            }
+        // Alabarda 20 = Lança de Caça (Ragnarok pré-Renewal, item 1422 Hunting_Spear): lança de uma
+        // mão, ATQ 180, peso 420, alcance 3, nível de arma 4, 1 espaço, nível 60.
+        var lancaCaca = Get("alabarda_20");
+        lancaCaca.name = "Lança de Caça";
+        lancaCaca.weaponType = WeaponType.Spear1H;
+        lancaCaca.twoHanded = false;
+        lancaCaca.atk = 180;
+        lancaCaca.weight = 420;
+        lancaCaca.range = 3f;
+        lancaCaca.weaponLevel = 4;
+        lancaCaca.slots = 1;
+        lancaCaca.equipLevel = 60;
+        lancaCaca.note = "Ignora a DEF de feras; 10% de chance de carne ao matar feras; 10% de chance de Golpe Articulado Nv 3 " +
+                         "(ainda sem efeito: o jogo não tem raças de monstro nem essa habilidade).";
+        for (int i = 1; i <= 30; i++)
+            Equip($"escudo_{i:00}", $"Escudo {i}", EquipSlot.Shield, def: 5 + i * 2).category = "escudo";
+        for (int i = 1; i <= 20; i++)
+            Add(new ItemDef { id = $"aljava_{i:00}", name = $"Aljava {i}", kind = ItemKind.Material, maxStack = 1, category = "aljava" });
+        // Consumíveis (Tools/extract_consumiveis.py): poções, bebidas e comidas. (id, nome, HP, SP)
+        var consumiveis = new (string id, string nome, int hp, int sp)[]
+        {
+            ("pocao_vermelha_p", "Poção Vermelha Pequena", 50, 0), ("pocao_vermelha_m", "Poção Vermelha Média", 150, 0),
+            ("pocao_vermelha_g", "Poção Vermelha Grande", 300, 0), ("pocao_azul_p", "Poção Azul Pequena", 0, 30),
+            ("pocao_azul_m", "Poção Azul Média", 0, 70), ("pocao_azul_g", "Poção Azul Grande", 0, 120),
+            ("pocao_verde_p", "Poção Verde Pequena", 80, 10), ("pocao_verde_m", "Poção Verde Média", 200, 20),
+            ("pocao_verde_g", "Poção Verde Grande", 400, 40), ("pocao_laranja_p", "Poção de Energia Pequena", 40, 40),
+            ("pocao_laranja_m", "Poção de Energia Média", 100, 100), ("pocao_laranja_g", "Poção de Energia Grande", 200, 200),
+            ("pocao_roxa_p", "Poção Lunar Pequena", 0, 150), ("pocao_roxa_g", "Poção Lunar Grande", 0, 300),
+            ("pocao_rosa_p", "Poção do Coração Pequena", 500, 0), ("pocao_rosa_g", "Poção do Coração Grande", 1000, 0),
+            ("pocao_branca", "Poção Branca", 325, 0), ("pocao_dourada", "Poção Dourada", 1000, 300),
+            ("cerveja", "Caneca de Cerveja", 20, 30), ("cerveja_metal", "Caneco de Cerveja", 30, 40),
+            ("vinho_tinto", "Vinho Tinto", 0, 50), ("vinho_branco", "Vinho Branco", 0, 50),
+            ("cafe", "Café", 0, 25), ("cha_verde", "Chá Verde", 10, 35),
+            ("frango_assado", "Frango Assado", 250, 0), ("bife", "Bife", 200, 0), ("sopa", "Sopa", 120, 20),
+            ("pao", "Pão", 60, 0), ("queijo_frutas", "Queijo e Frutas", 100, 10), ("torta_morango", "Torta de Morango", 90, 15),
+            ("prato_carne_arroz", "Arroz com Carne", 150, 0), ("espaguete", "Espaguete", 140, 0),
+            ("salmao_grelhado", "Salmão Grelhado", 170, 10), ("salada", "Salada", 60, 10), ("hamburguer", "Hambúrguer", 160, 0),
+            ("pizza", "Pizza", 180, 0), ("sopa_abobora", "Sopa de Abóbora", 100, 15), ("frango_brocolis", "Frango com Brócolis", 150, 0),
+            ("sushi", "Sushi", 130, 20), ("ovos_bacon", "Ovos com Bacon", 120, 0), ("panquecas", "Panquecas", 110, 10),
+            ("taco", "Taco", 120, 0), ("acai", "Açaí", 90, 30), ("omelete", "Omelete", 100, 0), ("feijoada", "Feijoada", 220, 0),
+            ("frango_arroz", "Frango com Arroz", 160, 0), ("ramen", "Ramen", 170, 15), ("ensopado", "Ensopado", 180, 10),
+            ("lasanha", "Lasanha", 190, 0), ("salada_caprese", "Salada Caprese", 70, 15), ("sanduiche", "Sanduíche", 100, 0),
+            ("batata_frita", "Batata Frita", 80, 0), ("risoto", "Risoto", 150, 10), ("burrito", "Burrito", 140, 0),
+            ("salada_frutas", "Salada de Frutas", 70, 25), ("bolo_chocolate", "Bolo de Chocolate", 90, 20),
+            ("milkshake", "Milk-shake", 50, 30), ("mingau_banana", "Mingau de Banana", 80, 10), ("bife_milho", "Bife com Milho", 200, 0),
+            ("pudim", "Pudim", 80, 20),
+        };
+        foreach (var c in consumiveis)
+            Add(new ItemDef { id = c.id, name = c.nome, kind = ItemKind.Consumable, heal = c.hp, healSp = c.sp });
+        // Pudim: +100 de precisão por 5 minutos.
+        var pudim = Get("pudim");
+        pudim.buffHit = 100;
+        pudim.buffSeconds = 300f;
+        // Bife: +100 de ASPD por 5 minutos (o máximo continua 190).
+        var bife = Get("bife");
+        bife.buffAspd = 100;
+        bife.buffSeconds = 300f;
+        // Hambúrguer: +100 de ATQ por 5 minutos.
+        var hamburguer = Get("hamburguer");
+        hamburguer.buffAtk = 100;
+        hamburguer.buffSeconds = 300f;
         Add(new ItemDef { id = "morango", name = "Morango", kind = ItemKind.Material });
         Add(new ItemDef { id = "semente_morango", name = "Semente de Morango", kind = ItemKind.Material });
         Equip("colar_esmeralda", "Colar de Esmeralda", EquipSlot.Accessory1, intl: 2);

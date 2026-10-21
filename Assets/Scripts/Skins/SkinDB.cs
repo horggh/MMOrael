@@ -20,6 +20,10 @@ public class SkinDef
 {
     public string id, name;
     public float ppu = 32f;
+    /// Corpo sem arma: a arma e o escudo equipados são camadas por cima (ModularLayers),
+    /// encaixadas pelas âncoras de Resources/<modularData>.json.
+    public bool modular;
+    public string modularData;
     public readonly Dictionary<string, SkinAnim> anims = new Dictionary<string, SkinAnim>();
 
     public SkinAnim Get(string anim) => anims.TryGetValue(anim, out var a) && a.sprites != null && a.sprites.Length > 0 ? a : null;
@@ -58,18 +62,22 @@ public static class SkinDB
     {
         _all = new List<SkinDef>();
 
-        // Cavaleiro: a arte original (Resources/Characters/cav_*), quadros de 64x48.
-        var knight = new SkinDef { id = "cavaleiro", name = "Cavaleiro", ppu = 32f };
-        Add(knight, "walk_down", "Characters/cav_walk_down", 4, false);
-        Add(knight, "walk_side", "Characters/cav_walk_side", 4, true);
-        Add(knight, "walk_up", "Characters/cav_walk_up", 4, false);
-        Add(knight, "run_side", "Characters/cav_run_side", 4, false);
-        Add(knight, "attack_side", "Characters/cav_attack_side", 4, false);
+        // Cavaleiro (Tools/extract_sheet_cavaleiro.py): na altura do "camadas" (~106px, PPU 64).
+        // Golpe sem a espada desenhada (Tools/desarmar_skins.py): a espada e o escudo
+        // equipados são camadas, como no "Cavaleiro (camadas)".
+        var knight = new SkinDef { id = "cavaleiro", name = "Cavaleiro", ppu = 64f, modular = true,
+                                   modularData = "Characters/Skins/cavaleiro/ancoras" };
+        Add(knight, "walk_down", "Characters/Skins/cavaleiro/walk_down", 4, false);
+        Add(knight, "walk_side", "Characters/Skins/cavaleiro/walk_side", 4, true);
+        Add(knight, "walk_up", "Characters/Skins/cavaleiro/walk_up", 4, false);
+        Add(knight, "run_side", "Characters/Skins/cavaleiro/run_side", 4, false);
+        Add(knight, "attack_side", "Characters/Skins/cavaleiro/sem_arma/attack_side", 4, false);
         _all.Add(knight);
 
         // Andarilho: cabelo branco e cachecol (Tools/build_skin_andarilho.py). A arte é mais
-        // detalhada: 40 px por unidade deixa o tamanho perto do cavaleiro.
-        var wanderer = new SkinDef { id = "andarilho", name = "Andarilho", ppu = 40f };
+        // detalhada; na altura do "camadas" (PPU 64).
+        var wanderer = new SkinDef { id = "andarilho", name = "Andarilho", ppu = 64f, modular = true,
+                                     modularData = "Characters/Skins/andarilho/ancoras" };
         const string W = "Characters/Skins/andarilho/";
         Add(wanderer, "idle_down", W + "idle_down", 1, false);
         Add(wanderer, "walk_down", W + "walk_down", 4, false);
@@ -77,11 +85,39 @@ public static class SkinDB
         Add(wanderer, "walk_up", W + "walk_up", 4, false);
         Add(wanderer, "run_side", W + "run_side", 8, false);
         Add(wanderer, "run_up", W + "run_up", 3, false);
-        Add(wanderer, "attack_down", W + "attack_down", 3, false);
-        Add(wanderer, "attack_side", W + "attack_side", 4, false);
-        Add(wanderer, "attack_up", W + "attack_up", 4, false);
-        Add(wanderer, "death", W + "death", 6, false);
+        Add(wanderer, "attack_down", W + "sem_arma/attack_down", 3, false);
+        Add(wanderer, "attack_side", W + "sem_arma/attack_side", 4, false);
+        Add(wanderer, "attack_up", W + "sem_arma/attack_up", 4, false);
+        Add(wanderer, "death", W + "sem_arma/death", 6, false);
         _all.Add(wanderer);
+
+        // Cavaleiro em camadas (Tools/extract_modular.py): corpo sem arma, nas 4 direções; a
+        // espada e o escudo equipados aparecem por cima, encaixados na mão de cada quadro.
+        // 64 px por unidade: a arte tem o dobro de detalhe das outras skins, no mesmo tamanho.
+        var layered = new SkinDef { id = "modular", name = "Cavaleiro (camadas)", ppu = 64f, modular = true,
+                                    modularData = "Characters/Skins/modular/ancoras" };
+        const string M = "Characters/Skins/modular/corpo/";
+        foreach (var dir in new[] { "down", "left", "up", "right" })
+        {
+            Add(layered, "walk_" + dir, M + "walk_" + dir, 4, false);
+            Add(layered, "attack_" + dir, M + "attack_" + dir, 3, false);
+            Add(layered, "death_" + dir, M + "death_" + dir, 4, false);
+        }
+        _all.Add(layered);
+
+        // Cavaleiro montado (Tools/extract_montaria.py): 8 direções, com a espada e os efeitos
+        // do golpe desenhados (sem camadas de arma/escudo, a pedido).
+        var mounted = new SkinDef { id = "montaria", name = "Cavaleiro montado", ppu = 64f };
+        const string R = "Characters/Skins/montaria/";
+        foreach (var dir in new[] { "down", "downleft", "left", "upleft", "up", "upright", "right", "downright" })
+        {
+            Add(mounted, "idle_" + dir, R + "idle_" + dir, 1, false);
+            Add(mounted, "walk_" + dir, R + "walk_" + dir, 3, false);
+            Add(mounted, "run_" + dir, R + "run_" + dir, 3, false);
+            Add(mounted, "attack_" + dir, R + "attack_" + dir, 3, false);
+        }
+        Add(mounted, "death", R + "death", 4, false);
+        _all.Add(mounted);
     }
 
     private static void Add(SkinDef skin, string anim, string file, int frames, bool facesLeft)

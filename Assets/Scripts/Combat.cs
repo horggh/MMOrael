@@ -65,10 +65,49 @@ public static class Combat
         target.TakeDamage(damage, from, knockback);
     }
 
+    /// Golpe de arma de habilidade que pode errar: chance de acerto (80 + PRECISÃO − ESQUIVA)
+    /// aumentada em hitBonusPercent %, sem crítico. Ex.: Impacto Explosivo (+10% por nível).
+    public static AttackResult ApplySkillHit(CharacterStats attacker, Health target, Vector2 from, float knockback,
+                                             float mult, float hitBonusPercent)
+    {
+        var defender = target.GetComponent<CharacterStats>();
+        float chance = (80f + attacker.Hit - (defender != null ? defender.Flee : 0)) * (1f + hitBonusPercent / 100f);
+        if (UnityEngine.Random.value * 100f >= Mathf.Clamp(chance, 5f, 100f))
+        {
+            var miss = new AttackResult { kind = HitKind.Miss, damage = 0, skill = true };
+            Resolved?.Invoke(target.transform.position, miss);
+            return miss;
+        }
+        var result = Resolve(attacker, defender, mult, true);
+        result.skill = true;
+        Resolved?.Invoke(target.transform.position, result);
+        target.TakeDamage(result.damage, from, knockback);
+        return result;
+    }
+
+    /// Golpe de habilidade com dano calculado pela própria habilidade, que ignora a DEF: pode
+    /// errar (80 + PRECISÃO − ESQUIVA), vale o bônus de dano do equipamento e a redução do MVP.
+    public static AttackResult ApplyIgnoreDef(CharacterStats attacker, Health target, Vector2 from, float knockback, float damage)
+    {
+        var defender = target.GetComponent<CharacterStats>();
+        float chance = 80f + attacker.Hit - (defender != null ? defender.Flee : 0);
+        if (UnityEngine.Random.value * 100f >= Mathf.Clamp(chance, 5f, 100f))
+        {
+            var miss = new AttackResult { kind = HitKind.Miss, damage = 0, skill = true };
+            Resolved?.Invoke(target.transform.position, miss);
+            return miss;
+        }
+        var result = new AttackResult { kind = HitKind.Hit, damage = Taken(defender, damage * attacker.DamageMultiplier), skill = true };
+        Resolved?.Invoke(target.transform.position, result);
+        target.TakeDamage(result.damage, from, knockback);
+        return result;
+    }
+
     public static AttackResult Apply(CharacterStats attacker, Health target, Vector2 from, float knockback,
                                      float mult = 1f, bool skill = false)
     {
         var defender = target.GetComponent<CharacterStats>();
+        if (!skill && attacker != null && attacker.FireBonus) mult *= 1.2f;
         var result = Resolve(attacker, defender, mult, skill);
         result.skill = skill;
         Resolved?.Invoke(target.transform.position, result);

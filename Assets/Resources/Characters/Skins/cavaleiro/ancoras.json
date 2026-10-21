@@ -1,0 +1,77 @@
+{
+ "ppu": 64,
+ "escala_espada": 1.0,
+ "escala_escudo": 0.65,
+ "biblioteca": "Characters/Skins/modular/ancoras",
+ "anims": [
+  {
+   "chave": "attack_side",
+   "largura": 188,
+   "altura": 142,
+   "corpo": [
+    {
+     "mao_arma": [
+      124,
+      94
+     ],
+     "mao_escudo": [
+      45,
+      108
+     ],
+     "arma_chave": "attack_up",
+     "arma_quadro": 0,
+     "arma_escala": 1.595,
+     "escudo_chave": "attack_right",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      122,
+      92
+     ],
+     "mao_escudo": [
+      44,
+      104
+     ],
+     "arma_chave": "attack_right",
+     "arma_quadro": 1,
+     "arma_escala": 1.424,
+     "escudo_chave": "attack_right",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      122,
+      92
+     ],
+     "mao_escudo": [
+      56,
+      108
+     ],
+     "arma_chave": "attack_right",
+     "arma_quadro": 1,
+     "arma_escala": 1.424,
+     "escudo_chave": "attack_right",
+     "escudo_quadro": 0
+    },
+    {
+     "mao_arma": [
+      92,
+      103
+     ],
+     "mao_escudo": [
+      44,
+      108
+     ],
+     "arma_chave": "death_right",
+     "arma_quadro": 1,
+     "arma_escala": 2.0,
+     "escudo_chave": "attack_right",
+     "escudo_quadro": 0
+    }
+   ],
+   "arma_na_frente": true,
+   "escudo_na_frente": false
+  }
+ ]
+}

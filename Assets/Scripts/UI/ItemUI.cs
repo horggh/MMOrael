@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -307,16 +308,26 @@ public class ItemUI : MonoBehaviour
         _px = UIKit.Px;
         _eq.r.size = new Vector2(EqW * _px, (EqH + EqStatsH) * _px);
 
-        if (_inv.show) DrawInventoryWindow(e, mouse);
-
-        if (_sk.show && _skills != null) DrawSkillWindow(e, mouse);
-        if (_eq.show && _equip != null) DrawEquipWindow(e, mouse);
-        DrawChestWindow(e, mouse);
-        if (DevTools)
+        // Janelas na ordem de profundidade (a clicada vem para a frente; ver WindowStack).
+        GUI.depth = 0;
+        WindowStack.Report("inv", _inv.show, _inv.ScreenRect);
+        WindowStack.Report("sk", _sk.show && _skills != null, _sk.ScreenRect);
+        WindowStack.Report("eq", _eq.show && _equip != null, _eq.r);
+        WindowStack.Report("chest", _chestShown != null && _chestWin.show, _chestWin.ScreenRect);
+        WindowStack.Report("dev", DevTools && _dev.show, _dev.ScreenRect);
+        if (e.type == EventType.MouseDown) WindowStack.Focus(mouse);
+        foreach (var id in WindowStack.Order.ToArray())
         {
-            if (_dev.show) DrawDevWindow(e, mouse);
-            DrawDevButton(e, mouse);
+            switch (id)
+            {
+                case "inv": if (_inv.show) WindowStack.Draw(id, () => DrawInventoryWindow(e, mouse)); break;
+                case "sk": if (_sk.show && _skills != null) WindowStack.Draw(id, () => DrawSkillWindow(e, mouse)); break;
+                case "eq": if (_eq.show && _equip != null) WindowStack.Draw(id, () => DrawEquipWindow(e, mouse)); break;
+                case "chest": WindowStack.Draw(id, () => DrawChestWindow(e, mouse)); break;
+                case "dev": if (DevTools && _dev.show) WindowStack.Draw(id, () => DrawDevWindow(e, mouse)); break;
+            }
         }
+        if (DevTools) DrawDevButton(e, mouse);
 
         for (int i = 0; i < ActionBar.Size; i++) DrawBarSlot(i);
 
@@ -331,6 +342,9 @@ public class ItemUI : MonoBehaviour
 
         PointerOverUI = Over(mouse) || _dragSrc != Src.None;
     }
+
+    /// O espaço está sob o mouse e nenhuma janela de cima o cobre.
+    private static bool Hit(string window, Rect r, Vector2 mouse) => r.Contains(mouse) && !WindowStack.CoveredAt(window, mouse);
 
     private void DrawBarSlot(int i)
     {
@@ -460,7 +474,7 @@ public class ItemUI : MonoBehaviour
             UIKit.Slot(slot, d.icon, slot.Contains(mouse) && _dragSrc == Src.None, lv == 0 || !hasTool);
 
             UIKit.Label(_sk.Art(SkillTextX, y + 2, 210, 22), d.name, 16, lv > 0 && hasTool ? UIKit.Gold : UIKit.Dim);
-            string info = hasTool ? $"Nv {lv}/{d.maxLevel}    SP {d.spCost}"
+            string info = hasTool ? $"Nv {lv}/{d.maxLevel}    SP {d.SpAt(lv)}"
                                   : $"Requer {ItemDB.Get(d.requiredTool)?.name ?? d.requiredTool} equipado(a)";
             UIKit.Label(_sk.Art(SkillTextX, y + 28, 210, 20), info, hasTool ? 14 : 12, hasTool ? UIKit.Cream : UIKit.Dim);
 
@@ -648,22 +662,28 @@ public class ItemUI : MonoBehaviour
             if (DevCheats.InfiniteHp && h != null && !h.IsDead) h.Restore(h.maxHp);
             SaveGame.Save();
         }
-        y += 30;
+        y += 26;
         if (DevToggle(y, "SP infinito", "As habilidades não gastam SP.", DevCheats.InfiniteSp))
         {
             DevCheats.InfiniteSp = !DevCheats.InfiniteSp;
             if (DevCheats.InfiniteSp) _skills.RefillSp();
             SaveGame.Save();
         }
-        y += 30;
+        y += 26;
+        if (DevToggle(y, "Sem nível mín.", "Equipa itens sem o nível exigido.", DevCheats.IgnoreEquipLevel))
+        {
+            DevCheats.IgnoreEquipLevel = !DevCheats.IgnoreEquipLevel;
+            SaveGame.Save();
+        }
+        y += 26;
         DevNumber(y, "XP ×", "Multiplicador da XP dos monstros (1 = real).", ref _rateText,
                   ExpTable.Rate, ExpTable.MaxRate, v => ExpTable.Rate = v);
-        y += 30;
+        y += 26;
         DevNumber(y, "Dano ×", "Multiplicador do dano que você causa (1 = normal).", ref _damageText,
                   DevCheats.DamageRate, DevCheats.MaxDamageRate, v => DevCheats.DamageRate = v);
-        y += 30;
+        y += 26;
         DevBoss(y);
-        y += 30;
+        y += 26;
         DevMaxAttributes(y);
     }
 
@@ -721,10 +741,13 @@ public class ItemUI : MonoBehaviour
 
     /// Item do desenvolvedor solto num espaço: completa a pilha ou ocupa o espaço vazio;
     /// em espaço com outro item, vai para qualquer lugar livre da mesma lista.
+    /// Quanto a janela DEV dá por clique: materiais de 10 em 10, o resto de 1 em 1.
+    private static int DevAmount(ItemDef d) => d != null && d.kind == ItemKind.Material ? 10 : 1;
+
     private static void GiveInto(ItemStack[] slots, int index, string id, bool fullStack)
     {
         int max = ItemDB.Get(id)?.maxStack ?? 99;
-        int amount = fullStack ? max : 1;
+        int amount = fullStack ? max : Mathf.Min(max, DevAmount(ItemDB.Get(id)));
         var s = slots[index];
         if (s.Empty) { s.id = id; s.count = amount; return; }
         if (s.id == id) { s.count = Mathf.Min(max, s.count + amount); return; }
@@ -756,7 +779,7 @@ public class ItemUI : MonoBehaviour
             {
                 for (int i = 0; i < Inventory.Size; i++)
                 {
-                    if (!InvRect(i).Contains(mouse) || _bag.slots[i].Empty) continue;
+                    if (!Hit("inv", InvRect(i), mouse) || _bag.slots[i].Empty) continue;
                     if (e.button == 1)
                     {
                         // Com o baú aberto, o clique direito guarda a pilha nele em vez de usar.
@@ -772,8 +795,8 @@ public class ItemUI : MonoBehaviour
                 var items = DevList();
                 for (int i = 0; i < items.Count; i++)
                 {
-                    if (!DevRect(i).Contains(mouse)) continue;
-                    if (e.button == 1) { _bag.Add(items[i].id, 1); e.Use(); return; }
+                    if (!Hit("dev", DevRect(i), mouse)) continue;
+                    if (e.button == 1) { _bag.Add(items[i].id, DevAmount(items[i])); e.Use(); return; }
                     if (e.button == 0) { Begin(Src.Dev, i, items[i].id, mouse); e.Use(); return; }
                 }
             }
@@ -781,7 +804,7 @@ public class ItemUI : MonoBehaviour
             {
                 for (int i = 0; i < StorageChest.Size; i++)
                 {
-                    if (!ChestRect(i).Contains(mouse) || _chestShown.slots[i].Empty) continue;
+                    if (!Hit("chest", ChestRect(i), mouse) || _chestShown.slots[i].Empty) continue;
                     if (e.button == 1) { Transfer(_chestShown.slots, i, _bag.slots); e.Use(); return; }
                     if (e.button == 0) { Begin(Src.Chest, i, _chestShown.slots[i].id, mouse); e.Use(); return; }
                 }
@@ -792,7 +815,7 @@ public class ItemUI : MonoBehaviour
                 for (int i = 0; i < list.Count; i++)
                 {
                     // Só dá para arrastar o que já foi aprendido.
-                    if (!SkillRect(i).Contains(mouse) || _skills.Level(list[i].id) == 0) continue;
+                    if (!Hit("sk", SkillRect(i), mouse) || _skills.Level(list[i].id) == 0) continue;
                     Begin(Src.Skill, i, ActionBar.SkillPrefix + list[i].id, mouse); e.Use(); return;
                 }
             }
@@ -801,7 +824,7 @@ public class ItemUI : MonoBehaviour
                 for (int i = 0; i < Equipment.Size; i++)
                 {
                     // Clique num espaço vestido devolve o item ao inventário.
-                    if (!EqRect((EquipSlot)i).Contains(mouse) || string.IsNullOrEmpty(_equip.slots[i])) continue;
+                    if (!Hit("eq", EqRect((EquipSlot)i), mouse) || string.IsNullOrEmpty(_equip.slots[i])) continue;
                     _equip.Unequip((EquipSlot)i); e.Use(); return;
                 }
             }
@@ -816,14 +839,14 @@ public class ItemUI : MonoBehaviour
             bool click = (mouse - _downPos).sqrMagnitude < 16f;
             int barTarget = -1, invTarget = -1;
             for (int i = 0; i < ActionBar.Size; i++) if (BarRect(i).Contains(mouse)) barTarget = i;
-            if (_inv.show) for (int i = 0; i < Inventory.Size; i++) if (InvRect(i).Contains(mouse)) invTarget = i;
+            if (_inv.show) for (int i = 0; i < Inventory.Size; i++) if (Hit("inv", InvRect(i), mouse)) invTarget = i;
 
             int eqTarget = -1;
             if (_eq.show && _equip != null)
-                for (int i = 0; i < Equipment.Size; i++) if (EqRect((EquipSlot)i).Contains(mouse)) eqTarget = i;
+                for (int i = 0; i < Equipment.Size; i++) if (Hit("eq", EqRect((EquipSlot)i), mouse)) eqTarget = i;
             int chestTarget = -1;
             if (_chestShown != null)
-                for (int i = 0; i < StorageChest.Size; i++) if (ChestRect(i).Contains(mouse)) chestTarget = i;
+                for (int i = 0; i < StorageChest.Size; i++) if (Hit("chest", ChestRect(i), mouse)) chestTarget = i;
 
             if (_dragSrc == Src.Dev)
             {
@@ -871,21 +894,21 @@ public class ItemUI : MonoBehaviour
         for (int i = 0; i < ActionBar.Size; i++) if (BarRect(i).Contains(mouse)) id = _bar.slots[i];
         if (_inv.show)
             for (int i = 0; i < Inventory.Size; i++)
-                if (InvRect(i).Contains(mouse) && !_bag.slots[i].Empty) { id = _bag.slots[i].id; stack = _bag.slots[i]; }
-        if (_sk.show) for (int i = 0; i < SkillDB.All.Count; i++) if (SkillRect(i).Contains(mouse)) id = ActionBar.SkillPrefix + SkillDB.All[i].id;
+                if (Hit("inv", InvRect(i), mouse) && !_bag.slots[i].Empty) { id = _bag.slots[i].id; stack = _bag.slots[i]; }
+        if (_sk.show) for (int i = 0; i < SkillDB.All.Count; i++) if (Hit("sk", SkillRect(i), mouse)) id = ActionBar.SkillPrefix + SkillDB.All[i].id;
         if (_chestShown != null)
             for (int i = 0; i < StorageChest.Size; i++)
-                if (ChestRect(i).Contains(mouse) && !_chestShown.slots[i].Empty) { id = _chestShown.slots[i].id; stack = _chestShown.slots[i]; }
+                if (Hit("chest", ChestRect(i), mouse) && !_chestShown.slots[i].Empty) { id = _chestShown.slots[i].id; stack = _chestShown.slots[i]; }
         if (DevTools && _dev.show)
         {
             var list = DevList();
-            for (int i = 0; i < list.Count; i++) if (DevRect(i).Contains(mouse)) id = list[i].id;
+            for (int i = 0; i < list.Count; i++) if (Hit("dev", DevRect(i), mouse)) id = list[i].id;
         }
         string emptySlot = null;
         if (_eq.show && _equip != null)
             for (int i = 0; i < Equipment.Size; i++)
             {
-                if (!EqRect((EquipSlot)i).Contains(mouse)) continue;
+                if (!Hit("eq", EqRect((EquipSlot)i), mouse)) continue;
                 if (string.IsNullOrEmpty(_equip.slots[i])) emptySlot = Equipment.SlotNames[i];
                 else id = _equip.slots[i];
             }
@@ -904,14 +927,20 @@ public class ItemUI : MonoBehaviour
         {
             var s = SkillDB.Get(SkillId(id));
             if (s == null) return;
-            text = $"{s.name}\n{s.description}\nSP {s.spCost}   Recarga {s.cooldown:0.#}s";
+            int slv = _skills != null ? Mathf.Max(1, _skills.Level(s.id)) : 1;
+            text = $"{s.name}\n{s.description}\nSP {s.SpAt(slv)}   Recarga {s.CooldownAt(slv):0.#}s" +
+                   (s.CastAt(slv) > 0f ? $"   Conjuração {s.CastAt(slv):0.#}s" : "");
         }
         else
         {
             var d = ItemDB.Get(id);
             if (d == null) return;
             text = d.effect == "retorno" ? $"{d.name}\nClique direito: volta para o portal ativo"
-                 : d.heal > 0 ? $"{d.name}\nRecupera {d.heal} HP"
+                 : d.heal > 0 || d.healSp > 0 ? $"{d.name}\nRecupera " +
+                   (d.heal > 0 && d.healSp > 0 ? $"{d.heal} HP e {d.healSp} SP" : d.heal > 0 ? $"{d.heal} HP" : $"{d.healSp} SP") +
+                   (d.buffHit > 0 ? $"\n+{d.buffHit} de precisão por {Mathf.RoundToInt(d.buffSeconds / 60f)} min" : "") +
+                   (d.buffAspd > 0 ? $"\n+{d.buffAspd} de ASPD por {Mathf.RoundToInt(d.buffSeconds / 60f)} min" : "") +
+                   (d.buffAtk > 0 ? $"\n+{d.buffAtk} de ATQ por {Mathf.RoundToInt(d.buffSeconds / 60f)} min" : "")
                  : d.kind == ItemKind.Equipment ? $"{d.name}\n{d.BonusText()}"
                  : d.place == "raspar" ? $"{d.name}\nClique direito: raspar pisos e papel (voltam para a bolsa)"
                  : d.place == "janela" ? $"{d.name}\nClique direito: colocar na parede (dentro de casa)"

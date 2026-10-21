@@ -77,8 +77,19 @@ public class PlayerController2D : MonoBehaviour
     private int _chaseStuck;
     private int _whiffs;   // golpes seguidos que não acertaram nada
 
+    /// O personagem da cena (o primeiro a acordar). Cópias (ex.: o mapa copiado junto com ele)
+    /// são desligadas: senão as duas andam juntas, cada uma com a barra de vida.
+    public static PlayerController2D Main { get; private set; }
+
     private void Awake()
     {
+        if (Main != null && Main != this && Main.gameObject.activeInHierarchy)
+        {
+            Debug.LogWarning($"Há mais de um personagem na cena: \"{name}\" foi desligado. Apague a cópia na Hierarchy.", this);
+            gameObject.SetActive(false);
+            return;
+        }
+        Main = this;
         _body = GetComponent<Rigidbody2D>();
         _sprite = GetComponentInChildren<SpriteRenderer>();
         _health = GetComponent<Health>();
@@ -114,7 +125,7 @@ public class PlayerController2D : MonoBehaviour
         }
 
         // Posicionando um móvel, o clique é do posicionamento (ver Placement).
-        bool overUI = CombatHUD.PointerOverUI || ItemUI.PointerOverUI || Building.PointerOverUI || Placement.BlocksInput;
+        bool overUI = CombatHUD.PointerOverUI || ItemUI.PointerOverUI || Building.PointerOverUI || MonsterSheet.PointerOverUI || Placement.BlocksInput;
         Vector2 mouse = MouseWorld();
         Health hovered = overUI ? null : MonsterAt(mouse);
         if (_aimSkill != null) CursorManager.SetTarget(hovered != null);
@@ -157,13 +168,13 @@ public class PlayerController2D : MonoBehaviour
                 _aimSkill = null;
             }
             else if (hovered != null) { _target = hovered; _moveTo = null; _holdMove = false; }
-            else { _target = null; _moveTo = mouse; _holdMove = true; }
+            else { LogMissedClick(mouse); _target = null; _moveTo = mouse; _holdMove = true; }
         }
 
         // Habilidade tem preferência sobre o golpe básico: no alcance, corta o golpe básico em
         // andamento (o dano dele não sai) e a habilidade sai na hora.
         if (_queuedSkill != null && _attackTimer > 0f && _activeSkill == null && _strikePending &&
-            _target != null && DistanceTo(_target) <= engageRange && _skills.CanUse(_queuedSkill.id))
+            _target != null && DistanceTo(_target) <= Reach && _skills.CanUse(_queuedSkill.id))
         {
             _attackTimer = 0f; _hitTimer = -1f; _strikePending = false;
         }
@@ -185,7 +196,7 @@ public class PlayerController2D : MonoBehaviour
             _moveTo = null;
         }
         else if (_target != null && _attackTimer <= 0f && (Time.time >= _nextAttackAt || _queuedSkill != null) &&
-                 (DistanceTo(_target) <= engageRange || ChaseBlocked()))
+                 (DistanceTo(_target) <= Reach || ChaseBlocked()))
         {
             Vector2 dir = (Vector2)_target.transform.position + Vector2.up * 0.3f - Chest;
             SkillDef skill = _queuedSkill != null && _skills.Spend(_queuedSkill) ? _queuedSkill : null;
@@ -223,8 +234,13 @@ public class PlayerController2D : MonoBehaviour
 
         if (def.kind == SkillKind.AreaSelf)
         {
-            if (_attackTimer > 0f || !_skills.Spend(def)) return;
-            Explode(def);
+            if (_attackTimer > 0f || !_skills.CanUse(def.id)) return;
+            // Impacto Explosivo custa vida (20 no Nv 1 até 16 no Nv 10); sem vida, não sai.
+            int lv = Mathf.Max(1, _skills.Level(def.id));
+            if (def.id == "impacto_explosivo" && (_health == null || !_health.PayHp(20 - (lv - 1) / 2))) return;
+            if (!_skills.Spend(def)) return;
+            if (def.id == "impacto_explosivo") MagnumBreak(def, lv);
+            else Explode(def);
             BeginAttack(MouseWorld() - Chest, null, strike: false);   // só a animação; o dano já saiu
             return;
         }
@@ -242,7 +258,7 @@ public class PlayerController2D : MonoBehaviour
     {
         if (_chaseStuck < 20) return false;   // ~0,4 s sem avançar (contado no FixedUpdate)
         _chaseStuck = 0;
-        if (DistanceTo(_target) <= engageRange * 1.8f) return true;
+        if (DistanceTo(_target) <= Reach * 1.8f) return true;
         _target = null;
         _queuedSkill = null;
         return false;
@@ -256,7 +272,30 @@ public class PlayerController2D : MonoBehaviour
                              k.upArrowKey.isPressed || k.downArrowKey.isPressed);
     }
 
+    /// Larga alvo, caminho e ação pendente (ex.: ao passar por um portal de mapa).
+    public void ClearOrders()
+    {
+        _target = null; _moveTo = null; _holdMove = false; _queuedSkill = null; _queuedTool = null; _aimSkill = null;
+    }
+
     private Vector2 Chest => (Vector2)transform.position + Vector2.up * 0.45f;
+
+    /// Com besta, ataca de longe: 5 quadrados do chão.
+    private bool Ranged => _stats != null && _stats.Weapon == WeaponType.Crossbow;
+    /// Alcance do ataque básico da arma na mão (lança de alcance 3), em unidades; 0 = comum.
+    private float WeaponRange
+    {
+        get
+        {
+            var eq = GetComponent<Equipment>();
+            var w = eq != null ? ItemDB.Get(eq.Get(EquipSlot.Weapon)) : null;
+            return w != null ? w.range * FarmGrid.Cell : 0f;
+        }
+    }
+
+    private float Reach => Ranged ? 5f * FarmGrid.Cell
+        : _queuedSkill != null && _queuedSkill.range > 0f ? Mathf.Max(engageRange, _queuedSkill.range * FarmGrid.Cell)
+        : Mathf.Max(engageRange, WeaponRange);
 
     private float DistanceTo(Health h) => Vector2.Distance(transform.position, h.transform.position);
 
@@ -273,10 +312,28 @@ public class PlayerController2D : MonoBehaviour
         {
             if (h == _health || h.IsDead) continue;
             var sr = h.GetComponentInChildren<SpriteRenderer>();
-            if (sr == null || !sr.bounds.Contains(new Vector3(p.x, p.y, sr.bounds.center.z))) continue;
+            var col = h.GetComponent<Collider2D>();
+            bool onBody = col != null && col.enabled && col.OverlapPoint(p);
+            if (!onBody && (sr == null || !sr.bounds.Contains(new Vector3(p.x, p.y, sr.bounds.center.z)))) continue;
             if (h.transform.position.y < bestY) { bestY = h.transform.position.y; best = h; }
         }
         return best;
+    }
+
+    /// Diagnóstico: clique que não pegou monstro, mas havia um perto (o que impediu).
+    private void LogMissedClick(Vector2 p)
+    {
+        foreach (var h in Health.All)
+        {
+            if (h == _health || Vector2.Distance(h.transform.position, p) > 3f) continue;
+            var sr = h.GetComponentInChildren<SpriteRenderer>();
+            string why = h.IsDead ? "morto (vida " + h.Hp + ")"
+                       : sr == null ? "sem SpriteRenderer"
+                       : sr.sprite == null ? "SpriteRenderer sem desenho"
+                       : "clique fora do desenho (desenho em " + sr.bounds.min + " a " + sr.bounds.max + ", objeto do desenho \"" + sr.name +
+                         "\" filho de \"" + (sr.transform.parent != null ? sr.transform.parent.name : "-") + "\", corpo em " + h.transform.position + ")";
+            Debug.Log($"[Clique] {h.name} perto de {p}: não selecionado — {why}", h);
+        }
     }
 
     private void DoTool(SkillDef def, Vector2Int cell)
@@ -285,6 +342,44 @@ public class PlayerController2D : MonoBehaviour
         FarmGrid.Act(def.id, cell, _bag);
         // Mesmo gesto do golpe, virado para o quadrado, sem causar dano.
         BeginAttack(FarmGrid.Center(cell) - Chest, null, strike: false);
+    }
+
+    /// Perfurar em Espiral (Spiral Pierce, pré-Renewal): no alvo travado, a até 4 quadrados.
+    /// Por golpe: peso da arma × 0,8 × (1 + 0,5×Nv) + (FOR/10)²; 5 golpes (somados num número);
+    /// ignora a DEF; prende o alvo 1 s (chefes não).
+    private void SpiralPierce(SkillDef def)
+    {
+        var target = _target;
+        if (target == null || target.IsDead || DistanceTo(target) > def.range * FarmGrid.Cell + 0.6f) return;
+        int lv = Mathf.Max(1, _skills.Level(def.id));
+        var eq = GetComponent<Equipment>();
+        var weapon = eq != null ? ItemDB.Get(eq.Get(EquipSlot.Weapon)) : null;
+        int weight = weapon != null && weapon.weight > 0 ? weapon.weight : 100;
+        int str = _stats != null ? _stats.Total(0) : 1;
+        float perHit = weight * 0.8f * (1f + 0.5f * lv) + (str / 10) * (str / 10);
+        var r = Combat.ApplyIgnoreDef(_stats, target, transform.position, 0f, perHit * 5f);
+        if (r.kind != HitKind.Miss) target.Hold(1f);
+    }
+
+    /// Impacto Explosivo (Magnum Break): 5x5 quadrados em volta dos pés. Centro (3x3):
+    /// ATQ × (100 + 20×Nv)%; borda: ATQ × (100 + 10×Nv)%; no Nv 10, 500% em tudo; precisão +10×Nv %; empurra 2
+    /// quadrados. Depois, 10 s de golpes normais com +20% de fogo.
+    private void MagnumBreak(SkillDef def, int lv)
+    {
+        Vector2 center = transform.position;
+        var hit = new HashSet<Health>();
+        foreach (var col in Physics2D.OverlapBoxAll(center, new Vector2(5f, 5f) * FarmGrid.Cell, 0f))
+        {
+            var target = col.GetComponentInParent<Health>();
+            if (target == null || target == _health || target.IsDead || !hit.Add(target)) continue;
+            Vector2 d = ((Vector2)target.transform.position - center) / FarmGrid.Cell;
+            int cells = Mathf.Max(Mathf.RoundToInt(Mathf.Abs(d.x)), Mathf.RoundToInt(Mathf.Abs(d.y)));
+            float mult = (100f + (cells <= 1 ? 20f : 10f) * lv) / 100f;
+            if (lv >= 10) mult = 5f;   // nível 10: 500% em toda a área (regra própria do jogo)
+            Combat.ApplySkillHit(_stats, target, center, knockback * 2f, mult, 10f * lv);
+        }
+        if (_stats != null) _stats.AddFireBonus(10f);
+        SkillFx.Ring(center, def.radius);
     }
 
     /// Dano em todos os monstros dentro do raio, medido a partir dos pés do personagem.
@@ -313,12 +408,43 @@ public class PlayerController2D : MonoBehaviour
         _attackLength = _attackTimer = motion;
         _hitTimer = motion * hitDelay / attackDuration;   // impacto na mesma fração do golpe
         if (strike) _nextAttackAt = Time.time + (_stats != null ? _stats.AttackInterval : attackDuration);
+        // Habilidade com conjuração (Perfurar em Espiral): o golpe sai ao fim dela.
+        float cast = skill != null && _skills != null ? skill.CastAt(_skills.Level(skill.id)) : 0f;
+        if (cast > 0f)
+        {
+            _hitTimer = cast;
+            _attackLength = _attackTimer = cast + motion * 0.5f;
+        }
         _body.linearVelocity = Vector2.zero;
     }
 
     /// Acerta tudo que tem vida num círculo na direção do golpe.
     private void Strike()
     {
+        if (_activeSkill != null && _activeSkill.id == "perfurar_espiral")
+        {
+            SpiralPierce(_activeSkill);
+            return;
+        }
+        // Lança de alcance (ex.: Lança de Caça, alcance 3): acerta o alvo travado de longe.
+        if (!Ranged && WeaponRange > engageRange && _target != null && !_target.IsDead &&
+            DistanceTo(_target) <= WeaponRange + 0.5f)
+        {
+            bool sk = _activeSkill != null;
+            Combat.Apply(_stats, _target, transform.position, sk ? knockback * 1.6f : 0f, sk ? _activeSkill.damageMult : 1f, sk);
+            _whiffs = 0;
+            return;
+        }
+        if (Ranged)
+        {
+            // Besta: o virote voa até o alvo travado (ou na direção do golpe) e acerta o primeiro
+            // que tiver vida no caminho.
+            bool skillShot = _activeSkill != null;
+            Bolt.Fire(_stats, _health, Chest, AttackDir, Reach + 0.5f, skillShot ? knockback * 1.6f : 0f,
+                      skillShot ? _activeSkill.damageMult : 1f, skillShot);
+            _whiffs = 0;
+            return;
+        }
         Vector2 center = (Vector2)transform.position + Vector2.up * 0.45f + AttackDir * hitReach;
         var hit = new HashSet<Health>();
         foreach (var col in Physics2D.OverlapCircleAll(center, hitRadius))
@@ -364,7 +490,7 @@ public class PlayerController2D : MonoBehaviour
         {
             _target = null; _moveTo = null; _holdMove = false; _queuedSkill = null; _queuedTool = null;
         }
-        else if (_target != null && _attackTimer <= 0f && DistanceTo(_target) > engageRange)
+        else if (_target != null && _attackTimer <= 0f && DistanceTo(_target) > Reach)
         {
             input = ((Vector2)_target.transform.position - (Vector2)transform.position).normalized;
             float dist = DistanceTo(_target);

@@ -14,7 +14,7 @@ public static class FloorTiles
 
     public static bool IsWall(string id) => id != null && id.StartsWith("parede_");
 
-    /// Pisos na ordem por tema (a mesma do extract_pisos.py): id, nome, tema.
+    /// Pisos na ordem por tema (a mesma do extract_pisos.py e do extract_pisos_natureza.py): id, nome, tema.
     public static readonly (string id, string name, string theme)[] Catalog =
     {
         ("piso_liso", "Liso", "Lajotas"),
@@ -37,6 +37,27 @@ public static class FloorTiles
         ("piso_faixa", "Faixa", "Urbano"),
         ("piso_placa", "Placa de metal", "Urbano"),
         ("piso_retalhos", "Retalhos", "Urbano"),
+        // Pisos naturais e rústicos (Tools/extract_pisos_natureza.py).
+        ("piso_grama", "Grama", "Grama"),
+        ("piso_grama_flores", "Grama com flores", "Grama"),
+        ("piso_grama_trevos", "Grama com trevos", "Grama"),
+        ("piso_mato_seco", "Mato seco", "Grama"),
+        ("piso_folhagem", "Folhagem", "Grama"),
+        ("piso_folhas_outono", "Folhas de outono", "Grama"),
+        ("piso_terra_arada", "Terra arada", "Terra"),
+        ("piso_terra_batida", "Terra batida", "Terra"),
+        ("piso_terra_galhos", "Terra com galhos", "Terra"),
+        ("piso_barro", "Barro", "Terra"),
+        ("piso_areia", "Areia", "Terra"),
+        ("piso_cascalho_terra", "Cascalho na terra", "Terra"),
+        ("piso_pedras_redondas", "Pedras redondas", "Pedra"),
+        ("piso_lajotas_grandes", "Lajotas grandes", "Pedra"),
+        ("piso_pedras_quebradas", "Pedras quebradas", "Pedra"),
+        ("piso_lajotas_hera", "Lajotas com hera", "Pedra"),
+        ("piso_tijolo_vermelho", "Tijolo vermelho", "Pedra"),
+        ("piso_ornamentado", "Ornamentado", "Pedra"),
+        ("piso_tabuas", "Tábuas", "Madeira"),
+        ("piso_tabuas_em_pe", "Tábuas em pé", "Madeira"),
     };
 
     // Preenchido pelos próprios FloorTile ao ligar (ver FloorTile.cs).
@@ -77,6 +98,37 @@ public static class FloorTiles
         ("parede_runas", "Runas", "Fantasia"),
         ("parede_coracoes_sombrios", "Corações sombrios", "Fantasia"),
         ("parede_coracoes", "Corações", "Fantasia"),
+        // Segunda folha (Tools/extract_papeis2.py).
+        ("parede_listras_reais", "Listras reais", "Clássico"),
+        ("parede_flor_de_lis_verde", "Flor-de-lis verde", "Clássico"),
+        ("parede_damasco_azul", "Damasco azul", "Clássico"),
+        ("parede_damasco_dourado", "Damasco dourado", "Clássico"),
+        ("parede_flores_listras", "Flores em listras", "Clássico"),
+        ("parede_brocado_roxo", "Brocado roxo", "Clássico"),
+        ("parede_estrelas_douradas", "Estrelas douradas", "Clássico"),
+        ("parede_ramos_verdes", "Ramos verdes", "Clássico"),
+        ("parede_listras_azuis", "Listras azuis", "Clássico"),
+        ("parede_leoes", "Leões reais", "Clássico"),
+        ("parede_rosas_vermelhas", "Rosas vermelhas", "Natureza"),
+        ("parede_violetas", "Violetas", "Natureza"),
+        ("parede_margaridas", "Margaridas", "Natureza"),
+        ("parede_trepadeira", "Trepadeira", "Natureza"),
+        ("parede_nuvens", "Nuvens", "Natureza"),
+        ("parede_brotos", "Brotos", "Natureza"),
+        ("parede_vasos_plantas", "Vasos de plantas", "Natureza"),
+        ("parede_listras_coracoes", "Listras com corações", "Padrões"),
+        ("parede_losangos_verdes", "Losangos verdes", "Padrões"),
+        ("parede_losangos_vermelhos", "Losangos vermelhos", "Padrões"),
+        ("parede_flocos_azuis", "Flocos azuis", "Padrões"),
+        ("parede_flores_losangos", "Flores em losangos", "Padrões"),
+        ("parede_reboco", "Reboco", "Rústico"),
+        ("parede_madeira", "Tábuas de madeira", "Rústico"),
+        ("parede_tijolo_reboco", "Tijolo e reboco", "Rústico"),
+        ("parede_musgo_tijolos", "Musgo e tijolos", "Rústico"),
+        ("parede_lua_estrelas", "Lua e estrelas", "Fantasia"),
+        ("parede_lacos", "Laços", "Fantasia"),
+        ("parede_cruzes_roxas", "Cruzes roxas", "Fantasia"),
+        ("parede_vitral_gotico", "Vitral gótico", "Fantasia"),
     };
 
     /// Todos os pisos e papéis colocados (quadrado, id), para o jogo salvo.

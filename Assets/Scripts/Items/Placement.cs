@@ -46,6 +46,7 @@ public class Placement : MonoBehaviour
     {
         var def = ItemDB.Get(id);
         if (def == null || string.IsNullOrEmpty(def.place)) return;
+        if (HouseInterior.InCityBuilding) return;   // só a casa do jogador é personalizável
         if (_instance == null) _instance = new GameObject("Posicionamento").AddComponent<Placement>();
         var p = _instance;
         p.EndMove(false);
@@ -61,6 +62,7 @@ public class Placement : MonoBehaviour
     /// Habilidades do martelo: escolher o móvel para mover (collect = false) ou recolher.
     public static void BeginHammer(Inventory bag, bool collect)
     {
+        if (HouseInterior.InCityBuilding) return;
         if (_instance == null) _instance = new GameObject("Posicionamento").AddComponent<Placement>();
         var p = _instance;
         p.EndMove(false);
@@ -155,7 +157,7 @@ public class Placement : MonoBehaviour
         else if (_place == "bau") pos = ChestSnap(world);
         _ghost.transform.position = pos;
 
-        _valid = _place == "bau" ? ChestFree(pos) : AreaFree(origin);
+        _valid = !HouseInterior.InCityBuilding && (_place == "bau" ? ChestFree(pos) : AreaFree(origin));
         if (_place == "raspar")
             _ghost.color = _valid ? new Color(1f, 0.85f, 0.35f, 0.45f) : new Color(1f, 0.3f, 0.3f, 0.3f);
         else

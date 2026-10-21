@@ -241,13 +241,13 @@ public static class BuildScene
         camGo.tag = "MainCamera";
         camGo.transform.position = new Vector3(0f, 0f, -10f);
         var pp = camGo.AddComponent<PixelPerfectCamera>();
-        pp.assetsPPU = ConfigureAllSprites.PPU;
+        pp.assetsPPU = CameraFollow2D.pixelsPerUnit;
         pp.refResolutionX = 480;
         pp.refResolutionY = 270;
         pp.upscaleRT = false;
         var follow = camGo.AddComponent<CameraFollow2D>();
         follow.target = player.transform;
-        follow.pixelsPerUnit = ConfigureAllSprites.PPU;
+        // (pixelsPerUnit da câmera agora é fixo em 64 no CameraFollow2D)
 
         System.IO.Directory.CreateDirectory("Assets/Scenes");
         EditorSceneManager.SaveScene(scene, ScenePath);

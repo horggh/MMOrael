@@ -78,12 +78,22 @@ public class SaveGame : MonoBehaviour
         public int zoom;            // nível de afastamento da câmera
         public int money;           // unidades (dinheiro)
         public bool infiniteHp, infiniteSp;   // chaves de teste da janela DEV
+        public bool ignoreEquipLevel;         // equipar sem o nível mínimo
+        public int hitBuff;                   // precisão extra de comida (pudim)
+        public float hitBuffLeft;             // segundos restantes dela
+        public int aspdBuff;                  // ASPD extra de comida (bife)
+        public float aspdBuffLeft;
+        public int atkBuff;                   // ATQ extra de comida (hambúrguer)
+        public float atkBuffLeft;
+        public string hitBuffItem, aspdBuffItem, atkBuffItem;   // ícone de cada bônus
         public bool maxedAttributes;          // atributos em 99 pela janela DEV
         public int expRate;                   // multiplicador de XP (0 = jogo salvo antigo: 1x)
         public string skin;                   // aparência do personagem (SkinDB)
         public int damageRate;                // multiplicador de dano de teste (0 = jogo salvo antigo: 1x)
         public int drakeHp;                   // vida do boss Drake (0 = cheia ou morto)
         public float drakeRespawn;            // segundos até o Drake reaparecer (0 = vivo)
+        public int lordHp;                    // vida do MVP Lord of Death (0 = cheia ou morto)
+        public float lordRespawn;             // segundos até ele reaparecer (0 = vivo)
         public bool inside;              // dentro de uma casa (px, py são do interior)
         public float insideX, insideY;   // posição da casa em que está
     }
@@ -91,6 +101,7 @@ public class SaveGame : MonoBehaviour
     private static SaveGame _instance;
     private GameObject _player;
     private float _timer;
+    private bool _loggedWrite;
 
     // Depois do Awake de tudo na cena e antes de qualquer Start: o kit inicial do inventário
     // já foi montado e é substituído pelo que estava salvo.
@@ -98,10 +109,12 @@ public class SaveGame : MonoBehaviour
     private static void Boot()
     {
         var pc = FindAnyObjectByType<PlayerController2D>();
+        Debug.Log($"[Save] início: personagem {(pc != null ? "achado" : "NÃO achado")}, arquivo {FilePath}");
         if (pc == null) return;
         _instance = new GameObject("Jogo Salvo").AddComponent<SaveGame>();
         _instance._player = pc.gameObject;
         _instance.Load();
+        Debug.Log($"[Save] carregado: {Building.All.Count} construções, {StorageChest.All.Count} baús");
     }
 
     /// Grava agora (ex.: logo após colocar um baú).
@@ -133,7 +146,7 @@ public class SaveGame : MonoBehaviour
 
     private void Write()
     {
-        if (_player == null) return;
+        if (_player == null) { Debug.LogWarning("[Save] sem personagem: não gravou"); return; }
         var d = Collect();
         string tmp = FilePath + ".tmp";
         try
@@ -142,6 +155,7 @@ public class SaveGame : MonoBehaviour
             File.WriteAllText(tmp, JsonUtility.ToJson(d, true));
             if (File.Exists(FilePath)) File.Delete(FilePath);
             File.Move(tmp, FilePath);
+            if (!_loggedWrite) { _loggedWrite = true; Debug.Log("[Save] gravado em " + FilePath); }
         }
         catch (Exception e)
         {
@@ -155,12 +169,17 @@ public class SaveGame : MonoBehaviour
         var p = _player;
         d.zoom = CameraFollow2D.Zoom;
         d.infiniteHp = DevCheats.InfiniteHp;
+        var stBuff = p.GetComponent<CharacterStats>();
+        if (stBuff != null) { d.hitBuff = stBuff.HitBuff; d.hitBuffLeft = stBuff.HitBuffLeft; d.aspdBuff = stBuff.AspdBuff; d.aspdBuffLeft = stBuff.AspdBuffLeft; d.atkBuff = stBuff.AtkBuff; d.atkBuffLeft = stBuff.AtkBuffLeft;
+                              d.hitBuffItem = stBuff.HitBuffItem; d.aspdBuffItem = stBuff.AspdBuffItem; d.atkBuffItem = stBuff.AtkBuffItem; }
         d.infiniteSp = DevCheats.InfiniteSp;
+        d.ignoreEquipLevel = DevCheats.IgnoreEquipLevel;
         d.maxedAttributes = DevCheats.MaxedAttributes;
         d.expRate = ExpTable.Rate;
         d.damageRate = DevCheats.DamageRate;
         d.skin = SkinDB.CurrentId;
         DrakeBoss.Capture(out d.drakeHp, out d.drakeRespawn);
+        LordOfDeath.Capture(out d.lordHp, out d.lordRespawn);
         d.px = p.transform.position.x;
         d.py = p.transform.position.y;
 
@@ -214,6 +233,7 @@ public class SaveGame : MonoBehaviour
 
         var buildings = new List<BuildingData>();
         foreach (var b in Building.All)
+            if (!b.IsCity)   // prédios da cidade fazem parte do mapa
             buildings.Add(new BuildingData
             {
                 type = b.type, x = b.transform.position.x, y = b.transform.position.y, stage = b.stage,
@@ -258,11 +278,17 @@ public class SaveGame : MonoBehaviour
         Vector3 scenePos = p.transform.position;
         CameraFollow2D.SetZoom(d.zoom);
         DevCheats.InfiniteHp = d.infiniteHp;
+        var stLoad = p.GetComponent<CharacterStats>();
+        if (stLoad != null && d.hitBuff > 0 && d.hitBuffLeft > 0f) stLoad.AddHitBuff(d.hitBuff, d.hitBuffLeft, d.hitBuffItem);
+        if (stLoad != null && d.aspdBuff > 0 && d.aspdBuffLeft > 0f) stLoad.AddAspdBuff(d.aspdBuff, d.aspdBuffLeft, d.aspdBuffItem);
+        if (stLoad != null && d.atkBuff > 0 && d.atkBuffLeft > 0f) stLoad.AddAtkBuff(d.atkBuff, d.atkBuffLeft, d.atkBuffItem);
         DevCheats.InfiniteSp = d.infiniteSp;
+        DevCheats.IgnoreEquipLevel = d.ignoreEquipLevel;
         DevCheats.MaxedAttributes = d.maxedAttributes;
         ExpTable.Rate = Mathf.Clamp(d.expRate, 1, ExpTable.MaxRate);
         DevCheats.DamageRate = Mathf.Clamp(d.damageRate, 1, DevCheats.MaxDamageRate);
         if (!string.IsNullOrEmpty(d.skin)) SkinDB.Set(d.skin);
+        LordOfDeath.Restore(d.lordHp, d.lordRespawn);
         DrakeBoss.Restore(d.drakeHp, d.drakeRespawn);   // início da cena, caso a casa salva não exista mais
         var pos = new Vector3(d.px, d.py, p.transform.position.z);
         // Fora de casa e fora do mapa (ex.: perdido no vazio depois de uma recompilação no meio

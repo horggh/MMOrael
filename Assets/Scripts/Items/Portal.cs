@@ -11,7 +11,8 @@ using UnityEngine.InputSystem;
 public class Portal : MonoBehaviour
 {
     // Desenho com 79 px de largura: com 40 px por unidade fica com ~2 quadrados de largura.
-    private const float PPU = 40f;
+    // Padrão do jogo: 64 px por quadrado da grade (ver Tools/padronizar_64.py).
+    private const float PPU = 64f;
     public static readonly Vector2Int Footprint = new Vector2Int(2, 1);
     public const float Reach = 1.5f;
     private const float WakeTime = 1.2f;

@@ -1,0 +1,13 @@
+agua
+areia
+lama
+terra
+grama
+grama_flores
+mato
+trilha
+cascalho
+pedras
+calcamento
+tabuas
+masmorra

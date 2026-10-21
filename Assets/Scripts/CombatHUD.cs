@@ -51,19 +51,21 @@ public class CombatHUD : MonoBehaviour
     private void DrawBossBar()
     {
         if (player == null) return;
-        foreach (var boss in DrakeBoss.All)
+        var bosses = new System.Collections.Generic.List<(Health h, string name, bool dead)>();
+        foreach (var b in DrakeBoss.All) bosses.Add((b.GetComponent<Health>(), DrakeBoss.DisplayName, b.IsDead));
+        foreach (var b in LordOfDeath.All) bosses.Add((b.GetComponent<Health>(), "Lord of Death", b.IsDead));
+        foreach (var (h, bossName, dead) in bosses)
         {
-            var h = boss.GetComponent<Health>();
-            if (boss.IsDead || h == null || Vector2.Distance(boss.transform.position, player.transform.position) > 16f) continue;
+            if (dead || h == null || Vector2.Distance(h.transform.position, player.transform.position) > 16f) continue;
             float w = Screen.width * 0.36f, bh = Mathf.Max(8f, Screen.height * 0.016f);
             float x = (Screen.width - w) / 2f, y = _helpY + Screen.height * 0.05f;
             _bossName ??= new GUIStyle(GUI.skin.label) { fontStyle = FontStyle.Bold, alignment = TextAnchor.LowerCenter };
             _bossName.fontSize = Mathf.Max(11, Mathf.RoundToInt(Screen.height * 0.022f));
             var nameRect = new Rect(x, y - _bossName.fontSize * 1.6f, w, _bossName.fontSize * 1.5f);
             _bossName.normal.textColor = new Color(0f, 0f, 0f, 0.8f);
-            GUI.Label(new Rect(nameRect.x + 1, nameRect.y + 1, w, nameRect.height), $"{DrakeBoss.DisplayName}  ·  MVP", _bossName);
+            GUI.Label(new Rect(nameRect.x + 1, nameRect.y + 1, w, nameRect.height), $"{bossName}  ·  MVP", _bossName);
             _bossName.normal.textColor = new Color(1f, 0.82f, 0.4f);
-            GUI.Label(nameRect, $"{DrakeBoss.DisplayName}  ·  MVP", _bossName);
+            GUI.Label(nameRect, $"{bossName}  ·  MVP", _bossName);
             DrawFill(new Rect(x, y, w, bh), h.Hp, h.maxHp, new Color(0.8f, 0.15f, 0.12f));
             _bossName.fontSize = Mathf.Max(9, Mathf.RoundToInt(bh * 0.85f));
             _bossName.alignment = TextAnchor.MiddleCenter;
@@ -148,6 +150,8 @@ public class CombatHUD : MonoBehaviour
                                      _bag != null ? _bag.money : 0,
                                      used, Inventory.Size);
             _helpY = bar.yMax + 4;
+            float buffsBottom = DrawBuffs(bar, room + margin);
+            if (buffsBottom > _helpY) _helpY = buffsBottom + 4;
 
             // Barra sob os pés do personagem, como no Ragnarok: sempre à vista no meio da luta.
             Vector3 feet = Camera.main.WorldToScreenPoint(player.transform.position);
@@ -158,13 +162,7 @@ public class CombatHUD : MonoBehaviour
 
         DrawBossBar();
 
-        foreach (var wolf in WolfAI.All)
-        {
-            var h = wolf.GetComponent<Health>();
-            if (h == null || h.IsDead || h.Hp == h.maxHp) continue;
-            Vector3 s = Camera.main.WorldToScreenPoint(wolf.transform.position + Vector3.up * 1.4f);
-            DrawBar(new Rect(s.x - 25, Screen.height - s.y, 50, 6), h, new Color(0.85f, 0.6f, 0.15f));
-        }
+        DrawMonsterBars();
 
         foreach (var p in _popups)
         {
@@ -174,7 +172,11 @@ public class CombatHUD : MonoBehaviour
             GUI.Label(new Rect(s.x - 50, Screen.height - s.y - 15, 100, 30), p.text, _popup);
         }
 
-        if (_statsWin.show && _stats != null) DrawStats();
+        WindowStack.Report("stats", _statsWin.show && _stats != null, _statsWin.ScreenRect);
+        if (Event.current.type == EventType.MouseDown) WindowStack.Focus(Event.current.mousePosition);
+        // Atributos na frente: este OnGUI é desenhado por cima do das outras janelas.
+        GUI.depth = WindowStack.IsFront("stats") ? -1 : 1;
+        if (_statsWin.show && _stats != null) WindowStack.Draw("stats", DrawStats);
         PointerOverUI = _statsWin.show && _statsWin.ScreenRect.Contains(Event.current.mousePosition);
     }
 
@@ -229,6 +231,95 @@ public class CombatHUD : MonoBehaviour
         UIKit.Label(w.Art(16, yEnd + 22, StatsW - 32, 16), "(n) = pontos para subir o atributo", 12, UIKit.Dim);
 
         w.HandleInput(Event.current);
+    }
+
+    /// Monstros comuns: barra pequena logo abaixo dos pés, com a vida restante escrita.
+    /// (Os MVPs têm a barra grande no alto da tela.)
+    private void DrawMonsterBars()
+    {
+        var cam = Camera.main;
+        if (cam == null) return;
+        _hpText ??= new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Bold };
+        foreach (var h in Health.All)
+        {
+            if (h == null || h.IsDead || !h.gameObject.activeInHierarchy) continue;
+            var st = h.GetComponent<CharacterStats>();
+            if (st == null || !st.IsMonster || h.GetComponent<DrakeBoss>() != null || h.GetComponent<LordOfDeath>() != null) continue;
+            var sr = h.GetComponentInChildren<SpriteRenderer>();
+            if (sr != null && (!sr.enabled || sr.color.a < 0.5f)) continue;
+            Vector3 s = cam.WorldToScreenPoint(h.transform.position + Vector3.down * 0.12f);
+            if (s.z < 0f || s.x < -50 || s.x > Screen.width + 50 || s.y < -20 || s.y > Screen.height + 20) continue;
+            float w = Mathf.Max(36f, Screen.height * 0.045f), bh = Mathf.Max(4f, Screen.height * 0.006f);
+            var r = new Rect(s.x - w / 2f, Screen.height - s.y, w, bh);
+            DrawFill(r, h.Hp, h.maxHp, h.Hp * 3 < h.maxHp ? new Color(0.95f, 0.3f, 0.2f) : new Color(0.85f, 0.6f, 0.15f));
+            _hpText.fontSize = Mathf.Max(8, Mathf.RoundToInt(bh * 2f));
+            var tr = new Rect(r.x - 20, r.yMax, r.width + 40, _hpText.fontSize + 4);
+            _hpText.normal.textColor = new Color(0f, 0f, 0f, 0.8f);
+            GUI.Label(new Rect(tr.x + 1, tr.y + 1, tr.width, tr.height), h.Hp.ToString("N0"), _hpText);
+            _hpText.normal.textColor = Color.white;
+            GUI.Label(tr, h.Hp.ToString("N0"), _hpText);
+        }
+    }
+
+    private GUIStyle _hpText;
+
+    private GUIStyle _buffTime;
+
+    /// Bônus ativos (comidas e bebidas, fogo do Impacto Explosivo): o ícone do item com o tempo
+    /// que falta embaixo; mouse em cima mostra o que ele dá. Ao lado da barra do personagem;
+    /// sem espaço, logo abaixo dela. Devolve a base da fileira (ou 0 se não há bônus).
+    private float DrawBuffs(Rect bar, float right)
+    {
+        if (_stats == null) return 0f;
+        var list = new System.Collections.Generic.List<(Texture2D icon, float left, string tip)>();
+        void Add(string item, int amount, float left, string what, System.Func<ItemDef, bool> gives)
+        {
+            if (amount <= 0 || left <= 0f) return;
+            var def = !string.IsNullOrEmpty(item) ? ItemDB.Get(item) : null;
+            // Bônus de antes de o item ser guardado (save antigo): o item que dá esse bônus.
+            if (def == null) foreach (var d in ItemDB.All) if (gives(d)) { def = d; break; }
+            list.Add((def?.icon, left, $"{def?.name ?? "Bônus"}: +{amount} de {what}"));
+        }
+        Add(_stats.HitBuffItem, _stats.HitBuff, _stats.HitBuffLeft, "precisão", d => d.buffHit > 0);
+        Add(_stats.AspdBuffItem, _stats.AspdBuff, _stats.AspdBuffLeft, "ASPD", d => d.buffAspd > 0);
+        Add(_stats.AtkBuffItem, _stats.AtkBuff, _stats.AtkBuffLeft, "ATQ", d => d.buffAtk > 0);
+        if (_stats.FireBonus)
+            list.Add((SkillDB.Get("impacto_explosivo")?.icon, _stats.FireBonusLeft, "Impacto Explosivo: +20% de fogo nos golpes"));
+        if (list.Count == 0) return 0f;
+
+        float size = Mathf.Max(24f, bar.height * 0.62f), gap = size * 0.18f;
+        float timeH = size * 0.42f;
+        float width = list.Count * (size + gap);
+        // Ao lado da barra; sem espaço, embaixo, alinhado à esquerda.
+        float x = bar.xMax + gap * 2, y = bar.y + (bar.height - size - timeH) / 2f;
+        if (x + width > right) { x = bar.x; y = bar.yMax + 4; }
+        _buffTime ??= new GUIStyle(GUI.skin.label) { alignment = TextAnchor.UpperCenter, fontStyle = FontStyle.Bold, padding = new RectOffset() };
+        _buffTime.fontSize = Mathf.Max(9, Mathf.RoundToInt(timeH * 0.8f));
+        Vector2 mouse = Event.current.mousePosition;
+        string tip = null;
+        foreach (var (icon, left, text) in list)
+        {
+            var r = new Rect(x, y, size, size);
+            GUI.color = new Color(0f, 0f, 0f, 0.55f);
+            GUI.DrawTexture(r, Texture2D.whiteTexture);
+            GUI.color = Color.white;
+            if (icon != null) GUI.DrawTexture(new Rect(r.x + 2, r.y + 2, r.width - 4, r.height - 4), icon, ScaleMode.ScaleToFit);
+            int s = Mathf.CeilToInt(left);
+            string t = s >= 60 ? $"{s / 60}:{s % 60:00}" : $"{s}s";
+            var tr = new Rect(x - gap / 2f, r.yMax + 1, size + gap, timeH);
+            _buffTime.normal.textColor = new Color(0f, 0f, 0f, 0.85f);
+            GUI.Label(new Rect(tr.x + 1, tr.y + 1, tr.width, tr.height), t, _buffTime);
+            _buffTime.normal.textColor = s <= 10 ? new Color(1f, 0.45f, 0.35f) : Color.white;
+            GUI.Label(tr, t, _buffTime);
+            if (r.Contains(mouse)) tip = text;
+            x += size + gap;
+        }
+        if (tip != null)
+        {
+            var size2 = GUI.skin.box.CalcSize(new GUIContent(tip));
+            GUI.Box(new Rect(mouse.x + 14, mouse.y + 14, size2.x + 8, size2.y + 4), tip);
+        }
+        return y + size + timeH;
     }
 
     private static void DrawBar(Rect r, Health h, Color color)

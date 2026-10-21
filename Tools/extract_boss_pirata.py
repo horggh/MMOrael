@@ -6,7 +6,7 @@ A folha tem 3 linhas x 5 colunas, fundo xadrez:
   linha 3: dor 1 (chapéu voando), dor 2 (ajoelhado), morte 1, morte 2, morte 3
 
 Cada quadro sai num quadro de tamanho único, com os pés no mesmo ponto (centro da
-coluna, base da linha), para a animação não pular. Saída: Assets/Resources/Characters/Drake/.
+coluna, base da linha), para a animação não pular. Saída: Assets/Art/Sprites/Monsters/MVP/Resources/Drake/.
 
 Uso: python Tools/extract_boss_pirata.py   (na raiz do projeto)
 """
@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from extract_pixelart import resample, background_mask, drop_specks, quantize  # noqa: E402
 
 SRC = "imagens/boss-pirata.jpg"
-OUT = "Assets/Resources/Characters/Drake"
+OUT = "Assets/Art/Sprites/Monsters/MVP/Resources/Drake"
 GRID = 512          # a arte tem pixel de 2 px na imagem de 1024
 COLS = 5
 NAMES = [

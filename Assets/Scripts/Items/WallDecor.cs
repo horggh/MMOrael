@@ -9,7 +9,7 @@ using UnityEngine;
 public class WallDecor : MonoBehaviour
 {
     private const float PPU = 64f;
-    private const int SkyOrder = -8975, WindowOrder = -8970, RaysOrder = 25000;
+    public const int SkyOrder = -8975, WindowOrder = -8970, RaysOrder = 25000;
 
     /// Todas as janelas colocadas (para o jogo salvo).
     public static readonly List<WallDecor> All = new List<WallDecor>();

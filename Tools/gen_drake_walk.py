@@ -10,7 +10,7 @@ casaco cobre o topo da perna, como se a coxa entrasse por baixo dela.
   partir do quadril (o pé anda mais que a coxa). A de trás é a mesma perna, um pouco mais
   escura, como a perna do outro lado do corpo.
 
-Saída: Assets/Resources/Characters/Drake/andar_<direção>.png, 4 quadros lado a lado.
+Saída: Assets/Art/Sprites/Monsters/MVP/Resources/Drake/andar_<direção>.png, 4 quadros lado a lado.
 Uso: python Tools/gen_drake_walk.py   (depois de Tools/extract_boss_pirata.py)
 """
 import os
@@ -18,7 +18,7 @@ import os
 import numpy as np
 from PIL import Image
 
-DIR = "Assets/Resources/Characters/Drake"
+DIR = "Assets/Art/Sprites/Monsters/MVP/Resources/Drake"
 PREVIEW = os.environ.get("PREVIEW_DIR", "")
 
 # Por direção: linha onde as pernas saem de baixo do casaco e faixa de colunas delas (fora

@@ -60,6 +60,7 @@ public class WolfAI : MonoBehaviour
 
     private void Awake()
     {
+        _drops = MonsterDrops.Ensure(gameObject, "Lobo", false);
         _body = GetComponent<Rigidbody2D>();
         _health = GetComponent<Health>();
         _stats = GetComponent<CharacterStats>();
@@ -77,7 +78,7 @@ public class WolfAI : MonoBehaviour
 
     private void Start()
     {
-        var player = FindFirstObjectByType<PlayerController2D>();
+        var player = FindAnyObjectByType<PlayerController2D>();
         if (player != null)
         {
             _player = player.transform;
@@ -172,8 +173,13 @@ public class WolfAI : MonoBehaviour
         }
     }
 
+    private MonsterDrops _drops;
+
     private void OnDied(Health h)
     {
+        // Drops (ainda não definidos: lista vazia no MonsterDrops).
+        var dropBag = _player != null ? _player.GetComponent<Inventory>() : null;
+        if (_drops != null) _drops.Roll(dropBag);
         var playerStats = _player != null ? _player.GetComponent<CharacterStats>() : null;
         if (playerStats != null)
         {

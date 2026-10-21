@@ -10,12 +10,12 @@ public class UITextureImport : AssetPostprocessor
         "Assets/Resources/Buildings/", "Assets/Resources/Items/planta_casa.png", "Assets/Resources/Floors/",
         "Assets/Resources/Items/raspador.png", "Assets/Resources/Items/martelo.png",
         "Assets/Resources/Skills/mover.png", "Assets/Resources/Skills/recolher.png", "Assets/Resources/Items/portal.png", "Assets/Resources/Items/pedra_retorno.png", "Assets/Resources/Walls/", "Assets/Resources/Windows/",
-        "Assets/Resources/Characters/Drake/", "Assets/Resources/Characters/Skins/", "Assets/Resources/Items/martelo_gm.png", "Assets/Resources/Items/pedra.png", "Assets/Resources/Items/madeira.png", "Assets/Resources/Items/corda.png",
+        "Assets/Art/Sprites/Monsters/MVP/Resources/Drake/", "Assets/Art/Sprites/Monsters/SerialKiller/", "Assets/Resources/Characters/Skins/", "Assets/Resources/Items/martelo_gm.png", "Assets/Resources/Items/pedra.png", "Assets/Resources/Items/madeira.png", "Assets/Resources/Items/corda.png",
     };
 
     // Mudar a versão faz a Unity reimportar as imagens já importadas com a regra antiga
     // (ex.: arquivos que chegaram antes deste script compilar).
-    public override uint GetVersion() => 6;
+    public override uint GetVersion() => 9;
 
     private void OnPreprocessTexture()
     {
@@ -28,6 +28,18 @@ public class UITextureImport : AssetPostprocessor
         ti.filterMode = UnityEngine.FilterMode.Point;
         ti.wrapMode = UnityEngine.TextureWrapMode.Clamp;
         ti.textureCompression = TextureImporterCompression.Uncompressed;
+        // MVPs: sprite, para dar para arrastar qualquer desenho para a cena (vira o boss inteiro,
+        // MvpNaCena). O jogo continua lendo como textura (Resources.Load<Texture2D>).
+        if (assetPath.Contains("/Monsters/MVP/") || assetPath.Contains("/Monsters/SerialKiller/"))
+        {
+            ti.textureType = TextureImporterType.Sprite;
+            ti.spriteImportMode = SpriteImportMode.Single;
+            ti.spritePixelsPerUnit = 64;
+            var st = new TextureImporterSettings();
+            ti.ReadTextureSettings(st);
+            st.spriteAlignment = (int)UnityEngine.SpriteAlignment.BottomCenter;
+            ti.SetTextureSettings(st);
+        }
         // Construções: o clique vale só onde há desenho (Building lê a transparência do pixel).
         if (assetPath.StartsWith("Assets/Resources/Buildings/")) ti.isReadable = true;
     }

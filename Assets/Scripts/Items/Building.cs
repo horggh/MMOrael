@@ -21,7 +21,8 @@ public class Building : MonoBehaviour
     // A base ocupa 6 quadrados de largura (e 2 de fundo). Os sprites têm 192 px de largura:
     // 192 / 6 = 32 px por unidade, a mesma escala do personagem e do mapa, então a altura
     // (199 px, ~6,2 unidades) fica proporcional sem distorcer o pixel art.
-    private const float PPU = 32f;
+    // Padrão do jogo: 64 px por quadrado da grade (ver Tools/padronizar_64.py).
+    private const float PPU = 64f;
     public static readonly Vector2Int Footprint = new Vector2Int(6, 2);
 
     /// Todas as construções no mapa (para o jogo salvo).
@@ -30,6 +31,31 @@ public class Building : MonoBehaviour
     public static Building Current { get; private set; }
 
     public string type;
+    /// Prédio da cidade (colocado na cena pela janela Decoração): já vem pronto, com este
+    /// desenho e nome, a mesma área da casa (Footprint) e o mesmo interior. Não vai no save
+    /// (faz parte do mapa); o que for colocado dentro é salvo pelo interiorId.
+    public Sprite art;
+    public string displayName;
+    public bool IsCity => art != null;
+    /// Interior em corredor (escada: leva ao andar de cima, sala comprida e baixa).
+    public bool corredor;
+    /// Texto do botão da janela ("Entrar", "Subir!").
+    public string botao = "Entrar";
+
+    /// Escada ou porta (decoração da pasta Passagens): passagem para outra sala.
+    public static bool IsPassage(string file) => file.StartsWith("escada") || file.StartsWith("porta_");
+    public bool Passage => IsCity && IsPassage(type ?? "");
+
+    /// Prédio da cidade, escada ou porta a partir do desenho: nome, botão e tipo de sala.
+    public void SetupFromArt(Sprite sprite)
+    {
+        art = sprite;
+        type = sprite.texture.name;
+        bool escada = type.StartsWith("escada");
+        corredor = escada;
+        botao = escada ? "Subir!" : "Entrar";
+        displayName = escada ? "Escada" : type.StartsWith("porta_") ? "Porta" : CityName(type);
+    }
     public int stage = 1;
     /// Número do interior desta casa (cada uma tem a sala num lugar próprio). Salvo.
     public int interiorId;
@@ -77,6 +103,85 @@ public class Building : MonoBehaviour
         return b;
     }
 
+    /// Desenhos de prédio da cidade (Art/Sprites/Environment/Predios), pelo nome do arquivo.
+    private static readonly HashSet<string> CityArt = new HashSet<string>
+        {
+            "loja", "mercearia", "cavalaria", "estabulo", "taberna", "hotel",
+            "boticario", "armaria", "ferraria", "banco", "palacio_real", "mansao_real", "portao_real", "coreto_real",
+            "hospital", "catedral", "capela", "igreja_grande", "igreja", "capela_simples", "arquearia",
+            "torre_magica", "guilda_ladroes", "torre_arcana", "guilda_guerreiros", "salao_concerto", "salao_musica",
+        };
+
+    /// Ao abrir a cena: todo prédio da cidade (pelo desenho, ou qualquer coisa dentro do grupo
+    /// "Prédios") vira construção pronta, com a área da casa, a barreira na base, a janela com
+    /// "Entrar" e o interior, onde quer que tenha sido colocado.
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    private static void ConvertCityBuildings()
+    {
+        var list = new List<SpriteRenderer>();
+        foreach (var sr in FindObjectsByType<SpriteRenderer>())
+        {
+            if (sr.sprite == null || sr.GetComponent<Building>() != null) continue;
+            var parent = sr.transform.parent;
+            if (CityArt.Contains(sr.sprite.texture.name) || IsPassage(sr.sprite.texture.name) ||
+                (parent != null && parent.name == "Prédios"))
+                list.Add(sr);
+        }
+        // Número do interior fixo pela posição (a ordem dos objetos na cena pode mudar).
+        list.Sort((a, b) =>
+        {
+            Vector2 pa = a.transform.position, pb = b.transform.position;
+            int c = pa.x.CompareTo(pb.x);
+            return c != 0 ? c : pa.y.CompareTo(pb.y);
+        });
+        for (int i = 0; i < list.Count; i++)
+        {
+            var sr = list[i];
+            var go = sr.gameObject;
+            // O colisor antigo (do tamanho do desenho) dá lugar à base da casa.
+            // Na hora (não no fim do quadro): senão a construção pega este colisor e fica sem nenhum.
+            foreach (var c in go.GetComponents<Collider2D>()) DestroyImmediate(c);
+            // A escala dada na edição fica (prédio maior que a casa): a base sólida e a área de
+            // clique crescem junto, porque o colisor acompanha a escala do objeto.
+            var b = go.AddComponent<Building>();
+            b.SetupFromArt(sr.sprite);
+            b.interiorId = 2000 + i;
+            b.SetStage(Stages);
+        }
+    }
+
+    public static string CityName(string file) => file switch
+    {
+        "cavalaria" => "Prédio de Cavalaria",
+        "estabulo" => "Estábulo",
+        "taberna" => "Taberna Medieval",
+        "hotel" => "Hotel",
+        "loja" => "Loja",
+        "mercearia" => "Mercearia",
+        "boticario" => "Boticário",
+        "armaria" => "Armaria",
+        "ferraria" => "Ferraria",
+        "banco" => "Banco",
+        "palacio_real" => "Palácio Real",
+        "mansao_real" => "Mansão Real",
+        "portao_real" => "Portão Real",
+        "coreto_real" => "Coreto Real",
+        "hospital" => "Hospital",
+        "catedral" => "Catedral",
+        "capela" => "Capela",
+        "igreja_grande" => "Igreja Grande",
+        "igreja" => "Igreja",
+        "capela_simples" => "Capela Simples",
+        "arquearia" => "Arquearia",
+        "torre_magica" => "Torre Mágica",
+        "guilda_ladroes" => "Guilda dos Ladrões",
+        "torre_arcana" => "Torre Arcana",
+        "guilda_guerreiros" => "Guilda dos Guerreiros",
+        "salao_concerto" => "Salão de Concerto",
+        "salao_musica" => "Salão de Música",
+        _ => file.Length > 0 ? char.ToUpper(file[0]) + file.Substring(1).Replace('_', ' ') : "Prédio",
+    };
+
     public static Sprite SpriteFor(string type, int stage)
     {
         string key = $"{type}_{stage}";
@@ -91,17 +196,41 @@ public class Building : MonoBehaviour
 
     private void Awake()
     {
-        _sr = gameObject.AddComponent<SpriteRenderer>();
-        gameObject.AddComponent<YSortRenderer>();
+        // (Sem "??": o Unity devolve um nulo falso no editor.)
+        _sr = GetComponent<SpriteRenderer>();
+        if (_sr == null) _sr = gameObject.AddComponent<SpriteRenderer>();
+        if (GetComponent<YSortRenderer>() == null) gameObject.AddComponent<YSortRenderer>();
         // Sólido só na base (a frente da casa); dá para passar por trás do telhado.
-        _col = gameObject.AddComponent<BoxCollider2D>();
+        _col = GetComponent<BoxCollider2D>();
+        if (_col == null) _col = gameObject.AddComponent<BoxCollider2D>();
         _col.size = new Vector2(Footprint.x - 0.2f, Footprint.y - 0.4f);
         _col.offset = new Vector2(0f, (Footprint.y - 0.4f) / 2f);
+        if (IsCity) SetStage(Stages);
     }
 
     public void SetStage(int s)
     {
         stage = Mathf.Clamp(s, 1, Stages);
+        if (IsCity)
+        {
+            _sr.sprite = art;
+            if (!Passage && _col != null && art != null)
+            {
+                // Prédio da cidade: base sólida na largura do próprio desenho (tabela de escala,
+                // Tools/escala.py), 2 quadrados de fundo como a casa.
+                float w = art.bounds.size.x;
+                _col.size = new Vector2(Mathf.Max(1f, w - 0.4f), Footprint.y - 0.4f);
+                _col.offset = new Vector2(0f, (Footprint.y - 0.4f) / 2f);
+            }
+            if (Passage && _col != null)
+            {
+                // Porta/escada: só a faixa de baixo do desenho é sólida (não a base de uma casa).
+                Vector2 size = art.bounds.size;
+                _col.size = new Vector2(size.x * 0.8f, 0.4f);
+                _col.offset = new Vector2(0f, 0.2f);
+            }
+            return;
+        }
         _sr.sprite = SpriteFor(type, stage);
         gameObject.name = $"Construção {type} ({stage}/{Stages})";
     }
@@ -254,13 +383,14 @@ public class Building : MonoBehaviour
     {
         var w = _win;
         w.DrawFrame();
-        string name = type == "casa" ? "Casa" : type;
-        UIKit.Label(w.Art(16, 38, WinW - 32, 22), Done ? $"{name} pronta!" : $"{name}  —  nível {stage} de {Stages}", 16, UIKit.Gold);
+        string name = IsCity ? displayName : type == "casa" ? "Casa" : type;
+        UIKit.Label(w.Art(16, 38, WinW - 32, 22), Passage ? name : Done ? $"{name} pronta!" : $"{name}  —  nível {stage} de {Stages}", 16, UIKit.Gold);
 
         if (Done)
         {
-            UIKit.Label(w.Art(16, RowsTop, WinW - 32, 20), "A construção está completa.", 14, UIKit.Cream);
-            if (UIKit.Button(w.Art(16, RowsTop + 30, 120, 19), "Entrar", true, 10))
+            string info = !Passage ? "A construção está completa." : corredor ? "Leva ao andar de cima." : "Leva a outra sala.";
+            UIKit.Label(w.Art(16, RowsTop, WinW - 32, 20), info, 14, UIKit.Cream);
+            if (UIKit.Button(w.Art(16, RowsTop + 30, 120, 19), string.IsNullOrEmpty(botao) ? "Entrar" : botao, true, 10))
             {
                 Close();
                 HouseInterior.Enter(this);
